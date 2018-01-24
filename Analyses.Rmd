@@ -63,7 +63,6 @@ collapse_rows <- function(db){
   return(db)
 }
 
-#Because we do hierarchical models, we do not collapse. This is better when looking at an interaction effect.
 
 #db_ET_correct = collapse_rows(db_ET_correct)
 
@@ -98,16 +97,6 @@ sum_dat <- dat[!duplicated(dat[c("short_cite", "same_infant")]),]
 
 The database contains data from `r length(unique(dat$short_cite))` papers consisting of data from `r sum(sum_dat$n_1)` infants. In the tables below, we provide more descriptive information.
 
-The next table shows what type of publications were included in our meta-analysis
-```{r DescriptivesPubtype, echo = FALSE}
-
-pub_info <- dat %>%
-  group_by(publication_status) %>%
-  summarize(n_unique = n_distinct(short_cite), count = n())
-
-kable(pub_info)
-
-```
 The next table shows what type of publications were included in our meta-analysis
 ```{r DescriptivesPubtype, echo = FALSE}
 
@@ -256,7 +245,7 @@ summary(rma_MPeffect_age)
 Followup: Per condition (correct or MP) the interaction with age
 
 ```{r LanguageEffectAnalyses}
-dat$condition_label = ifelse(dat$condition==1, "correct", "MP")
+dat$condition_label = ifelse(dat$condition==1, "Correct", "Misp")
 
 dat$lang_family = ifelse(dat$native_lang=="American English" | dat$native_lang=="British English" |
                            dat$native_lang=="Dutch" | dat$native_lang=="English" | 
@@ -491,7 +480,9 @@ vocab_info <- db_ET_correct %>%
 kable(vocab_info)
 
 ```
+
 We have 17 correlations, roughly evenly divided between comprehension and production data. There is reason to believe that production data are different from comprehension data (the former being easier to estimate for parents in the typical questionnaire-based assessment), so we should both analyze this data separately and see whether it makes sense in a joint analysis.
+
 
 ```{r ComprehensionMeta}
 #we're relying on the library meta function metacor
@@ -510,8 +501,20 @@ metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 
 
 # Plotting
+```{r PlotAPATheme}
+#Themes and plot
+apatheme=theme_bw()+
+  theme(#panel.grid.major=element_blank(),
+    #panel.grid.minor=element_blank(),
+    #panel.border=element_blank(),
+    axis.line=element_line(),
+    text=element_text(family='Times', size=25))
+
+```
 ## Mispronunciation Effect by Age (color)
 ```{r PlotMPEffect}
+
+dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
 # Color Blind palette:
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -521,12 +524,12 @@ p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) +
   geom_line(y= 0, linetype="dotted") + 
   geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
   scale_colour_manual(values=cbPalette)+
-  theme_bw()+
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
+  apatheme +
+  theme(legend.title = element_blank(),
         legend.position = "bottom") + 
   xlab("Age in months") + 
   ylab("Effect size Hedges' g")
+  
 p
 
 min(dat$mean_age_1/30.44)
