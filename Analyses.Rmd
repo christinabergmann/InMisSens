@@ -91,6 +91,8 @@ dat <- bind_rows(db_ET_correct, db_ET_MP)
 # need data set of unique short cite by condition
 
 sum_dat <- dat[!duplicated(dat[c("short_cite", "same_infant")]),]
+time_wind_dat <- dat[!duplicated(dat[c("short_cite", "offset", "post_nam_dur")]),]
+
 ```
 
 # Descriptive data
@@ -149,7 +151,7 @@ kable(comparison_info)
 Where possible, we noted the time window for analysis. First, let's look at the offset (in milliseconds) after the start of the word, i.e. the begin of a give analysis window for a naming effect
 
 ```{r TimeWindowOffset}
-offset_info <- db_ET_correct %>%
+offset_info <- time_wind_dat %>%
   group_by(offset) %>%
   summarize(count = n())
 

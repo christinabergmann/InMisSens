@@ -84,17 +84,17 @@ for(line in 1:length(db$n_1)){
 
 #### Power ####
 
-db_test <- db_ET_correct
+#db_test <- db_ET_correct
 #db_test <- db_ET_MP
-#db_test <- db_mpe
+db_test <- db_mpe
 
 # What is the average power to detect an effect (to be compared with p-curve estimate)
 d = rma.mv(g_calc, g_var_calc, data = db_test, random = ~ 1 | short_cite)$b[,1]
 # Let's try to extract the ES automagically later, for now I enter the value I had when running fir model by hand
 
-pwr.t.test(n = median(db_test$n_1, na.rm=TRUE), d = .95, sig.level = .05, type = "paired", alternative = "two.sided")
+pwr.t.test(n = median(db_test$n_1, na.rm=TRUE), d = .55, sig.level = .05, type = "paired", alternative = "two.sided")
 
-pwr.t.test(d = .228, sig.level = .05, type = "paired", power = .8, alternative = "two.sided")
+pwr.t.test(d = .55, sig.level = .05, type = "paired", power = .80, alternative = "two.sided")
 
 
 
