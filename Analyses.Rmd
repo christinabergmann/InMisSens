@@ -92,6 +92,7 @@ dat <- bind_rows(db_ET_correct, db_ET_MP)
 
 sum_dat <- dat[!duplicated(dat[c("short_cite", "same_infant")]),]
 time_wind_dat <- dat[!duplicated(dat[c("short_cite", "offset", "post_nam_dur")]),]
+distract_dat <- dat[!duplicated(dat[c("short_cite", "object_pair")]),]
 
 ```
 
@@ -145,6 +146,19 @@ kable(comparison_info)
 #table(db_ET_MP$es_method)
 ```
 
+This is a summary of the type of distractor used in an experiment
+
+```{r DescriptivesDISTRACT, echo = FALSE}
+#What kind of distractor was used?
+
+distr_info <- distract_dat %>%
+  group_by(object_pair) %>%
+  summarize(count = n())
+
+
+kable(distr_info)
+
+```
 
 ## Analysis time window
 
@@ -264,8 +278,16 @@ summary(rma_lang_interaction)
 
 ### Type of distractor
 
+```{r DistractorTypeAge}
 
-```{r DistractorType}
+rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
+  
+summary(rma_Distractor)  
+
+```
+
+## Type of Distractor with age
+```{r DistractorTypeAge}
 
 rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
   

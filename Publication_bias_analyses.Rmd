@@ -1,30 +1,40 @@
-#### Bias and Replicability Analyses ####
+---
+title: "MP Publication Bias"
+author: "originally Christina Bergmann, modified by Katie Von Holzen"
+output: 
+  pdf_document:
+    toc: true
+---
+```{r Setup, echo = FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, tidy = TRUE, message = FALSE, error = TRUE)
 
-# This script was adapted from Christina Bergmann's script, which was
-# written to analyze bias and replicability in statistical learning studies 
-# (segmenting artificial mini-languages based on statistics). 
-# Original Author: Christina Bergmann
-# chbergma'at'gmail.com
-# last modified: January 22, 2018
-#   by Katie Von Holzen
-#### Load libraries ####
-
+### Load libraries
 library(metafor)
 library(pwr)
+library(ggplot2)
+library(grid)
+library(gridExtra)
 
-#### get data ####
+```
 
+#Preparation
+
+Read in data and tidy up dataset
+
+```{r ReadIn,  echo = FALSE}
+#Get the data
 source("scripts/Meta_Analysis.R")
 
+# change name of mispronunciation sensitivity object
 db_mpe <- dat
 rm(dat)
 
-#### get p curve code ####
+```
 
-#source("scripts/p_curve_app_code.R")
+# Funnel Plot Asymmetry
+Use ranktest() to check for funnel plot asymmetry. All three tests show evidence of significant asymmetry.
 
-
-#### Publication Bias ####
+```{r FunnelPlotAsymmetry, echo = FALSE}
 
 # Publication bias can become visible in funnel plot asymmetry. 
 # Metafor comes with several options to check this, I chose ranktest and regtest
@@ -38,26 +48,23 @@ ranktest(rma_correct)
 # mispronounced object identification
 ranktest(rma_MP)
 
+```
 
-# from models where we removed g > 2
-# correct object
-ranktest(rma_co2)
+# Export data for p-curve
 
-# mispronounced object
-ranktest(rma_mp2)
+This step creates a text file that can be used in the p-curve app:
+http://www.p-curve.com/app4/
 
-#No longer possible with switch from rma to rma.mv
-#regtest(rma_all)
-#regtest(rma_DR)
+These files can be found in "p_curve_app/"
 
-# All datasets seem to have significant asymmetry 
-# See below for funnel plots
+for correct: p_curve_co.txt
+for mispronounced: p_curve_mp.txt
 
-#### Export Data for p-curve ####
-#The very pedestrian way because reasons. 
+Just copy and paste the .txt onto the website and voila!
 
-# save text strings to paste into p-curve app
-# http://www.p-curve.com/app4/
+NOTE: This will always append lines to the existing txt file, check for double writing!
+
+```{r PcurveExport, echo = FALSE}
 
 textfile_co = "p_curve_app/p_curve_co.txt"
 
@@ -80,92 +87,45 @@ for(line in 1:length(db_ET_MP$n_1)){
     #write(newline, file = textfile, append = TRUE)    
   }
 }
-#sink()
+```
 
-#pcurve_app("p_curve_mp.txt","p_curve_app")
-#pcurve_app("p_curve_co.txt","p_curve_app")
 
-#### Power ####
+# Calculate Power
 
-#db_test <- db_ET_correct
-#db_test <- db_ET_MP
-db_test <- db_mpe
+# What is the power of the studies in the dataset?
 
-# What is the average power to detect an effect (to be compared with p-curve estimate)
-d = rma.mv(g_calc, g_var_calc, data = db_test, random = ~ 1 | short_cite)$b[,1]
+
+```{r Power_exist, echo = FALSE}
+d = rma.mv(g_calc, g_var_calc, data = db_mpe, random = ~ 1 | short_cite)$b[,1]
 
 # estimate from mispronunciation sensitivity
 mp_est <- coef(summary(rma_MPeffect))[2,]$estimate
 
-pwr.t.test(n = median(db_test$n_1, na.rm=TRUE), d = mp_est, sig.level = .05, type = "paired", alternative = "two.sided")
+pwr.t.test(n = median(db_mpe$n_1, na.rm=TRUE), d = mp_est, sig.level = .05, type = "paired", alternative = "two.sided")
 
-pwr.t.test(d = mp_est, sig.level = .05, type = "paired", power = .80, alternative = "two.sided")
+```
 
+# What is the average power to detect a mispronunciation sensitivity effect (to be compared with p-curve estimate)
+```{r Power_plan, echo = FALSE}
 
+# estimate from mispronunciation sensitivity
+mp_est <- coef(summary(rma_MPeffect))[2,]$estimate
 
-
-
-#### Draw Funnel Plots ####
-# Mispronunciation Effect
-summary(rma_MPeffect)
-ME_estimate = 0.5310
-ME_se = 0.0356
-mpe <- funnel.rma(rma_MPeffect, main="Standard Error",
-           refline = ME_estimate, xlab = "Hedges' g")
-abline(v = 0, col = "gray60", lty = 2)
-abline(lm(x ~ y, data = mpe), lty = 3)
-
-# Correct Object
-summary(rma_correct)
-CO_estimate = 0.9455
-CO_se = 0.1067
-co <- funnel(rma_correct, main="Standard Error",
-       refline = CO_estimate, xlab = "Hedges' g")
-abline(v = 0, col = "gray60", lty = 2)
-abline(lm(x ~ y, data = co), lty = 3)
-
-# Mispronunciation Object
-summary(rma_MP)
-MP_estimate = 0.2725
-MP_se = 0.0569
-mp <- funnel(rma_MP, main="Standard Error",
-       refline = MP_estimate, xlab = "Hedges' g")
-abline(v = 0, col = "gray60", lty = 2)
-abline(lm(x ~ y, data = mp), lty = 3)
+# one-sided t-test
+pwr.t.test(d = mp_est, sig.level = .05, type = "paired", power = .80, alternative = "greater")
 
 
-#### Plots from Sakaluk, 2016 ####
-# https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-meta-analysis/
+```
 
-#### Forest Plots from Sakaluk, 2016 ####
 
-#Call the ggplot2 package, if you haven't already done so
-library(ggplot2)
-library(grid)
-library(gridExtra)
+# Draw Funnel Plots
 
-#Rename a bunch of things for ease
-dat=db_mpe
-dat <-
-  dat %>% 
-  rename(cite = short_cite,
-         yi = g_calc,
-         vi = g_var_calc)
+### Plots from Sakaluk, 2016
+### https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-meta-analysis/
 
-#Reorder bibliographic info based on value of g (yi), so effect sizes can be plotted in descending order
+## Funnel Plot for Correct Object Identification
 
-dat <-
-  dat %>% 
-  select(cite, expt_num, same_infant, mean_age_1, yi, vi) %>% 
-  mutate(study_ref = paste(cite, expt_num, same_infant, sep=',')) %>% 
-  arrange(desc(yi))
-
-#Get standard errors from variances
-dat$se = sqrt(dat$vi)
-
-#Calculate 95% CI values
-dat$lowerci = (-1.96*dat$se)+dat$yi
-dat$upperci = (1.96*dat$se)+dat$yi
+```{r FunnelPrep, echo = FALSE}
 
 #Themes and plot
 apatheme=theme_bw()+
@@ -175,42 +135,16 @@ apatheme=theme_bw()+
     axis.line=element_line(),
     text=element_text(family='Times', size=25),
     legend.position='none')
-p=
-  ggplot(dat, aes(y=reorder(study_ref, -yi), x=yi, xmin=lowerci, xmax=upperci))+
-  #Add data points and color them black
-  geom_point(color = 'black')+
-  #Add 'special' points for the summary estimates, by making them diamond shaped
-  #  geom_point(data=subset(dat, tester=='Summary'), color='black', shape=18, size=4)+
-  #add the CI error bars
-  geom_errorbarh(height=.1)+
-  #Specify the limits of the x-axis and relabel it to something more meaningful
-  scale_x_continuous(limits=c(-1.5,1.5), name='Standardized Mean Difference (g)')+
-  #Give y-axis a meaningful label
-  ylab('Reference')+
-  #Add a vertical dashed line indicating an effect size of zero, for reference
-  geom_vline(xintercept=0, color='grey', linetype='dashed')+
-  #Add a vertical line to show mean effect
-  geom_vline(xintercept=0.19, color='black', linetype='dashed')+
-  #Create sub-plots (i.e., facets) based on levels of setting
-  #And allow them to have their own unique axes (so authors don't redundantly repeat)
-  #facet_grid(setting~., scales= 'free', space='free')+
-  #Apply my APA theme
-  apatheme
 
-p
 
-ggsave("figures/ForestPlot_DR.png", p)
+```
 
-###############################################################################
-###############################################################################
-#### Funnel Plots from Sakaluk, 2016 ####
-###############################################################################
-###############################################################################
+## Funnel Plot for Correct Object Identification
 
-# CORRECT PRONUNCIAITON OBJECT IDENFICATION
+```{r FunnelCorrect, echo = FALSE}
 
 #Rename a bunch of things for ease
-dat_co = db_correct
+dat_co = db_ET_correct
 #dat_co=db_ET_correct
 dat_co <-
   dat_co %>% 
@@ -274,7 +208,6 @@ fp_co = ggplot(aes(x = se, y = yi), data = dat_co) +
   #Add your data-points to the scatterplot
   geom_point(size = 2.5, colour="black") +
   #
-  ggtitle("Correct")+
   #Give the x- and y- axes informative labels
   xlab('Standard Error') + ylab('Hedge\'s g')+
   # make sure both plots have same scale
@@ -306,14 +239,16 @@ fp_co = ggplot(aes(x = se, y = yi), data = dat_co) +
   apatheme
 
 #Call the pretty funnel plot
-#fp
-#ggsave("figures/FunnelPlot_DR.pdf")
+fp_co +   ggtitle("Correct")
+ggsave("figures/FunnelPlot_correct.pdf")
+```
 
-################################################################
-  # MISPRONUNCIAITON OBJECT IDENFICATION
-  
+## Funnel Plot for Mispronunciation Object Identification
+
+```{r FunnelMisp, echo = FALSE}
+
   #Rename a bunch of things for ease
-dat_mp = db_ET_mp2  
+dat_mp = db_ET_MP  
 #dat_mp=db_ET_MP
   dat_mp <-
     dat_mp %>% 
@@ -377,7 +312,6 @@ dat_mp = db_ET_mp2
     #Add your data-points to the scatterplot
     geom_point(size = 2.5, colour="black") +
     #
-    ggtitle("Mispronunciation")+
   #Give the x- and y- axes informative labels
   xlab('Standard Error') + ylab('Hedge\'s g')+
     # make sure both plots have same scale
@@ -409,21 +343,26 @@ dat_mp = db_ET_mp2
     apatheme
   
   #Call the pretty funnel plot
-  #fp
-  #ggsave("figures/FunnelPlot_DR.pdf")
-  
-  
+  fp_mp + ggtitle("Mispronunciation")
+  ggsave("figures/FunnelPlot_misp.pdf")
+
+```
+
+## Combine both funnel plots for figure
+
+```{r FunnelCombo, echo = FALSE}
+
+
   jpeg(filename = "figures/Funnel_Plots_Object_Identification.jpg", 
        width = 600, height = 400, units = "px")
   
-  p <-   grid.arrange(fp_co, fp_mp, nrow = 1, 
-                      top = textGrob("Object Identification", gp=gpar(fontsize=25)))
+  p <-   grid.arrange(fp_co, fp_mp, nrow = 1)
+                      #top = textGrob("Object Identification", gp=gpar(fontsize=25)))
                       #top = "Object Identification")
-
+  
   
   dev.off()
+
+    grid.draw(p)
   
-  #ggsave("figures/Funnel_Plots_Object_Identification.jpg", p,height= 7,width= 6)
-  
-#This is the "classical" plot from the metafor package
-#funnel(rma_DR)
+```
