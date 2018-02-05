@@ -93,6 +93,7 @@ dat <- bind_rows(db_ET_correct, db_ET_MP)
 sum_dat <- dat[!duplicated(dat[c("short_cite", "same_infant")]),]
 time_wind_dat <- dat[!duplicated(dat[c("short_cite", "offset", "post_nam_dur")]),]
 distract_dat <- dat[!duplicated(dat[c("short_cite", "object_pair")]),]
+mix_co_mp <- dat[!duplicated(dat[c("short_cite", "word_correct_and_MP")]),]
 
 ```
 
@@ -157,6 +158,20 @@ distr_info <- distract_dat %>%
 
 
 kable(distr_info)
+
+```
+
+This is a summary of whether an experiment had both correct and mispronounced versions of the word in the experiment
+
+```{r DescriptivesCoMp, echo = FALSE}
+#What kind of distractor was used?
+
+mix_info <- mix_co_mp %>%
+  group_by(word_correct_and_MP) %>%
+  summarize(count = n())
+
+
+kable(mix_info)
 
 ```
 

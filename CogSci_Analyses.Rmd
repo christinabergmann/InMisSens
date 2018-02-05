@@ -1,0 +1,389 @@
+---
+title: "Mispronunciation MetaAnalysis for CogSci"
+author: "Christina Bergmann and Katie Von Holzen"
+output: 
+  pdf_document:
+    toc: true
+---
+```{r Setup, echo = FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, tidy = TRUE, message = FALSE, error = TRUE)
+
+### Load libraries
+library(tidyverse)
+library(metafor)
+library(meta)
+library(pwr)
+library(knitr)
+library(wesanderson)
+
+```
+
+#Preparation
+
+Read in data and tidy up dataset
+
+```{r ReadIn,  echo = FALSE}
+#Get the data
+source("scripts/calculateES.R")
+
+```
+
+```{r Preprocess, echo = FALSE}
+
+db_ET <- db_ET %>%
+  mutate(age.C = (mean_age_1-mean(mean_age_1, na.rm=TRUE))/30.44) %>%
+  filter(mean_age_months < 31)
+
+
+db_ET$collapse <- paste(db_ET$study_ID, db_ET$expt_num, db_ET$same_infant, sep = "_")
+
+#Split into correct and MP database
+
+db_ET_correct <- db_ET[db_ET$is_correct=="1",]
+db_ET_MP <- db_ET[db_ET$is_mp=="1",]
+
+#collapse over nonindependent MP rows for a *general* MP effect
+
+
+collapse_rows <- function(db){
+  db$collapse <- paste(db$study_ID, db$expt_num, db$same_infant, sep = "_")
+  
+  for(independent in unique(db$collapse)){
+    if(length(db[db$collapse==independent])>1){
+      sub = db[db$collapse==independent, ]
+      sub$d_calc <- median(sub$d_calc)
+      sub$d_var_calc <- median(sub$d_var_calc)
+      sub$g_calc <- median(sub$g_calc)
+      sub$g_var_calc <- median(sub$g_var_calc)
+      sub$corr_imputed <- median(sub$corr_imputed)
+      db <- db[!(db$collapse==independent),]
+      db <- rbind(db, sub[1,])
+    }
+  }
+  return(db)
+}
+
+
+#db_ET_correct = collapse_rows(db_ET_correct)
+
+#db_ET_MP = collapse_rows(db_ET_MP)
+
+#remove outliers, for now we have none, though
+db_ET_MP$nooutlier = ifelse(db_ET_MP$g_calc > mean(db_ET_MP$g_calc, na.rm = TRUE) + 3*sd(db_ET_MP$g_calc, na.rm = TRUE) 
+                         | db_ET_MP$g_calc < mean(db_ET_MP$g_calc, na.rm = TRUE) - 3*sd(db_ET_MP$g_calc, na.rm = TRUE),FALSE, TRUE)
+db_ET_MP = db_ET_MP[db_ET_MP$nooutlier,]
+
+db_ET_correct$nooutlier = ifelse(db_ET_correct$g_calc > mean(db_ET_correct$g_calc, na.rm = TRUE) + 3*sd(db_ET_correct$g_calc, na.rm = TRUE) 
+                         | db_ET_correct$g_calc < mean(db_ET_correct$g_calc, na.rm = TRUE) - 3*sd(db_ET_correct$g_calc, na.rm = TRUE),FALSE, TRUE)
+db_ET_correct = db_ET_correct[db_ET_correct$nooutlier,]
+
+
+# make sure that both correct and mispronounced conditions are considered in descriptives
+
+db_ET_correct$condition <- 1
+db_ET_MP$condition <- 0
+
+dat <- bind_rows(db_ET_correct, db_ET_MP)
+
+# need data set of unique short cite by expt_num
+# in order to calculate total number of infants
+
+# need data set of unique short cite by condition
+
+sum_dat <- dat[!duplicated(dat[c("short_cite", "same_infant")]),]
+time_wind_dat <- dat[!duplicated(dat[c("short_cite", "offset", "post_nam_dur")]),]
+distract_dat <- dat[!duplicated(dat[c("short_cite", "object_pair")]),]
+mix_co_mp <- dat[!duplicated(dat[c("short_cite", "word_correct_and_MP")]),]
+vocab_dat <- dat[!duplicated(dat[c("short_cite")]),]
+
+```
+
+# Systematic Study Collection
+
+The database contains data from `r length(unique(dat$short_cite))` papers consisting of data from `r sum(sum_dat$n_1)` infants.
+
+The next table shows what type of publications were included in our meta-analysis
+```{r DescriptivesPubtype, echo = FALSE}
+
+pub_info <- dat %>%
+  group_by(publication_status) %>%
+  summarize(n_unique = n_distinct(short_cite))
+
+kable(pub_info)
+
+```
+
+# Effect Size Calculation
+
+## Type of Dependent Variable
+
+The table below summarized the type of dependent variable and subsequent comparison reported in each paper.
+
+```{r DescriptivesComparison, echo = FALSE}
+db_ET_correct$within_measure_descriptive <- ifelse(db_ET_correct$within_measure == "post",
+ "post-naming phase compared with chance (=50%)",
+ifelse(db_ET_correct$within_measure == "pre_post", "post-naming compared to pre-naming phase", "post-pre difference score compared with chance (=0)"))
+
+
+comparison_info <- db_ET_correct %>%
+  group_by(within_measure_descriptive) %>%
+  summarize(n_unique = n_distinct(short_cite))
+
+
+kable(comparison_info)
+#table(db_ET_MP$es_method)
+```
+
+## Data Used to Calculate Effect Sizes
+
+The table below shows based on which data we calculated effect sizes. If both raw means/standard deviations as well as t-values were available, we used raw means/standard deviations to calculate effect sizes.
+
+```{r DescriptivesES, echo = FALSE}
+#how did we calculate effect sizes?
+
+es_info <- dat %>%
+  group_by(es_method) %>%
+  summarize(n_unique = n_distinct(short_cite))
+
+kable(es_info)
+#table(dat$es_method, dat$short_cite)
+# only missing from:
+# Bailey & Plunkett (2002) <- crazy old data
+# Renner (2017) <- just finished phd
+# Tamasi (2016) <- standard deviations are wrong
+#table(db_ET_MP$es_method)
+
+```
+
+# Meta-Analysis
+
+## Object Identification
+
+### Correct words
+
+Meta-analytic effect for correctly pronounced words in object identification.
+
+```{r MAcorrect}
+
+rma_correct = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = ~ collapse | short_cite)
+
+summary(rma_correct)
+
+```
+
+### Mispronounced words
+
+Meta-analytic effect for mispronounced words in object identification.
+
+```{r MAMP}
+
+rma_MP = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = ~ collapse | short_cite)
+
+summary(rma_MP)
+
+```
+
+
+## Mispronunciation Sensitivity
+
+Meta-analytic effect for mispronunciation senstivity.
+
+```{r MPEffect}
+db_ET_correct$condition <- 1
+db_ET_MP$condition <- 0
+
+dat <- bind_rows(db_ET_correct, db_ET_MP)
+  
+rma_MPeffect <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = ~ collapse | short_cite)
+  
+summary(rma_MPeffect)  
+
+```
+
+## Age Moderator Effects
+
+### Object identification correct words
+
+Age moderator effects for object identification for correctly pronounced words.
+
+```{r MAcorrect_age}
+rma_correct_age = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_correct, random = ~ collapse | short_cite)
+
+summary(rma_correct_age)
+
+```
+
+### Object identification mispronounced words
+
+Age moderator effects for object identification for mispronounced words.
+
+```{r MAMP_age}
+
+rma_MP_age = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_MP, random = ~ collapse | short_cite)
+
+summary(rma_MP_age)
+```
+
+### Mispronunciation sensitivity
+
+Age moderator effects for mispronunciation sensitivity
+
+```{r MPEffect_age}
+db_ET_correct$condition <- 1
+db_ET_MP$condition <- 0
+
+dat <- bind_rows(db_ET_correct, db_ET_MP)
+
+rma_MPeffect_age <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition, data = dat, random = ~ collapse | short_cite)
+  
+summary(rma_MPeffect_age)  
+
+
+```
+
+# Plotting Mispronunciation Sensitivity by Age
+
+This is the plot used in Figure 2. Effect sizes for correct pronunciations (yellow) and mispronunciations (blue) by participant age. Point size is inverse variance. The dashed line indicates zero.
+
+```{r FunnelPrep, echo = FALSE}
+
+#Themes and plot
+apatheme=theme_bw()+
+  theme(#panel.grid.major=element_blank(),
+    #panel.grid.minor=element_blank(),
+    #panel.border=element_blank(),
+    axis.line=element_line(),
+    text=element_text(family='Times', size=25),
+    legend.position='none')
+
+
+```
+
+```{r PlotMPEffect, echo = FALSE}
+
+dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
+
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
+  geom_point(aes(size = weights_g),show.legend=FALSE) + 
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
+  scale_colour_manual(values=cbPalette)+
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Effect size Hedges' g")
+  
+#p
+
+#min(dat$mean_age_1/30.44)
+#max(dat$mean_age_1/30.44)
+
+#ggsave("figures/AgeEffect_log.jpg", p,height= 7,width= 6)
+
+  #jpeg(filename = "figures/AgeEffect_log.jpg", 
+ #      width = 600, height = 400, units = "px")
+
+  p
+  
+  #dev.off()
+
+```
+
+
+# Supplementary Analyses for Discussion
+
+This section includes supplementary analyses discussed in the Discussion section
+
+## Vocabulary Data Available
+
+This table summarizes which papers also measured vocabulary in the infants they tested.
+
+```{r VocabularyData}
+
+vocab_info <- vocab_dat %>%
+  mutate(has_vocab = ifelse(!is.na(r_comprehension) & !is.na(r_production), "comprehension & production", 
+                            ifelse(!is.na(r_comprehension), "just comprehension",
+                            ifelse(!is.na(r_production), "just production", "none")))) %>%
+  group_by(has_vocab) %>%
+  summarize(count = n())
+
+
+kable(vocab_info)
+
+```
+
+## Mispronunciation Sensitivity at Youngest Ages
+
+Mispronunciation sensitivity in the papers in our dataset with the youngest ages (< 12-months-of-age; Bergelson & Swingley, 2017; Mani & Plunkett, 2007; Zesiger et al., 2012).
+
+```{r YoungAge, echo = FALSE}
+youngest <- subset(dat, min_age_1 < 365)
+
+#unique(youngest$short_cite)
+youngest$cond_lab <- ifelse(youngest$condition == 1, "correct", "misp")
+p <- ggplot(youngest, aes(x=cond_lab, y = g_calc, color = cond_lab)) + geom_boxplot()
+
+p
+
+```
+
+## Known vs Novel Distractor Images
+
+This table summarizes which papers used a known or novel distractor image.
+
+```{r DescriptivesDISTRACT, echo = FALSE}
+#What kind of distractor was used?
+
+distr_info <- distract_dat %>%
+  group_by(object_pair) %>%
+  summarize(count = n())
+
+
+kable(distr_info)
+
+```
+
+### Does distractor familiarity (known vs. novel) impact mispronunciation sensitivity?
+
+Preliminary moderator test examining the influence of distractor familiarity on mispronunciation sensitivity
+
+```{r DistractorTypeAge}
+
+rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
+  
+summary(rma_Distractor)  
+
+```
+
+## Plotting Influence of Distractor Familiarity 
+
+```{r PlotDistFamEffect_NoAge, echo = FALSE}
+
+dat$condition_label = ifelse(dat$condition==1, "correct", "mispronunciation")
+dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "known", "novel")
+
+p <- ggplot(dat, aes(dist_code, g_calc, color = condition_label)) + 
+  geom_boxplot() + 
+  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
+  scale_color_manual(values=wes_palette(name="Darjeeling"))+
+  theme_bw()+
+  theme(text = element_text(size=25),
+        legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Distractor Familiarity") + 
+  geom_hline(yintercept = 0, linetype="dotted") + 
+  ylab("Effect size Hedges' g")
+p
+
+
+
+#ggsave("figures/Distractor_fam_log.jpg", p)
+
+
+```
+
+

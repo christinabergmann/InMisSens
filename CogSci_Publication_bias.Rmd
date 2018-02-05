@@ -17,7 +17,7 @@ library(gridExtra)
 
 ```
 
-#Preparation
+# Preparation
 Read in data and tidy up dataset
 
 ```{r ReadIn,  echo = FALSE}
@@ -30,106 +30,34 @@ rm(dat)
 
 ```
 
-# P-curve
-
-# Export data for p-curve
-
-This step creates a text file that can be used in the p-curve app:
-http://www.p-curve.com/app4/
-
-These files can be found in "p_curve_app/"
-
-for correct: p_curve_co.txt
-for mispronounced: p_curve_mp.txt
-
-Just copy and paste the .txt onto the website and voila!
-
-```{r PcurveExport, echo = FALSE}
-
-textfile_co = "p_curve_app/p_curve_co.txt"
-
-# make sure the file is made new with our loop
-if (file.exists(textfile_co)) file.remove(textfile_co)
-
-for(line in 1:length(db_ET_correct$n_1)){
-  if(!is.na(db_ET_correct[line,]$t)){
-    newline = paste("t(", db_ET_correct[line,]$n_1-1, ")=",db_ET_correct[line,]$t, sep = "")
-    write(newline, file = textfile_co, append = TRUE)
-    #cat("\n")
-    #write(newline, file = textfile, append = TRUE)    
-  }
-}
-
-textfile_mp = "p_curve_app/p_curve_mp.txt"
-
-# make sure the file is made new with our loop
-if (file.exists(textfile_mp)) file.remove(textfile_mp)
-
-for(line in 1:length(db_ET_MP$n_1)){
-  if(!is.na(db_ET_MP[line,]$t)){
-    newline = paste("t(", db_ET_MP[line,]$n_1-1, ")=",db_ET_MP[line,]$t, sep = "")
-    write(newline, file = textfile_mp, append = TRUE)
-    #cat("\n")
-    #write(newline, file = textfile, append = TRUE)    
-  }
-}
-```
-
-
-
 # Funnel Plot Asymmetry
-Use ranktest() to check for funnel plot asymmetry. All three tests show evidence of significant asymmetry.
+Use ranktest() to check for funnel plot asymmetry. Both tests show evidence of significant asymmetry.
 
-```{r FunnelPlotAsymmetry, echo = FALSE}
+## Object Identification Correct Words
+
+```{r FunnelPlotAsymm_correct, echo = FALSE}
 
 # Publication bias can become visible in funnel plot asymmetry. 
 # Metafor comes with several options to check this, I chose ranktest and regtest
-
-# this is the model of the mispronunciation effect, without age
-ranktest(rma_MPeffect)
-
 # correct object identification
 ranktest(rma_correct)
+
+```
+
+## Object Identification Mispronounced Words
+
+```{r FunnelPlotAsymm_misp, echo = FALSE}
+
 
 # mispronounced object identification
 ranktest(rma_MP)
 
 ```
 
-# Calculate Power
-
-# What is the power of the studies in the dataset?
-
-
-```{r Power_exist, echo = FALSE}
-d = rma.mv(g_calc, g_var_calc, data = db_mpe, random = ~ 1 | short_cite)$b[,1]
-
-# estimate from mispronunciation sensitivity
-mp_est <- coef(summary(rma_MPeffect))[2,]$estimate
-
-pwr.t.test(n = median(db_mpe$n_1, na.rm=TRUE), d = mp_est, sig.level = .05, type = "paired", alternative = "two.sided")
-
-```
-
-# What is the average power to detect a mispronunciation sensitivity effect (to be compared with p-curve estimate)
-```{r Power_plan, echo = FALSE}
-
-# estimate from mispronunciation sensitivity
-mp_est <- coef(summary(rma_MPeffect))[2,]$estimate
-
-# one-sided t-test
-pwr.t.test(d = mp_est, sig.level = .05, type = "paired", power = .80, alternative = "greater")
-
-
-```
-
-
 # Draw Funnel Plots
 
-### Plots from Sakaluk, 2016
+### Plots adapted from Sakaluk, 2016, see also Black & Bergmann, 2017
 ### https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-meta-analysis/
-
-## Funnel Plot for Correct Object Identification
 
 ```{r FunnelPrep, echo = FALSE}
 
@@ -246,7 +174,8 @@ fp_co = ggplot(aes(x = se, y = yi), data = dat_co) +
 
 #Call the pretty funnel plot
 fp_co +   ggtitle("Correct")
-ggsave("figures/FunnelPlot_correct.pdf")
+#ggsave("figures/FunnelPlot_correct.pdf")
+
 ```
 
 ## Funnel Plot for Mispronunciation Object Identification
@@ -279,7 +208,7 @@ dat_mp = db_ET_MP
   
   
   #Store the meta-analytic estimate and its standard error from whatever model you run (substitute your own values)
-  summary(rma_MP)
+  #summary(rma_MP)
   estimate_mp = coef(summary(rma_MP))$estimate
   se_mp = coef(summary(rma_MP))$se
   
@@ -350,25 +279,105 @@ dat_mp = db_ET_MP
   
   #Call the pretty funnel plot
   fp_mp + ggtitle("Mispronunciation")
-  ggsave("figures/FunnelPlot_misp.pdf")
+#  ggsave("figures/FunnelPlot_misp.pdf")
 
 ```
 
 ## Combine both funnel plots for figure
 
+Below is the plot used in Figure 1. Funnel plots for object identification for correct (left) and mispronounced (right) words, plotting the standard error of the effect size in relation to effect size. The black line marks zero, the dashed grey line marks the effect estimate, and the grey line marks funnel plot asymmetry.
+
 ```{r FunnelCombo, echo = FALSE}
 
 
-  jpeg(filename = "figures/Funnel_Plots_Object_Identification.jpg", 
-       width = 600, height = 400, units = "px")
+#  jpeg(filename = "figures/Funnel_Plots_Object_Identification.jpg", 
+#       width = 600, height = 400, units = "px")
   
   p <-   grid.arrange(fp_co, fp_mp, nrow = 1)
                       #top = textGrob("Object Identification", gp=gpar(fontsize=25)))
                       #top = "Object Identification")
   
   
-  dev.off()
+#  dev.off()
 
     grid.draw(p)
   
 ```
+
+
+
+# P-curve
+
+## Export Data for P-curve
+
+This step creates a text file that can be used in the p-curve app:
+http://www.p-curve.com/app4/
+
+for correct word object identification see "p_curve_co.txt" file
+
+for mispronounced word object identification see "p_curve_mp.txt" file
+
+Just copy and paste the .txt onto the website and voila!
+
+
+```{r PcurveExport, echo = FALSE}
+
+textfile_co = "p_curve_app/p_curve_co.txt"
+
+# make sure the file is made new with our loop
+if (file.exists(textfile_co)) {file.remove(textfile_co)}
+
+for(line in 1:length(db_ET_correct$n_1)){
+  if(!is.na(db_ET_correct[line,]$t)){
+    newline = paste("t(", db_ET_correct[line,]$n_1-1, ")=",db_ET_correct[line,]$t, sep = "")
+    write(newline, file = textfile_co, append = TRUE)
+    #cat("\n")
+    #write(newline, file = textfile, append = TRUE)    
+  }
+}
+
+textfile_mp = "p_curve_app/p_curve_mp.txt"
+
+# make sure the file is made new with our loop
+if (file.exists(textfile_mp)) {file.remove(textfile_mp)}
+
+for(line in 1:length(db_ET_MP$n_1)){
+  if(!is.na(db_ET_MP[line,]$t)){
+    newline = paste("t(", db_ET_MP[line,]$n_1-1, ")=",db_ET_MP[line,]$t, sep = "")
+    write(newline, file = textfile_mp, append = TRUE)
+    #cat("\n")
+    #write(newline, file = textfile, append = TRUE)    
+  }
+}
+
+```
+
+
+
+
+
+
+# Calculate Power
+
+```{r Power_exist_descript, echo = FALSE}
+d = rma.mv(g_calc, g_var_calc, data = db_mpe, random = ~ 1 | short_cite)$b[,1]
+
+# estimate from mispronunciation sensitivity
+mp_est <- round(coef(summary(rma_MPeffect))[2,]$estimate, 2)
+
+# one-sided t-test
+ptt <- pwr.t.test(d = mp_est, sig.level = .05, type = "paired", power = .80, alternative = "greater")
+
+```
+
+The median sample size across studies in our dataset was `r median(db_mpe$n_1, na.rm=TRUE)`. To study infants' mispronunciation senstivity, which we estimate to have an effect size of `r mp_est`, this test gives the number of participants (n = `r round(ptt$n, 2)`) required in a within-participant design using a one-sided t-test to conduct a study which has 80% power.
+
+```{r Power_plan, echo = FALSE}
+
+# one-sided t-test
+pwr.t.test(d = mp_est, sig.level = .05, type = "paired", power = .80, alternative = "greater")
+
+
+```
+
+
