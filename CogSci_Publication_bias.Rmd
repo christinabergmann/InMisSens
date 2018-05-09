@@ -15,6 +15,7 @@ library(ggplot2)
 library(grid)
 library(gridExtra)
 
+
 ```
 
 # Preparation
@@ -144,9 +145,11 @@ fp_co = ggplot(aes(x = se, y = yi), data = dat_co) +
   #
   #Give the x- and y- axes informative labels
   xlab('Standard Error') + ylab('Hedge\'s g')+
-  # make sure both plots have same scale
-  # still ylim because we haven't flipped yet
-  #coord_cartesian(ylim = c(-1, 2.5))+
+  # give it a title
+    ggtitle("Correct") +
+    # make sure both plots have same scale
+    # still ylim because we haven't flipped yet
+    #coord_cartesian(ylim = c(0.5, 0))+
   #Now using the 'dfCI' data-frame we created, plot dotted lines corresponding
   #to the lower and upper limits of your 95% CI region
   #And dashed lines corresponding to your 99% CI region
@@ -173,7 +176,7 @@ fp_co = ggplot(aes(x = se, y = yi), data = dat_co) +
   apatheme
 
 #Call the pretty funnel plot
-fp_co +   ggtitle("Correct")
+fp_co
 #ggsave("figures/FunnelPlot_correct.pdf")
 
 ```
@@ -248,10 +251,14 @@ dat_mp = db_ET_MP
     geom_point(size = 2.5, colour="black") +
     #
   #Give the x- and y- axes informative labels
-  xlab('Standard Error') + ylab('Hedge\'s g')+
+  xlab('Standard Error') + 
+    # remove y label because it will be combined with the other funnel plot
+    ylab('Hedge\'s g')+
+    # give it a title
+    ggtitle("Mispronunciation") +
     # make sure both plots have same scale
-    # still ylim because we haven't flipped yet
-    #coord_cartesian(ylim = c(-1, 2.5))+
+    # still xlim because we haven't flipped yet
+    #coord_cartesian(xlim = c(0.5, 1))+
     #Now using the 'dfCI' data-frame we created, plot dotted lines corresponding
     #to the lower and upper limits of your 95% CI region
     #And dashed lines corresponding to your 99% CI region
@@ -273,12 +280,13 @@ dat_mp = db_ET_MP
     #scale_y_mpntinuous(breaks=seq(-.45,0.8,0.25))+
     #And now we flip the axes so that SE is on y- and Zr is on x-
     coord_flip()+
-    #Finally, apply my APA-format theme (see code at end of post).
+    #Finally, apply my APA-format theme (see previous).
     #You could, alternatively, specify theme_bw() instead.
-    apatheme
+    apatheme +
+    theme(axis.title.y = element_blank())
   
   #Call the pretty funnel plot
-  fp_mp + ggtitle("Mispronunciation")
+  fp_mp
 #  ggsave("figures/FunnelPlot_misp.pdf")
 
 ```
@@ -290,15 +298,15 @@ Below is the plot used in Figure 1. Funnel plots for object identification for c
 ```{r FunnelCombo, echo = FALSE}
 
 
-#  jpeg(filename = "figures/Funnel_Plots_Object_Identification.jpg", 
-#       width = 600, height = 400, units = "px")
+  jpeg(filename = "figures/Funnel_Plots_Object_Identification.jpg", 
+       width = 600, height = 400, units = "px")
   
   p <-   grid.arrange(fp_co, fp_mp, nrow = 1)
                       #top = textGrob("Object Identification", gp=gpar(fontsize=25)))
                       #top = "Object Identification")
   
   
-#  dev.off()
+  dev.off()
 
     grid.draw(p)
   

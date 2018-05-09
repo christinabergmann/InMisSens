@@ -264,7 +264,7 @@ apatheme=theme_bw()+
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
 # Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbPalette <- c("#E69F00", "#0072B2", "#009E73", "#F0E442", "#56B4E9", "#D55E00", "#CC79A7")
 
 p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
   geom_point(aes(size = weights_g),show.legend=FALSE) + 
@@ -284,12 +284,12 @@ p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) +
 
 #ggsave("figures/AgeEffect_log.jpg", p,height= 7,width= 6)
 
-  #jpeg(filename = "figures/AgeEffect_log.jpg", 
- #      width = 600, height = 400, units = "px")
+  jpeg(filename = "figures/AgeEffect_log.jpg", 
+       width = 600, height = 400, units = "px")
 
   p
   
-  #dev.off()
+dev.off()
 
 ```
 
