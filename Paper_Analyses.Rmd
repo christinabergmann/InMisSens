@@ -112,7 +112,7 @@ apatheme=theme_bw()+
 
 # Descriptive data
 
-The database contains data from `r length(unique(dat$short_cite))` papers consisting of data from `r sum(sum_dat$n_1)` infants. In the tables below, we provide more descriptive information.
+The database contains data from `r length(unique(dat$short_cite))` papers. In the tables below, we provide more descriptive information.
 
 The next table shows what type of publications were included in our meta-analysis
 ```{r DescriptivesPubtype, echo = FALSE}
@@ -144,6 +144,35 @@ kable(es_info)
 #table(db_ET_MP$es_method)
 
 ```
+
+## Number of unique infants
+
+```{r DescriptivesInfnum, echo = FALSE}
+
+infnum_info <- dat[,c("unique_ID", "same_infant", "expt_num", "n_1")]
+infnum_info <- unique(infnum_info)
+
+number_of_infants <- sum(infnum_info$n_1)
+
+
+```
+
+The database contains data from `r number_of_infants` unique infants.
+
+## Number of unique experimental conditions
+
+```{r DescriptivesExpCond, echo = FALSE}
+
+condnum_info <- dat[,c("unique_ID", "same_infant", "expt_num", "expt_condition")]
+condnum_info <- unique(condnum_info)
+
+number_of_cond <- nrow(condnum_info)
+
+
+```
+
+The database contains data from `r number_of_cond` unique experimental conditions
+
 
 ## Type of comparison of the time-course data calculated
 We also have different ways of comparison of the time-course data, as the next table shows.
@@ -323,6 +352,8 @@ summary(rma_MPeffect_age)
 
 ```
 
+## Plotting Mispronunciation Effect
+
 ### Plot Mispronunciation Effect by Age (color)
 
 ```{r PlotMPEffect}
@@ -419,20 +450,47 @@ prodr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_production) & r_productio
 metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 ```
 
-## Number of features
+## Number of Features Changed
+
+### Number of features
+
 Size of mispronunciation, measured in features changed
 
 
 ```{r NFeatures}
 
-db_ET_MPf = db_ET_MP %>%
-  filter(n_feature != "1-3" & n_feature != "1-2" & n_feature != "2-3")
+db_ET_MPf  <- subset(db_ET_MP, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
 
 #rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
 rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature), data = db_ET_MPf, random = ~collapse | short_cite)
  
  
 summary(rma_NFeatures)
+
+```
+
+### Number of features subset to age range
+Size of mispronunciation, measured in features changed
+
+
+```{r NFeatures_subset}
+
+dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
+
+mf <- subset(dat_f, n_feature == "3")
+min_age <- min(mf$mean_age_1)
+max_age <- max(mf$mean_age_1)
+
+dat_fage= dat_f%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
+rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature), data = dat_f, random = ~collapse | short_cite)
+ 
+ 
+summary(rma_NFeatures_agesub)
 
 ```
 
@@ -455,8 +513,8 @@ summary(rma_NFeatures)
 
 ```{r NFeatures_age}
 
-db_ET_MPf = db_ET_MP %>%
-  filter(n_feature != "1-3" & n_feature != "1-2" & n_feature != "2-3")
+db_ET_MPf  <- subset(db_ET_MP, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
 
 rma_NFeaturesAge <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature)*age.C, data = db_ET_MPf, random = ~collapse | short_cite)
  
@@ -478,6 +536,33 @@ rma_NFeaturesAge <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature)*age.
  
 summary(rma_NFeaturesAge)
 ```
+
+### Features changed with age moderator, subset to same age range
+
+```{r FeatureAgeRangeSubset}
+
+dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
+
+mf <- subset(dat_f, n_feature == "3")
+min_age <- min(mf$mean_age_1)
+max_age <- max(mf$mean_age_1)
+
+dat_fage= dat_f%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+rma_FeatureAgeS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(n_feature), data = dat_fage, random = ~ collapse | short_cite)
+  
+summary(rma_FeatureAgeS)  
+
+
+#rma_FeatureS <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(n_feature), data = dat_fage, random = ~ collapse | short_cite)
+  
+#summary(rma_FeatureS)  
+
+```
+
+## Plotting number of Features Changed
 
 ### Plot number of Features
 
@@ -506,10 +591,97 @@ p
 ggsave("figures/AgeEffect_log_feat.jpg", p)
 
 ```
+### Plot number of Features subsetted for age
 
+```{r PlotFeatEffect_agesubset}
+
+dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
+
+mf <- subset(dat_f, n_feature == "3")
+min_age <- min(mf$mean_age_1)
+max_age <- max(mf$mean_age_1)
+
+dat_fage= dat_f%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+dat_fage$feat_cat <- ifelse(dat_fage$n_feature == 1, "1-feature",
+                         ifelse(dat_fage$n_feature == 2, "2-feature",
+                                ifelse(dat_fage$n_feature == 3, "3-feature",
+                                       ifelse(dat_fage$n_feature == 0, "correct", "none"))))
+
+dat_fage <- subset(dat_fage, feat_cat != "none")
+
+dat_fage$Features_changed <- factor(dat_fage$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
+
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p <- ggplot(dat_fage, aes(mean_age_1/30.44, g_calc, color = Features_changed)) + 
+  geom_point(aes(size = weights_g, shape = Features_changed),show.legend=FALSE) + 
+  #facet_grid(.~type_feature)+
+    scale_colour_manual(values=cbPalette)+
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Effect size Hedges' g")
+p
+
+ggsave("figures/AgeEffect_log_feat_agesub.jpg", p)
+
+```
+
+### Plot number of Features subsetted for age Boxplot
+
+```{r PlotFeatEffect_agesubset_boxplot}
+
+dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
+
+mf <- subset(dat_f, n_feature == "3")
+min_age <- min(mf$mean_age_1)
+max_age <- max(mf$mean_age_1)
+
+dat_fage= dat_f%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+dat_fage$feat_cat <- ifelse(dat_fage$n_feature == 1, "1-feature",
+                         ifelse(dat_fage$n_feature == 2, "2-feature",
+                                ifelse(dat_fage$n_feature == 3, "3-feature",
+                                       ifelse(dat_fage$n_feature == 0, "correct", "none"))))
+
+dat_fage <- subset(dat_fage, feat_cat != "none")
+
+dat_fage$Features_changed <- factor(dat_fage$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
+
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p <- ggplot(dat_fage, aes(Features_changed, g_calc, fill = Features_changed)) + 
+  geom_boxplot() + 
+  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
+  scale_fill_manual(values=cbPalette)+
+  apatheme +
+  theme(text = element_text(size=25),
+        legend.title = element_blank(),
+        legend.position = "none",
+        axis.title.x = element_blank()) + 
+  #xlab("Number of Features Changed") + 
+  geom_hline(yintercept = 0, linetype="dotted") + 
+  ylab("Effect size Hedges' g")
+
+p
+
+ggsave("figures/AgeEffect_log_feat_agesub_noage.jpg", p)
+
+```
 
 ## Type of MP: Vowel, consonant, or tone
 
+### Type of MP: Vowel, consonant, or tone
 
 ```{r MPtype}
 db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
@@ -614,6 +786,7 @@ summary(rma_TypeFeatures_Lang)
 
 ```
 
+## Plotting MP type: Consonant, Vowel, or Tone?
 
 ### Plot MP type: Consonant, Vowel, or Tone?
 
@@ -634,6 +807,7 @@ ggsave("figures/AgeEffect_log_CV.jpg", p)
 ```
 
 ### Plot Language Family by MP type: Consonant, Vowel, or Tone?
+
 ```{r PlotCVEffect_Lang}
 
 
@@ -690,21 +864,45 @@ summary(rma_DistractorAge)
 
 ```
 
-### Distractor Familiarity with age moderator, subset to same age range
+### Distractor Familiarity with condition moderator, subset to same age range
 
-```{r DistractorTypeAgeRangeSubset}
+```{r DistractorTypeAgeRangeSubset_condition}
 
-min_age <- min(dat[dat$object_pair=="familiar_novel",]$mean_age_1)
-max_age <- max(dat[dat$object_pair=="familiar_novel",]$mean_age_1)
+mf <- subset(dat, object_pair=="familiar_novel")
+min_age <- min(mf$mean_age_1)
+
+mf <- subset(dat, object_pair=="familiar_familiar")
+max_age <- max(mf$mean_age_1)
 
 dat_age= dat%>%
-  filter(mean_age_1>min_age&mean_age_1<max_age)
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+rma_DistractorAgeS <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
+  
+summary(rma_DistractorAgeS)  
+
+```
+
+### Distractor Familiarity with age and condition moderator, subset to same age range
+
+```{r DistractorTypeAgeRangeSubset_agecondition}
+
+mf <- subset(dat, object_pair=="familiar_novel")
+min_age <- min(mf$mean_age_1)
+
+mf <- subset(dat, object_pair=="familiar_familiar")
+max_age <- max(mf$mean_age_1)
+
+dat_age= dat%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
 
 rma_DistractorAgeS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
   
 summary(rma_DistractorAgeS)  
 
 ```
+
+### Plotting Distractor Familiarity
 
 ### Plot Distractor Familiarity
 
@@ -762,32 +960,78 @@ ggsave("figures/Distractor_fam_log.jpg", p)
 
 ```{r PlotDistFamEffect_NoAge_AgeMatch}
 
-min_age<-min(dat[dat$object_pair=="familiar_novel",]$mean_age_1)
-max_age <- max(dat[dat$object_pair=="familiar_novel",]$mean_age_1)
+mf <- subset(dat, object_pair=="familiar_novel")
+min_age <- min(mf$mean_age_1)
+
+mf <- subset(dat, object_pair=="familiar_familiar")
+max_age <- max(mf$mean_age_1)
 
 dat_age= dat%>%
   filter(mean_age_1>min_age&mean_age_1<max_age)
 
-dat_age$condition_label = ifelse(dat_age$condition==1, "correct", "MP")
-dat_age$dist_code <- ifelse(dat_age$object_pair == "familiar_familiar", "familiar", "unfamiliar")
+dat_age$condition_label = ifelse(dat_age$condition==1, "correct", "mispronunciation")
+dat_age$dist_code <- ifelse(dat_age$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
 
-p <- ggplot(dat_age, aes(dist_code, g_calc, color = condition_label)) + 
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p <- ggplot(dat_age, aes(condition_label, g_calc, fill = condition_label)) + 
   geom_boxplot() + 
-  #geom_line(y= 0, linetype="dotted") + 
+  facet_grid(.~dist_code) +
   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_color_manual(values=wes_palette(name="Darjeeling"))+
-  theme_bw()+
+  scale_fill_manual(values=cbPalette)+
+  apatheme +
   theme(text = element_text(size=25),
         legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Distractor Familiarity") + 
+        legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) + 
+  #xlab("Number of Features Changed") + 
+  geom_hline(yintercept = 0, linetype="dotted") + 
   ylab("Effect size Hedges' g")
+
 p
 
 ggsave("figures/AgeMatch_Distractor_fam_log.jpg", p)
 
 ```
 
+
+### Plot Distractor Familiarity by age subsetted for age
+
+```{r PlotDistFam}
+
+mf <- subset(dat, object_pair=="familiar_novel")
+min_age <- min(mf$mean_age_1)
+
+mf <- subset(dat, object_pair=="familiar_familiar")
+max_age <- max(mf$mean_age_1)
+
+dat_fage= dat%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+dat_fage$dist_fam <- ifelse(dat_fage$object_pair == "familiar_novel", "Novel Distractor", "Familiar Distractor")
+
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p <- ggplot(dat_fage, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
+  geom_point(aes(size = weights_g, shape = dist_fam),show.legend=FALSE) + 
+  facet_grid(.~dist_fam)+
+    scale_colour_manual(values=cbPalette)+
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Effect size Hedges' g")
+p
+
+ggsave("figures/AgeEffect_log_DistFam_agesub.jpg", p)
+
+```
 
 ## Position of Mispronunciation (onset, medial)
 
@@ -850,7 +1094,7 @@ rma_LocationCondition <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*con
 summary(rma_LocationCondition)
 ```
 
-### Plot Position of Mispronunciation
+## Plotting Position of Mispronunciation
 ```{r PlotPositionEffect}
 
 #dat.p <- subset(dat, mispron_location == "onset" | mispron_location == "medial" |
@@ -913,7 +1157,7 @@ summary(rma_DistractorOverlap)
 
 ```
 
-### Plot Distractor Overlap
+## Plotting Distractor Overlap
 
 ```{r PlotDistOverlapEffect}
 
@@ -1009,7 +1253,7 @@ summary(rma_lang_interaction)
 
 ```
 
-### Plot Language Effect
+## Plotting Language Effect
 ```{r PlotLanguageEffect}
 
 
