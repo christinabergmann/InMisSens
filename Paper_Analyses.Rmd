@@ -37,6 +37,14 @@ db_ET <- db_ET %>%
 
 db_ET$collapse <- paste(db_ET$study_ID, db_ET$expt_num, db_ET$same_infant, sep = "_")
 
+# assign language families
+
+db_ET$lang_family = ifelse(db_ET$native_lang=="American English" | db_ET$native_lang=="British English" | db_ET$native_lang=="Dutch" |
+db_ET$native_lang=="Danish" | db_ET$native_lang=="Swedish" |
+db_ET$native_lang=="English" | db_ET$native_lang=="German", "Germanic", ifelse(db_ET$native_lang == "French" | db_ET$native_lang == "Catalan" | db_ET$native_lang == "Spanish" | db_ET$native_lang == "Catalan-Spanish" | db_ET$native_lang == "Swiss French", 
+                                "Romanic", "Sino-Tibetian"))
+
+
 #Split into correct and MP database
 
 db_ET_correct <- db_ET[db_ET$is_correct=="1",]
@@ -97,7 +105,7 @@ mix_co_mp <- dat[!duplicated(dat[c("short_cite", "word_correct_and_MP")]),]
 
 ```
 
-# Plotting defaults
+Plotting defaults
 
 ```{r PlotAPATheme}
 #Themes and plot
@@ -107,6 +115,9 @@ apatheme=theme_bw()+
     panel.border=element_blank(),
     axis.line=element_line(),
     text=element_text(family='Times', size=25))
+
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 ```
 
@@ -267,7 +278,7 @@ ggplot(youngest, aes(x=cond_lab, y = g_calc, color = cond_lab)) + geom_boxplot()
 
 # Meta-Analysis
 
-## Main Mispronunciation Sensitivity Effects
+## Condition: Mispronunciation Sensitivity Effects
 
 ### Correct object identification effect
 
@@ -313,7 +324,7 @@ summary(rma_MPeffect_1)
 ```
 
 
-## Main Mispronunciation Sensitivity Effects with Age Moderators
+## Age: Mispronunciation Sensitivity Effects with Age Moderators
 
 ### Correct object identification effect with age moderator
 
@@ -360,9 +371,6 @@ summary(rma_MPeffect_age)
 
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
 p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
   geom_point(aes(size = weights_g),show.legend=FALSE) + 
   geom_line(y= 0, linetype="dotted") + 
@@ -384,7 +392,7 @@ max(dat$mean_age_1/30.44)
 
 
   jpeg(filename = "figures/AgeEffect_log.jpg", 
-       width = 600, height = 400, units = "px")
+       width = 500, height = 300, units = "px")
 
   p
   
@@ -418,7 +426,7 @@ ggsave("figures/AgeEffect_log_BW.jpg", p,height= 3,width= 6)
 ```
 
 
-## Correlation MP effect and Vocabulary
+## Vocabulary size: Correlation between mispronunciation sensitivity and vocabulary
 
 First, let's take a look at which vocabulary data we have available.
 
@@ -450,29 +458,69 @@ prodr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_production) & r_productio
 metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 ```
 
-## Number of Features Changed
+## Size of Mispronunciation: Measured in Features Changed
 
 ### Number of features
 
 Size of mispronunciation, measured in features changed
 
-
 ```{r NFeatures}
 
-db_ET_MPf  <- subset(db_ET_MP, n_feature == "0" | n_feature == "1" |
+dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
                 n_feature == "2" | n_feature == "3")
 
 #rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature), data = db_ET_MPf, random = ~collapse | short_cite)
+rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature), data = dat.f, random = ~collapse | short_cite)
  
  
 summary(rma_NFeatures)
+aov.feat <- anova(rma_NFeatures)
+
+n_feat <- round(coef(summary(rma_NFeatures))[2,], 2)
 
 ```
+
+
+The moderator test was significant:
+`print(aov.feat)`
+
+Hedges' g was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
+(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
+
+
+### Number of features with age moderator interaction
+
+Size of mispronunciation, measured in features changed
+
+```{r NFeatures_age}
+
+dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
+
+#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
+rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature)*age.C, data = dat.f, random = ~collapse | short_cite)
+ 
+ 
+summary(rma_NFeatures)
+aov.feat <- anova(rma_NFeatures)
+
+n_feat <- round(coef(summary(rma_NFeatures))[4,], 2)
+
+```
+
+
+The moderator test was significant:
+`print(aov.feat)`
+
+But there was no significant interaction between number of features changed and age:
+
+Hedges' g was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
+(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
 
 ### Number of features subset to age range
 Size of mispronunciation, measured in features changed
 
+Number of features is still significant
 
 ```{r NFeatures_subset}
 
@@ -486,60 +534,24 @@ max_age <- max(mf$mean_age_1)
 dat_fage= dat_f%>%
   filter(mean_age_1>=min_age&mean_age_1<=max_age)
 
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature), data = dat_f, random = ~collapse | short_cite)
- 
- 
-summary(rma_NFeatures_agesub)
+#dat_fage$n_feature <- ordered(dat_fage$n_feature, levels = c("0", "1", "2", "3"))
+#dat_fage$n_feature <- as.numeric(dat_fage$n_feature)
 
-```
-
-### Number of features with condition moderator
-
-```{r NFeaturesCondition}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
 
 #rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature)*condition, data = dat_f, random = ~collapse | short_cite)
+rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature), data = dat_f, random = ~collapse | short_cite)
  
  
-summary(rma_NFeatures)
+#summary(rma_NFeatures_agesub)
 
 ```
 
-### Number of features with age moderator
+### Number of features with age moderator subset to age range
+Size of mispronunciation, measured in features changed
 
-```{r NFeatures_age}
+No interaction between features and age
 
-db_ET_MPf  <- subset(db_ET_MP, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-rma_NFeaturesAge <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature)*age.C, data = db_ET_MPf, random = ~collapse | short_cite)
- 
- 
-summary(rma_NFeaturesAge)
-```
-
-
-### Number of features with condition and age moderators
-
-```{r NFeaturesCondition_age}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-
-rma_NFeaturesAge <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(n_feature)*age.C*condition, data = dat_f, random = ~collapse | short_cite)
- 
- 
-summary(rma_NFeaturesAge)
-```
-
-### Features changed with age moderator, subset to same age range
-
-```{r FeatureAgeRangeSubset}
+```{r NFeatures_subset_age}
 
 dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
                 n_feature == "2" | n_feature == "3")
@@ -551,16 +563,18 @@ max_age <- max(mf$mean_age_1)
 dat_fage= dat_f%>%
   filter(mean_age_1>=min_age&mean_age_1<=max_age)
 
-rma_FeatureAgeS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(n_feature), data = dat_fage, random = ~ collapse | short_cite)
-  
-summary(rma_FeatureAgeS)  
+#dat_fage$n_feature <- ordered(dat_fage$n_feature, levels = c("0", "1", "2", "3"))
+#dat_fage$n_feature <- as.numeric(dat_fage$n_feature)
 
 
-#rma_FeatureS <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(n_feature), data = dat_fage, random = ~ collapse | short_cite)
-  
-#summary(rma_FeatureS)  
+#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
+rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature)*age.C, data = dat_f, random = ~collapse | short_cite)
+ 
+ 
+#summary(rma_NFeatures_agesub)
 
 ```
+
 
 ## Plotting number of Features Changed
 
@@ -568,99 +582,29 @@ summary(rma_FeatureAgeS)
 
 ```{r PlotFeatEffect}
 
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" | n_feature == "2" | n_feature == "3")
+dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
+                n_feature == "2" | n_feature == "3")
 
-dat_f$feat_cat <- ifelse(dat_f$n_feature == 1, "one",
-                         ifelse(dat_f$n_feature == 2, "two",
-                                ifelse(dat_f$n_feature == 3, "three",
+# mf <- subset(dat_f, n_feature == "3")
+# min_age <- min(mf$mean_age_1)
+# max_age <- max(mf$mean_age_1)
+# 
+# dat_fage= dat_f%>%
+#   filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+dat_f$feat_cat <- ifelse(dat_f$n_feature == 1, "1-feature",
+                         ifelse(dat_f$n_feature == 2, "2-feature",
+                                ifelse(dat_f$n_feature == 3, "3-feature",
                                        ifelse(dat_f$n_feature == 0, "correct", "none"))))
 
 dat_f <- subset(dat_f, feat_cat != "none")
 
-
-p <- ggplot(dat_f, aes(mean_age_1/30.44, g_calc, color = feat_cat)) + 
-  geom_point(aes(size = weights_g, shape = feat_cat),show.legend=FALSE) + 
-  #facet_grid(.~type_feature)+
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  theme(text = element_text(size=16)) + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-p
-
-ggsave("figures/AgeEffect_log_feat.jpg", p)
-
-```
-### Plot number of Features subsetted for age
-
-```{r PlotFeatEffect_agesubset}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-mf <- subset(dat_f, n_feature == "3")
-min_age <- min(mf$mean_age_1)
-max_age <- max(mf$mean_age_1)
-
-dat_fage= dat_f%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-dat_fage$feat_cat <- ifelse(dat_fage$n_feature == 1, "1-feature",
-                         ifelse(dat_fage$n_feature == 2, "2-feature",
-                                ifelse(dat_fage$n_feature == 3, "3-feature",
-                                       ifelse(dat_fage$n_feature == 0, "correct", "none"))))
-
-dat_fage <- subset(dat_fage, feat_cat != "none")
-
-dat_fage$Features_changed <- factor(dat_fage$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
+dat_f$Features_changed <- factor(dat_f$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
 
 # Color Blind palette:
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-p <- ggplot(dat_fage, aes(mean_age_1/30.44, g_calc, color = Features_changed)) + 
-  geom_point(aes(size = weights_g, shape = Features_changed),show.legend=FALSE) + 
-  #facet_grid(.~type_feature)+
-    scale_colour_manual(values=cbPalette)+
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-p
-
-ggsave("figures/AgeEffect_log_feat_agesub.jpg", p)
-
-```
-
-### Plot number of Features subsetted for age Boxplot
-
-```{r PlotFeatEffect_agesubset_boxplot}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-mf <- subset(dat_f, n_feature == "3")
-min_age <- min(mf$mean_age_1)
-max_age <- max(mf$mean_age_1)
-
-dat_fage= dat_f%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-dat_fage$feat_cat <- ifelse(dat_fage$n_feature == 1, "1-feature",
-                         ifelse(dat_fage$n_feature == 2, "2-feature",
-                                ifelse(dat_fage$n_feature == 3, "3-feature",
-                                       ifelse(dat_fage$n_feature == 0, "correct", "none"))))
-
-dat_fage <- subset(dat_fage, feat_cat != "none")
-
-dat_fage$Features_changed <- factor(dat_fage$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
-
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-p <- ggplot(dat_fage, aes(Features_changed, g_calc, fill = Features_changed)) + 
+p <- ggplot(dat_f, aes(Features_changed, g_calc, fill = Features_changed)) + 
   geom_boxplot() + 
   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
   scale_fill_manual(values=cbPalette)+
@@ -675,166 +619,38 @@ p <- ggplot(dat_fage, aes(Features_changed, g_calc, fill = Features_changed)) +
 
 p
 
-ggsave("figures/AgeEffect_log_feat_agesub_noage.jpg", p)
+  jpeg(filename = "figures/Number_of_Features.jpg", 
+       width = 500, height = 300, units = "px")
+
+  p
+  
+  dev.off()
 
 ```
-
-## Type of MP: Vowel, consonant, or tone
-
-### Type of MP: Vowel, consonant, or tone
-
-```{r MPtype}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-
-
-rma_TypeFeaturesMP <- rma.mv(g_calc, g_var_calc, mods = ~type_feature, data = db_MP_type, random = ~collapse | short_cite)
- 
- 
-summary(rma_TypeFeaturesMP)
-
-```
-
-### Type of MP: Vowel, consonant, or tone with age moderator
-
-
-```{r MPtype_age}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-
-rma_TypeFeaturesMPAge <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*age.C, data = db_MP_type, random = ~collapse | short_cite)
- 
- 
-summary(rma_TypeFeaturesMPAge)
-```
-
-### Type of MP: Vowel, consonant, or tone with condition moderator
-
-```{r MPtypeCondition}
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" |
-                type_feature == "tone")
-dat_type$type_feature <- as.factor(ifelse(dat_type$condition == 1, "none", dat_type$type_feature))
-
-
-rma_TypeFeatures <- rma.mv(g_calc, g_var_calc, mods = ~relevel(type_feature, "none")*condition, data = dat_type, random = ~collapse | short_cite)
- 
- 
-summary(rma_TypeFeatures)
-
-```
-
-
-### Type of MP: Vowel, consonant, or tone with age and condition moderator
-
-```{r MPtypeCondition_age}
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" |
-                type_feature == "tone")
-dat_type$type_feature <- as.factor(ifelse(dat_type$condition == 1, "none", dat_type$type_feature))
-
-
-rma_TypeFeaturesAge <- rma.mv(g_calc, g_var_calc, mods = ~relevel(type_feature, "none")*age.C*condition, data = dat_type, random = ~collapse | short_cite)
- 
- 
-summary(rma_TypeFeaturesAge)
-```
-
-### Type of MP with language family moderator
-
-```{r MPtypeLanguage}
-#dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" |
-#                type_feature == "tone")
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel")
-
-dat_type$type_feature <- as.factor(ifelse(dat_type$condition == 1, "none", dat_type$type_feature))
-
-dat_type$lang_family = ifelse(dat_type$native_lang=="American English" | dat_type$native_lang=="British English" | dat_type$native_lang=="Dutch" |
-dat_type$native_lang=="Danish" | dat_type$native_lang=="Swedish" |
-dat_type$native_lang=="English" | dat_type$native_lang=="German", "Germanic", ifelse(dat_type$native_lang == "French" | dat_type$native_lang == "Catalan" | dat_type$native_lang == "Spanish" | dat_type$native_lang == "Catalan-Spanish" | dat_type$native_lang == "Swiss French", 
-                                "Romanic", "Sino-Tibetian"))
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~relevel(type_feature, "none")*lang_family, data = dat_type_sub, random = ~collapse | short_cite)
- 
-
-summary(rma_TypeFeatures_Lang)
-```
-
-
-### Type of MP with language family and condition moderators
-
-```{r MPtypeLanguageCondition}
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel")# |
-                #type_feature == "tone")
-dat_type$type_feature <- as.factor(ifelse(dat_type$condition == 1, "none", dat_type$type_feature))
-
-dat_type$lang_family = ifelse(dat_type$native_lang=="American English" | dat_type$native_lang=="British English" | dat_type$native_lang=="Dutch" |
-dat_type$native_lang=="Danish" | dat_type$native_lang=="Swedish" |
-dat_type$native_lang=="English" | dat_type$native_lang=="German", "Germanic", ifelse(dat_type$native_lang == "French" | dat_type$native_lang == "Catalan" | dat_type$native_lang == "Spanish" | dat_type$native_lang == "Catalan-Spanish" | dat_type$native_lang == "Swiss French", 
-                                "Romanic", "Sino-Tibetian"))
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-dat_type_sub$lang_family <- as.factor(dat_type_sub$lang_family)
-
-
-
-rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~relevel(type_feature, "none")*lang_family*condition, data = dat_type_sub, random = ~collapse | short_cite)
- 
-
-summary(rma_TypeFeatures_Lang)
-
-```
-
-## Plotting MP type: Consonant, Vowel, or Tone?
-
-### Plot MP type: Consonant, Vowel, or Tone?
-
-```{r PlotCVEffect}
-
-
-p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-  geom_point(aes(size = weights_g, shape = type_feature),show.legend=FALSE) + 
-  facet_grid(.~type_feature)+
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  theme(text = element_text(size=16)) + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-p
-
-ggsave("figures/AgeEffect_log_CV.jpg", p)
-```
-
-### Plot Language Family by MP type: Consonant, Vowel, or Tone?
-
-```{r PlotCVEffect_Lang}
-
-
-p <- ggplot(dat_type_sub, aes(type_feature, g_calc, color = type_feature)) + 
-  geom_boxplot() + 
-  facet_grid(lang_family~condition_label)+
-  #geom_line(y= 0, linetype="dotted") + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  theme(text = element_text(size=16)) + 
-  xlab("Language Family") + 
-  ylab("Effect size Hedges' g")
-p
-
-
-ggsave("figures/LangFamily_CV.jpg", p)
-```
-
 
 ## Distractor Familiarity (familiary, unfamiliar) 
 
 ```{r DistractorType}
 
-rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
+rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = db_ET_MP, random = ~ collapse | short_cite)
   
-summary(rma_Distractor)  
+#summary(rma_Distractor)  
+ 
+aov.type <- anova(rma_Distractor)
+
+sum_eff <- round(coef(summary(rma_TypeFeatures_Lang))[2,], 2)
+
 
 ```
+
+The moderator test was not significant:
+`print(aov.type)`
+
+No significant interaction between feature type and language family:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
 
 ### Distractor Familiarity with condition moderator
 
@@ -844,16 +660,42 @@ rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_
   
 summary(rma_Distractor)  
 
+aov.type <- anova(rma_Distractor)
+
+sum_eff <- round(coef(summary(rma_Distractor))[4,], 2)
+
+
 ```
+
+The moderator test was significant:
+`print(aov.type)`
+
+But there was no significant interaction between distractor familiarity and condition:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
 
 ### Distractor Familiarity with age moderator
 ```{r DistractorTypeAge}
 
-rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
+rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(object_pair), data = db_ET_MP, random = ~ collapse | short_cite)
   
-summary(rma_DistractorAge)  
+#summary(rma_DistractorAge)  
+
+aov.type <- anova(rma_DistractorAge)
+
+sum_eff <- round(coef(summary(rma_DistractorAge))[4,], 2)
 
 ```
+The moderator test was not significant:
+`print(aov.type)`
+
+There was no significant interaction between distractor familiarity and age:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
 
 ### Distractor Familiarity with age and condition moderators
 ```{r DistractorTypeConditionAge}
@@ -861,18 +703,73 @@ summary(rma_DistractorAge)
 rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
   
 summary(rma_DistractorAge)  
+aov.type <- anova(rma_DistractorAge)
+
+sum_eff <- round(coef(summary(rma_DistractorAge))[7,], 2)
 
 ```
+
+The moderator test was significant:
+`print(aov.type)`
+
+There was a significant interaction between distractor familiarity and condition, but not age:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
+### Distractor Familiarity, subset to same age range
+
+```{r DistractorTypeAgeRangeSubset_condition}
+
+fn <- subset(dat, object_pair=="familiar_novel")
+min_fn <- min(mf$mean_age_1)
+max_fn <- max(mf$mean_age_1)
+
+ff <- subset(dat, object_pair=="familiar_familiar")
+min_ff <- min(ff$mean_age_1)
+max_ff <- max(ff$mean_age_1)
+
+min_age <- pmax(min_fn, min_ff)
+max_age <- pmin(max_fn, max_ff)
+
+
+dat_age= db_ET_MP%>%
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
+
+rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
+  
+#summary(rma_Distractor)  
+
+aov.type <- anova(rma_Distractor)
+
+sum_eff <- round(coef(summary(rma_Distractor))[2,], 2)
+
+```
+
+The moderator test was not significant:
+`print(aov.type)`
+
+There was no significant effect of distractor familiarity:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
 
 ### Distractor Familiarity with condition moderator, subset to same age range
 
 ```{r DistractorTypeAgeRangeSubset_condition}
 
-mf <- subset(dat, object_pair=="familiar_novel")
-min_age <- min(mf$mean_age_1)
+fn <- subset(dat, object_pair=="familiar_novel")
+min_fn <- min(mf$mean_age_1)
+max_fn <- max(mf$mean_age_1)
 
-mf <- subset(dat, object_pair=="familiar_familiar")
-max_age <- max(mf$mean_age_1)
+ff <- subset(dat, object_pair=="familiar_familiar")
+min_ff <- min(ff$mean_age_1)
+max_ff <- max(ff$mean_age_1)
+
+min_age <- pmax(min_fn, min_ff)
+max_age <- pmin(max_fn, max_ff)
+
 
 dat_age= dat%>%
   filter(mean_age_1>=min_age&mean_age_1<=max_age)
@@ -881,7 +778,20 @@ rma_DistractorAgeS <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(obj
   
 summary(rma_DistractorAgeS)  
 
+aov.type <- anova(rma_Distractor)
+
+sum_eff <- round(coef(summary(rma_Distractor))[4,], 2)
+
 ```
+
+The moderator test was significant:
+`print(aov.type)`
+
+There was a significant interaction between distractor familiarity and condition:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
 
 ### Distractor Familiarity with age and condition moderator, subset to same age range
 
@@ -898,67 +808,70 @@ dat_age= dat%>%
 
 rma_DistractorAgeS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
   
-summary(rma_DistractorAgeS)  
+#summary(rma_DistractorAgeS)  
+
+aov.type <- anova(rma_Distractor)
+
+sum_eff <- round(coef(summary(rma_Distractor))[8,], 2)
 
 ```
+
+The moderator test was significant:
+`print(aov.type)`
+
+There was no significant interaction between distractor familiarity, condition, and age:
+
+Hedges' g was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
+(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
+
 
 ### Plotting Distractor Familiarity
 
 ### Plot Distractor Familiarity
 
-```{r PlotDistFamEffect}
+```{r PlotDistFamEffect_NoAge_AgeMatch}
 
-dat$condition_label = ifelse(dat$condition==1, "correct", "MP")
-dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "familiar", "unfamiliar")
 
-p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-  geom_point(aes(size = weights_g, shape = dist_code),show.legend=FALSE) + 
-  facet_grid(.~dist_code)+
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_color_manual(values=wes_palette(name="Darjeeling"))+
-  theme_bw()+
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-p
+dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
+dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
 
-ggsave("figures/AgeEffect_log_distractor_fam.jpg", p)
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-```
-
-### Plot Distractor Familiarity (w/o age)
-
-```{r PlotDistFamEffect_NoAge}
-
-dat$condition_label = ifelse(dat$condition==1, "correct", "MP")
-dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "familiar", "unfamiliar")
-
-p <- ggplot(dat, aes(dist_code, g_calc, color = condition_label)) + 
+p <- ggplot(dat, aes(condition_label, g_calc, fill = condition_label)) + 
   geom_boxplot() + 
+  facet_grid(.~dist_code) +
   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_color_manual(values=wes_palette(name="Darjeeling"))+
-  theme_bw()+
+  scale_fill_manual(values=cbPalette)+
+  apatheme +
   theme(text = element_text(size=25),
         legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Distractor Familiarity") + 
+        legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank()) + 
+  #xlab("Number of Features Changed") + 
   geom_hline(yintercept = 0, linetype="dotted") + 
   ylab("Effect size Hedges' g")
+
 p
 
+  jpeg(filename = "figures/Distractor_fam.jpg", 
+       width = 500, height = 300, units = "px")
 
-
-ggsave("figures/Distractor_fam_log.jpg", p)
-
+  p
+  
+  dev.off()
 
 ```
 
-### Plot Distractor Familiarity (w/o age, subset to age range)
+### Plot Distractor Familiarity
 
 ```{r PlotDistFamEffect_NoAge_AgeMatch}
+
+
+dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
+dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
 
 mf <- subset(dat, object_pair=="familiar_novel")
 min_age <- min(mf$mean_age_1)
@@ -967,13 +880,8 @@ mf <- subset(dat, object_pair=="familiar_familiar")
 max_age <- max(mf$mean_age_1)
 
 dat_age= dat%>%
-  filter(mean_age_1>min_age&mean_age_1<max_age)
+  filter(mean_age_1>=min_age&mean_age_1<=max_age)
 
-dat_age$condition_label = ifelse(dat_age$condition==1, "correct", "mispronunciation")
-dat_age$dist_code <- ifelse(dat_age$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
-
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 p <- ggplot(dat_age, aes(condition_label, g_calc, fill = condition_label)) + 
   geom_boxplot() + 
@@ -993,14 +901,23 @@ p <- ggplot(dat_age, aes(condition_label, g_calc, fill = condition_label)) +
 
 p
 
-ggsave("figures/AgeMatch_Distractor_fam_log.jpg", p)
+  jpeg(filename = "figures/Distractor_fam_age_AgeSubset.jpg", 
+       width = 500, height = 300, units = "px")
+
+  p
+  
+  dev.off()
 
 ```
 
 
-### Plot Distractor Familiarity by age subsetted for age
+### Plot Distractor Familiarity by age (subset to same age range)
 
-```{r PlotDistFam}
+```{r PlotDistFamEffect_age}
+
+dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
+dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "familiar", "unfamiliar")
+
 
 mf <- subset(dat, object_pair=="familiar_novel")
 min_age <- min(mf$mean_age_1)
@@ -1008,30 +925,33 @@ min_age <- min(mf$mean_age_1)
 mf <- subset(dat, object_pair=="familiar_familiar")
 max_age <- max(mf$mean_age_1)
 
-dat_fage= dat%>%
+dat_age= dat%>%
   filter(mean_age_1>=min_age&mean_age_1<=max_age)
 
-dat_fage$dist_fam <- ifelse(dat_fage$object_pair == "familiar_novel", "Novel Distractor", "Familiar Distractor")
 
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-p <- ggplot(dat_fage, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-  geom_point(aes(size = weights_g, shape = dist_fam),show.legend=FALSE) + 
-  facet_grid(.~dist_fam)+
-    scale_colour_manual(values=cbPalette)+
+p <- ggplot(dat_age, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
+  geom_point(aes(size = weights_g, shape = dist_code),show.legend=FALSE) + 
+  facet_grid(.~dist_code)+
   geom_line(y= 0, linetype="dotted") + 
   geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  apatheme +
-  theme(legend.title = element_blank(),
+  scale_color_manual(values=cbPalette)+
+  theme_bw()+
+  theme(text = element_text(size=25),
+        legend.title = element_blank(),
         legend.position = "bottom") + 
   xlab("Age in months") + 
   ylab("Effect size Hedges' g")
 p
 
-ggsave("figures/AgeEffect_log_DistFam_agesub.jpg", p)
+  jpeg(filename = "figures/Distractor_fam_AgeSubset.jpg", 
+       width = 500, height = 300, units = "px")
+
+  p
+  
+  dev.off()
 
 ```
+
 
 ## Position of Mispronunciation (onset, medial)
 
@@ -1276,4 +1196,332 @@ p
 
 ggsave("figures/AgeEffect_log_language.jpg", p)
 
+```
+
+
+## Type of MP: Vowel, consonant, or tone
+
+### Type of MP: Vowel, consonant, or tone role in object identification
+
+```{r MPtype}
+db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+
+rma_TypeFeaturesMP <- rma.mv(g_calc, g_var_calc, mods = ~type_feature, data = db_MP_type, random = ~collapse | short_cite)
+ 
+ 
+#summary(rma_TypeFeaturesMP)
+
+aov.type <- anova(rma_TypeFeaturesMP)
+
+type_feat <- round(coef(summary(rma_TypeFeaturesMP))[2,], 2)
+
+
+```
+
+The moderator test was not significant:
+`print(aov.type)`
+
+No significant effect of feature type:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+
+### Type of MP: Vowel, consonant, or tone role in object identification with age moderator
+
+```{r MPtype_age}
+db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+
+rma_TypeFeaturesMPage <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*age.C, data = db_MP_type, random = ~collapse | short_cite)
+ 
+ 
+#summary(rma_TypeFeaturesMPage)
+
+aov.type <- anova(rma_TypeFeaturesMPage)
+
+type_feat <- round(coef(summary(rma_TypeFeaturesMPage))[4,], 2)
+
+
+```
+
+The moderator test was not significant:
+`print(aov.type)`
+
+No significant effect of feature type:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+
+### Type of MP: Vowel, consonant, or tone role in object identification with language family moderator
+
+```{r MPtype_lang}
+db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+dat_type_sub <- subset(db_MP_type, lang_family != "Sino-Tibetian")
+
+rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family, data = dat_type_sub, random = ~collapse | short_cite)
+ 
+
+#summary(rma_TypeFeatures_Lang)
+ 
+aov.type <- anova(rma_TypeFeatures_Lang)
+
+type_feat <- round(coef(summary(rma_TypeFeatures_Lang))[4,], 2)
+
+
+```
+The moderator test was not significant:
+`print(aov.type)`
+
+No significant interaction between feature type and language family:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+
+
+
+### Type of MP: Vowel, consonant, or tone with condition moderator
+
+
+```{r MPtype_cond}
+db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+#db_type <- subset(dat, type_feature != "consonant_and_vowel")
+
+rma_TypeFeaturesMPcond <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition, data = db_type, random = ~collapse | short_cite)
+ 
+ 
+#summary(rma_TypeFeaturesMPcond)
+
+aov.type <- anova(rma_TypeFeaturesMPcond)
+
+type_feat <- round(coef(summary(rma_TypeFeaturesMPcond))[2,], 2)
+
+
+```
+
+The moderator test was not significant:
+`print(aov.type)`
+
+No significant interaction between feature type and condition:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+
+### Type of MP: Vowel, consonant, or tone with condition and age moderators
+
+
+```{r MPtype_cond_age}
+db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+#db_type <- subset(dat, type_feature != "consonant_and_vowel")
+
+rma_TypeFeaturesMPcondage <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*age.C, data = db_type, random = ~collapse | short_cite)
+ 
+ 
+summary(rma_TypeFeaturesMPcondage)
+
+aov.type <- anova(rma_TypeFeaturesMPcondage)
+
+type_feat <- round(coef(summary(rma_TypeFeaturesMPcondage))[8,], 2)
+
+
+```
+
+The moderator test was significant:
+`print(aov.type)`
+
+There was a significant interaction between feature type, condition, and age:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+
+### Type of MP: Vowel, consonant, or tone with language family and condition moderators
+
+```{r MPtype_cond_lang}
+db_MP_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+dat_type_sub <- subset(db_MP_type, lang_family != "Sino-Tibetian")
+
+rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family*condition, data = dat_type_sub, random = ~collapse | short_cite)
+ 
+
+summary(rma_TypeFeatures_Lang)
+ 
+aov.type <- anova(rma_TypeFeatures_Lang)
+
+type_feat <- round(coef(summary(rma_TypeFeatures_Lang))[8,], 2)
+
+
+```
+
+The moderator test was significant:
+`print(aov.type)`
+
+There was a significant interaction between feature type, language family, and condition:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+### Type of MP: Vowel, consonant, or tone with language family, condition, and age moderators
+
+```{r MPtype_cond_lang}
+dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
+
+rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family*condition*age.C, data = dat_type_sub, random = ~collapse | short_cite)
+ 
+
+summary(rma_TypeFeatures_Lang)
+ 
+aov.type <- anova(rma_TypeFeatures_Lang)
+
+type_feat <- round(coef(summary(rma_TypeFeatures_Lang))[8,], 2)
+
+
+```
+The moderator test was significant:
+`print(aov.type)`
+
+There was a significant interaction between feature type, age, and language family, and condition:
+
+Hedges' g was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
+(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
+
+
+## Plotting MP type: Consonant, Vowel, or Tone?
+
+### Plot MP type: feature type, condition, and age
+
+```{r PlotCVEffect_cond_age}
+
+dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+#dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
+
+
+dat_type$condition_label = ifelse(dat_type$condition==1, "Correct", "Mispronunciation")
+
+p <- ggplot(dat_type, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
+    facet_grid(.~type_feature)+
+  geom_point(aes(size = weights_g),show.legend=FALSE) + 
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
+  scale_colour_manual(values=cbPalette)+
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Effect size Hedges' g")
+  
+p
+
+
+  jpeg(filename = "figures/FeatureType_Cond_Age.jpg", 
+       width = 500, height = 300, units = "px")
+
+  p
+  
+  dev.off()
+  
+```
+
+### Plot Language Family by MP type: Consonant, Vowel, or Tone?
+
+```{r PlotCVEffect_Lang}
+
+dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
+
+
+dat_type_sub$condition_label = ifelse(dat_type_sub$condition==1, "Correct", "Mispronunciation")
+
+
+p <- ggplot(dat_type_sub, aes(condition_label, g_calc, fill = condition_label)) + 
+  geom_boxplot() + 
+  facet_grid(.~type_feature*lang_family)+
+  #geom_line(y= 0, linetype="dotted") + 
+  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
+    scale_fill_manual(values=cbPalette)+
+  apatheme +
+  theme(text = element_text(size=25),
+        legend.title = element_blank(),
+        legend.position = "bottom",
+        axis.title.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank()) + 
+  #xlab("Number of Features Changed") + 
+  geom_hline(yintercept = 0, linetype="dotted") + 
+  xlab("Language Family") + 
+  ylab("Effect size Hedges' g")
+p
+
+
+ jpeg(filename = "figures/FeatureType_Cond_LangFam.jpg", 
+       width = 500, height = 300, units = "px")
+
+  p
+  
+  dev.off()
+  
+```
+
+### Plot MP type: feature type, condition, and age
+
+```{r PlotCVEffect_cond_age_fam}
+
+dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
+dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
+
+#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
+
+dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
+
+
+dat_type_sub$condition_label = ifelse(dat_type_sub$condition==1, "Correct", "Mispronunciation")
+
+p <- ggplot(dat_type_sub, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
+    facet_grid(.~type_feature*lang_family)+
+  geom_point(aes(size = weights_g),show.legend=FALSE) + 
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
+  scale_colour_manual(values=cbPalette)+
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Effect size Hedges' g")
+  
+p
+
+
+  jpeg(filename = "figures/FeatureType_Cond_Age_LangFam.jpg", 
+       width = 500, height = 300, units = "px")
+
+  p
+  
+  dev.off()
+  
 ```
