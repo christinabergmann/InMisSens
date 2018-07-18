@@ -1,5 +1,5 @@
 ---
-title: "MP MetaAnalysis"
+title: "MP MetaAnalysis Monolinguals"
 author: "Christina Bergmann"
 output: 
   pdf_document:
@@ -32,7 +32,7 @@ source("scripts/calculateES.R")
 
 db_ET <- db_ET %>%
   mutate(age.C = (mean_age_1-mean(mean_age_1, na.rm=TRUE))/30.44) %>%
-  filter(mean_age_months < 31)
+  filter(mean_age_months < 31, infant_type == "typical")
 
 
 db_ET$collapse <- paste(db_ET$study_ID, db_ET$expt_num, db_ET$same_infant, sep = "_")
@@ -121,80 +121,6 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 
 ```
 
-# Forest Plot
-
-```{r ForestPlot}
-
-#https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-met#a-analysis/
-
-#Rename a bunch of things for ease
-
-f.dat <-
-  dat %>% 
-  rename(cite = short_cite,
-         yi = g_calc,
-         vi = g_var_calc)
-
-#Reorder bibliographic info based on value of g (yi), so effect sizes can be plotted in descending order
-
-f.dat <-
-  f.dat %>% 
-  select(cite, expt_num, same_infant, mean_age_1, yi, vi, condition) %>% 
-  mutate(study_ref = paste(cite, expt_num, same_infant, sep=',')) %>% 
-  arrange(desc(yi))
-
-f.dat$condition_label <- ifelse(f.dat$condition==1, "Correct", "Mispronunciation")
-
-
-#Get standard errors from variances
-f.dat$se = sqrt(f.dat$vi)
-
-#Calculate 95% CI values
-f.dat$lowerci = (-1.96*f.dat$se)+f.dat$yi
-f.dat$upperci = (1.96*f.dat$se)+f.dat$yi
-
-
-
-p <-  ggplot(f.dat, aes(y=reorder(study_ref, -yi), x=yi, xmin=lowerci, xmax=upperci, color = condition_label))+
-  #Add f.data points and color them black
-  geom_point()+
-  #Add 'special' points for the summary estimates, by making them diamond shaped
-#  geom_point(f.data=subset(f.dat, tester=='Summary'), color='black', shape=18, size=4)+
-  #add the CI error bars
-  geom_errorbarh(height=.1)+
-  # set the colors to color blind
-    scale_colour_manual(values=cbPalette)+
-  #Specify the limits of the x-axis and relabel it to something more meaningful
-  scale_x_continuous(limits=c(-1.5,1.5), name='Standardized Mean Difference (g)')+
-  #Give y-axis a meaningful label
-  ylab('Reference')+
-  #Add a vertical dashed line indicating an effect size of zero, for reference
-  geom_vline(xintercept=0, color='grey', linetype='dashed')+
-  #Add a vertical line to show mean effect
-  geom_vline(xintercept=0.91, color='black', linetype='dashed')+
-    geom_vline(xintercept=0.25, color='blue', linetype='dashed')+
-  #Create sub-plots (i.e., facets) based on levels of setting
-  #And allow them to have their own unique axes (so authors don't redundantly repeat)
-  #facet_grid(setting~., scales= 'free', space='free')+
-  #Apply my APA theme
-  apatheme+
-      theme(text=element_text(family='Times', size=10),
-            legend.position = "bottom",
-            legend.title = element_blank())
-
-p
-
-  jpeg(filename = "figures/Forest_Plot.jpg", 
-       width = 700, height = 600, units = "px")
-
-  p
-  
-  dev.off()
-
-
-```
-
-
 # Descriptive data
 
 The database contains data from `r length(unique(dat$short_cite))` papers. In the tables below, we provide more descriptive information.
@@ -207,27 +133,6 @@ pub_info <- dat %>%
   summarize(n_unique = n_distinct(short_cite), count = n())
 
 kable(pub_info)
-
-
-pi <- dat[,c("short_cite", "publication_status")]
-pi <- unique(pi)
-
-c.plot <- ggplot(pi, aes(x= publication_status)) + 
-  geom_text(stat='count', aes(label=..count..), vjust=-1, size = 5)+
-  geom_bar(stat="count")+
-  coord_cartesian(ylim = c(0, 30))+
-  apatheme+
-  theme(axis.text.x = element_text(size = 20, angle = -45, hjust = .11),
-        axis.title.x = element_blank())
-
-c.plot
-
-  jpeg(filename = "figures/Pub_count.jpg", 
-       width = 500, height = 500, units = "px")
-
-  c.plot
-  
-  dev.off()
 
 ```
 
@@ -365,31 +270,8 @@ Even the youngest ages in the database (less than 1 year) show mispronunciation 
 youngest <- subset(dat, min_age_1 < 365)
 
 unique(youngest$short_cite)
-youngest$cond_lab <- ifelse(youngest$condition == 1, "Correct", "Mispronunciation")
-
-ggplot(youngest, aes(x=cond_lab, y = g_calc, fill = cond_lab)) + 
-    geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "none",
-        axis.title.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-
-  jpeg(filename = "figures/Youngest.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
+youngest$cond_lab <- ifelse(youngest$condition == 1, "correct", "misp")
+ggplot(youngest, aes(x=cond_lab, y = g_calc, color = cond_lab)) + geom_boxplot()
 
 ```
 
@@ -442,41 +324,6 @@ Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toStr
 (95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
 
 
-### Plot Object Identification
-
-```{r PlotObj_id}
-
-dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
-
-p <- ggplot(dat, aes(condition_label, g_calc, fill = condition_label)) + 
-  geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "none",
-        axis.title.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-#ggsave("figures/AgeEffect_log.jpg", p,height= 7,width= 6)
-
-
-
-  jpeg(filename = "figures/Object_ID.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-
- 
-```
 
 
 ### Mispronunciation Sensitivity effect
@@ -591,16 +438,15 @@ Hedges' g for `rownames(sum_eff)`  was `toString(n_feat$estimate)` (SE = `toStri
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
 p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-  geom_point(aes(size = weights_g),show.legend=FALSE, alpha = .5) + 
+  geom_point(aes(size = weights_g),show.legend=FALSE) + 
   geom_line(y= 0, linetype="dotted") + 
   geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
   scale_colour_manual(values=cbPalette)+
   apatheme +
   theme(legend.title = element_blank(),
-        legend.position = "bottom",
-        text = element_text(size = 40)) + 
+        legend.position = "bottom") + 
   xlab("Age in months") + 
-  ylab("Hedges' g")
+  ylab("Effect size Hedges' g")
   
 p
 
@@ -612,7 +458,7 @@ max(dat$mean_age_1/30.44)
 
 
   jpeg(filename = "figures/AgeEffect_log.jpg", 
-       width = 700, height = 350, units = "px")
+       width = 500, height = 300, units = "px")
 
   p
   
@@ -654,64 +500,6 @@ prodr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_production) & r_productio
 
 metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 ```
-
-
-```{r Vocab_describe1}
-#how did vocabulary collection change over time?
-
-dv <- read.csv("data/vocab_collection.csv", header = T)
-
-years.v <- as.data.frame(seq(from = 2000, to = 2018, by = 1))
-relat.v <- c("no_vocab", "no_relationship", "positive")
-
-fake.v <- merge(years.v, relat.v, all = T)
-names(fake.v) <- c("year", "relationship")
-dat.v <- merge(dv, fake.v, by = c("year", "relationship"), all.y = T)
-dat.v$vocab <- as.character(dat.v$vocab)
-dat.v$relationship <- as.character(dat.v$relationship)
-dat.v$short_cite <- as.character(dat.v$short_cite)
-
-dat.v$vocab[is.na(dat.v$vocab)] <- "none"
-dat.v$short_cite <- ifelse(dat.v$vocab == "none", "none", dat.v$short_cite)
-
-
-dat.v$short_cite[is.na(dat.v$short_cite)] <- "none"
-
-
-dat.v$tested <- ifelse(dat.v$short_cite == "none", "no", "yes")
-
-vocab_data1 <- dat.v %>%
-  group_by(year, relationship, tested) %>%
-  summarize(count = n())
-
-vocab_data1 <- as.data.frame(vocab_data1)
-vocab_data1$count <- ifelse(vocab_data1$tested == "no", 0, vocab_data1$count)
-vocab_data1$year <- as.numeric(vocab_data1$year)
-
-vocab_data1$relationship <- ifelse(vocab_data1$relationship == "no_vocab", "None",
-                                   ifelse(vocab_data1$relationship == "positive", "Predicts",
-                                          "No Relationship"))
-vocab_data1$relationship <- factor(vocab_data1$relationship, levels = c("Predicts", "No Relationship", "None"))
-
-p <- ggplot(vocab_data1, aes(year, count, color = relationship)) + 
-  geom_line() + 
-  geom_point()+
-  scale_y_continuous(breaks = c(0, 1, 2, 3, 4), limits = c(0,4))+
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom")
-p
-
-  jpeg(filename = "figures/Vocab_findings.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
- 
-```
-  
 
 ## Size of Mispronunciation: Measured in Features Changed
 
@@ -975,7 +763,7 @@ Hedges' g for `rownames(sum_eff)` was `toString(sum_eff$estimate)` (SE = `toStri
 
 ### Plot Distractor familiarity and condition
 
-```{r PlotDistFamEffect_NoAge}
+```{r PlotDistFamEffect_condition}
 
 
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
