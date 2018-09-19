@@ -226,6 +226,18 @@ pcurve_app=function(file1,dir1)
   main.results=as.numeric(c(ktot, ksig, khalf, Zppr, p.Zppr, Zpp33, p.Zpp33, Zppr.half, p.Zppr.half, Zpp33.half, p.Zpp33.half))
   write(main.results, paste("STOUFFER_",filek,".txt", sep=""),sep="\n")
   
+  # edit KATIE VON HOLZEN
+  # Sept 18, 2018
+  #pcd <- c(ksig, Zppr, p.Zppr)
+  #npcd <- c("num_sig", "Z", "sig")
+  pcd <- as.data.frame(cbind(ksig, Zppr, p.Zppr))
+  return(pcd)
+  #pcurve.data <- as.data.frame()
+  
+  #return(ksig)
+  #return(Zppr)
+  #return(p.Zppr)
+  
   #3.4 BINOMIAL
   #Observed share of p<.025
   prop25.obs=sum(p<.025)/sum(p<.05)

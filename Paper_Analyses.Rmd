@@ -14,7 +14,25 @@ library(metafor)
 library(meta)
 library(pwr)
 library(knitr)
+library(ggplot2)
 library(wesanderson)
+library(grid)
+library(gridExtra)
+
+# set Table count at 0
+t_num <- 0
+
+# set Figure count at 0
+f_num <- 0
+
+r2 <- function(x){ round(x, 2)}
+
+psig <- function(x){
+  ifelse(x < .0001, "< .0001",
+         ifelse(x < .001, "< .001",
+                ifelse(x < .01, "< .01",
+                       ifelse(x > .01 & x < .05, paste("=", r2(x), sep = " "), paste("=", r2(x), sep = " ")))))
+}
 
 ```
 
@@ -23,7 +41,8 @@ library(wesanderson)
 Read in data and tidy up dataset
 
 ```{r ReadIn,  echo = FALSE}
-#Get the data
+
+#Get the effect size data
 source("scripts/calculateES.R")
 
 ```
@@ -107,7 +126,7 @@ mix_co_mp <- dat[!duplicated(dat[c("short_cite", "word_correct_and_MP")]),]
 
 Plotting defaults
 
-```{r PlotAPATheme}
+```{r PlotAPATheme, echo = FALSE}
 #Themes and plot
 apatheme=theme_bw()+
   theme(panel.grid.major=element_blank(),
@@ -121,86 +140,18 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 
 ```
 
-# Forest Plot
 
-```{r ForestPlot}
+# Methods
 
-#https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-met#a-analysis/
+The present meta-analysis was conducted with maximal transparency and reproducibility in mind. To this end, we provide all data and analysis scripts on the supplementary website (https://osf.io/rvbjs/) and open our meta-analysis up for updates (Tsuji, Bergmann, & Cristia, 2014). In addition, we follow the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines and make the corresponding information available as supplementary materials. (Moher, Liberati, Tetzlaff, Altman & PRISMAGroup, 2009). 
 
-#Rename a bunch of things for ease
-
-f.dat <-
-  dat %>% 
-  rename(cite = short_cite,
-         yi = g_calc,
-         vi = g_var_calc)
-
-#Reorder bibliographic info based on value of g (yi), so effect sizes can be plotted in descending order
-
-f.dat <-
-  f.dat %>% 
-  select(cite, expt_num, same_infant, mean_age_1, yi, vi, condition) %>% 
-  mutate(study_ref = paste(cite, expt_num, same_infant, sep=',')) %>% 
-  arrange(desc(yi))
-
-f.dat$condition_label <- ifelse(f.dat$condition==1, "Correct", "Mispronunciation")
+## Study Selection
+We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list. This process yielded 110 items. We then used the google scholar search engine to search for papers citing the original Swingley & Aslin (2000) publication. This search was conducted on 22 September, 2017 and yielded 288 results. We screened the 398 items, removing 99 duplicate items. We screened remaining 299 items for their title and abstract to determine whether it met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition; (3) infants studied were under 36-months-of-age; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; 5) the stimuli were auditory speech. The final sample (n = *`r length(unique(dat$short_cite))`*) consisted of `r with(dat, n_distinct(short_cite[publication_status == "paper"]))` journal articles, `r with(dat, n_distinct(short_cite[publication_status == "proceedings"]))` proceedings paper, `r with(dat, n_distinct(short_cite[publication_status == "dissertation"]))` thesis, and `r with(dat, n_distinct(short_cite[publication_status == "gray paper"]))` unpublished reports. We will refer to these items collectively as papers. Table 1 (Summary Table) provides an overview of all papers included in the present meta-analysis.
 
 
-#Get standard errors from variances
-f.dat$se = sqrt(f.dat$vi)
-
-#Calculate 95% CI values
-f.dat$lowerci = (-1.96*f.dat$se)+f.dat$yi
-f.dat$upperci = (1.96*f.dat$se)+f.dat$yi
-
-
-
-p <-  ggplot(f.dat, aes(y=reorder(study_ref, -yi), x=yi, xmin=lowerci, xmax=upperci, color = condition_label))+
-  #Add f.data points and color them black
-  geom_point()+
-  #Add 'special' points for the summary estimates, by making them diamond shaped
-#  geom_point(f.data=subset(f.dat, tester=='Summary'), color='black', shape=18, size=4)+
-  #add the CI error bars
-  geom_errorbarh(height=.1)+
-  # set the colors to color blind
-    scale_colour_manual(values=cbPalette)+
-  #Specify the limits of the x-axis and relabel it to something more meaningful
-  scale_x_continuous(limits=c(-1.5,1.5), name='Standardized Mean Difference (g)')+
-  #Give y-axis a meaningful label
-  ylab('Reference')+
-  #Add a vertical dashed line indicating an effect size of zero, for reference
-  geom_vline(xintercept=0, color='grey', linetype='dashed')+
-  #Add a vertical line to show mean effect
-  geom_vline(xintercept=0.91, color='black', linetype='dashed')+
-    geom_vline(xintercept=0.25, color='blue', linetype='dashed')+
-  #Create sub-plots (i.e., facets) based on levels of setting
-  #And allow them to have their own unique axes (so authors don't redundantly repeat)
-  #facet_grid(setting~., scales= 'free', space='free')+
-  #Apply my APA theme
-  apatheme+
-      theme(text=element_text(family='Times', size=10),
-            legend.position = "bottom",
-            legend.title = element_blank())
-
-p
-
-  jpeg(filename = "figures/Forest_Plot.jpg", 
-       width = 700, height = 600, units = "px")
-
-  p
-  
-  dev.off()
-
-
-```
-
-
-# Descriptive data
-
-The database contains data from `r length(unique(dat$short_cite))` papers. In the tables below, we provide more descriptive information.
-
-The next table shows what type of publications were included in our meta-analysis
 ```{r DescriptivesPubtype, echo = FALSE}
+
+t_num <- t_num+1
 
 pub_info <- dat %>%
   group_by(publication_status) %>%
@@ -229,11 +180,37 @@ c.plot
   
   dev.off()
 
+
 ```
 
-## Type of data on which we calculated effect sizes
-The table below shows based on which data we calculated effect sizes.
+## Data Entry
 
+The `r length(unique(dat$short_cite))` papers we identified as relevant were then coded with as much detail as possible (Tsuji, Bergmann, & Cristia, 2014; Bergmann et al., in press). For each experiment (note that a paper typically has multiple experiments), we entered variables describing the publication, population, experiment design and stimuli, and results. For the present analyses, we focus on the following characteristics: 
+1 Condition: Were words mispronounced or not;
+2 Mean age reported per group of infants, in days;
+3 Vocabulary size:  
+4 Size of mispronunciation, measured in features changed;
+5 Distractor familiarity: familiar, unfamiliar;
+6 Phonological overlap between target and distractor: onset, onset/medial, rhyme, none, novel word;
+7 Position of mispronunciation: onset, medial, offset;
+8 Type of mispronunciation: consonant, vowel;
+
+We separated out conditions according to whether or not the target word was mispronounced to be able to investigate both infants' looking to the target picture separated by whether or not words were mispronounced and their mispronunciation sensitivity, which is the difference between looking in correct and mispronounced trials. When the same infants were further exposed to multiple mispronunciation conditions and the results were reported separately in the paper, we also entered each condition as a separate row  (e.g., consonant versus vowel mispronunciations; Mani & Plunkett, 2007).  The fact that the same infants have contributed data to multiple rows (minimally those containing information on correct and mispronounced trials) leads to shared variance across effect sizes, which we account for in our analyses (see next section). We will call each row a record; in total there were `r nrow(dat)` records in our data.
+
+## Data analysis
+
+```{r DescriptivesComparison, echo = FALSE}
+db_ET_correct$within_measure_descriptive <- ifelse(db_ET_correct$within_measure == "post",
+ "post-naming phase compared with chance (=50%)",
+ifelse(db_ET_correct$within_measure == "pre_post", "post-naming compared to pre-naming phase", "post-pre difference score compared with chance (=0)"))
+
+comparison_info <- db_ET_correct %>%
+  group_by(within_measure_descriptive) %>%
+  summarize(n_unique = n_distinct(short_cite), count = n())
+
+kable(comparison_info)
+#table(db_ET_MP$es_method)
+```
 ```{r DescriptivesES, echo = FALSE}
 #how did we calculate effect sizes?
 
@@ -251,342 +228,441 @@ kable(es_info)
 
 ```
 
-## Number of unique infants
+All scripts and raw data are available on Open Science Framework (OSF). INSERT LINK AS FOOTNOTE HERE. Mispronunciation sensitivity studies typically examine infants' proportion of target looks (PTL) in comparison to a baseline measurement. PTL is calculated by dividing the percentage of looks to the target by the total percentage of looks to both the target and distractor images. Across papers the baseline comparison varied; we used the baseline reported by the authors of each paper. Most papers (*n* = `r with(db_ET_correct, n_distinct(short_cite[within_measure == "pre_post_naming_effect"]))`) subtracted the PTL score for the pre-naming phase from the PTL score for the post-naming phase. When interpreting this difference score, a positive value indicates that infants increased their looks to the target after hearing the naming label (correct or mispronounced). Other papers either compared post- and pre-naming PTL with one another (*n* = `r with(db_ET_correct, n_distinct(short_cite[within_measure == "pre_post"]))`) or compared post-naming PTL with chance (50%, (*n* = `r with(db_ET_correct, n_distinct(short_cite[within_measure == "post"]))`)). For these comparisons, a positive difference score or a post-naming phase PTL score that is greater than the pre-naming phase PTL or chance indicate target looks that indicate object recognition after hearing the naming label.
 
-```{r DescriptivesInfnum, echo = FALSE}
+We report effect sizes for infants' looks to target pictures after hearing a correctly pronounced or mispronounced label (object identification) as well as the difference between effect sizes for correct and mispronounced trials (mispronunciation sensitivity). The effect size we report in the present paper are based on comparison of means, standardized by their variance. The most well-known effect size from this group is Cohen's *d* (Cite cohen). To correct for the small sample sizes common in infant research, however, we use as a dependent variable Hedges' *g* instead of Cohen's *d* (Hedges, 1981; Morris, 2000). 
 
-infnum_info <- dat[,c("unique_ID", "same_infant", "expt_num", "n_1")]
-infnum_info <- unique(infnum_info)
+No authors made their raw data available. Instead, we calculated Hedges' *g* using the raw means and standard deviations reported in the paper (*n* = `r with(dat, n_distinct(short_cite[es_method == "group_means_one" | es_method == "group_means_two"]))`) or using reported t-values (*n* = `r with(dat, n_distinct(short_cite[es_method == "t_one" | es_method == "t_two"]))`). Raw means and standard deviations were extracted from figures for `r with(dat, n_distinct(short_cite[ x_from_graph == "yes"]))` papers. In a within-participation design, when two means are compared (i.e. looking during pre- and post-naming) it is necessary to obtain correlations between the two measurements at the participant level to calculate effect sizes and effect size variance based on t-values. One paper reported this correlation, while we were able to compute correlations using means, standard deviations, and t-values (following Csibra, et al. 2016, Appendix B; see also Rabagliati, Ferguson, & Lew-Williams, submitted). Correlations were imputed for the remaining papers (see Black & Bergmann, 2017, for the same procedure). We computed a total of `r sum(dat$is_mp == 0)` effect sizes for correct pronunciations and `r sum(dat$is_mp == 1)` for mispronunciations.
 
-number_of_infants <- sum(infnum_info$n_1)
+To take into account the fact that the same infants contributed to multiple datapoints, we analyze our results in a multilevel approach using the R (R citation) package metafor (Viechtbauer, 20XX, Multulevel reference). This means we model as random effect that effect sizes from the same paper share are based on more similar studies than those across papers and that nested therein effects can stem from the same infants. 
 
+## Publication Bias
 
-```
+In the psychological sciences, there is a documented reluctance to publish null results. As a result, there is a potential for significant results to be valued over non-significant results (see Ferguson & Heene, 2012). To examine whether this is also the case in the mispronunciation sensitivity literature, which would bias the data analyzed in this meta-analysis, we conduct two tests. We first examine whether effect sizes are distributed as expected based on sampling error using the rank correlation test of funnel plot asymmetry with the R (R Core Team, 2016) package metafor (Viechtbauer, 2010). Effect szes with low-variance are closer to the estimated mean, while effect sizes with high-variance show an increased, evenly-distributed spread around the estimated mean. Second, we analyze all of the significant results in the dataset using a p-curve from the p-curve app (v4.0, p-curve.com; Simonsohn, Simmons, & Nelson, 2014). This tests for evidential value by examining whether the p-values have an expected distribution, regardless of whether the null hypothesis is true or not, as well as whether there is a larger proportion of p-values just below the typical alpha threshold of .05, which may indicate questionable research practices. Responses to correctly pronounced and mispronounced labels are predicted to show different patterns of looking behavior; as a result, we conduct these two analyses to assess publication bias separately for both conditions.
 
-The database contains data from `r number_of_infants` unique infants.
+## Meta-analysis
 
-## Number of unique experimental conditions
+The models reported are hierarchical random-effects models (infant groups nested within papers) of variance-weighted effect sizes with the R (R Core Team, 2016) package metafor
+(Viechtbauer, 2010). To investigate how development impacts mispronunciation sensitivity, our core theoretical investigation, we introduce age (centered; in days but transformed into months for ease of reading by dividing by 30.44) as a moderator to our main model. For the subsequent investigations of experimental characteristics, we introduce each characteristic as a moderator (more detail below).
 
-```{r DescriptivesExpCond, echo = FALSE}
+# Results
 
-condnum_info <- dat[,c("unique_ID", "same_infant", "expt_num", "expt_condition")]
-condnum_info <- unique(condnum_info)
+## Publication Bias
 
-number_of_cond <- nrow(condnum_info)
+```{r FunnelPlotAsymm_correct, echo = FALSE}
 
-
-```
-
-The database contains data from `r number_of_cond` unique experimental conditions
-
-
-## Type of comparison of the time-course data calculated
-We also have different ways of comparison of the time-course data, as the next table shows.
-
-```{r DescriptivesComparison, echo = FALSE}
-db_ET_correct$within_measure_descriptive <- ifelse(db_ET_correct$within_measure == "post",
- "post-naming phase compared with chance (=50%)",
-ifelse(db_ET_correct$within_measure == "pre_post", "post-naming compared to pre-naming phase", "post-pre difference score compared with chance (=0)"))
-
-
-comparison_info <- db_ET_correct %>%
-  group_by(within_measure_descriptive) %>%
-  summarize(n_unique = n_distinct(short_cite), count = n())
-
-
-kable(comparison_info)
-#table(db_ET_MP$es_method)
-```
-
-## Type of distractor
-This is a summary of the type of distractor used in an experiment
-
-```{r DescriptivesDISTRACT, echo = FALSE}
-#What kind of distractor was used?
-
-distr_info <- distract_dat %>%
-  group_by(object_pair) %>%
-  summarize(count = n())
-
-
-kable(distr_info)
+rma_correct = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = ~ collapse | short_cite)
+# Publication bias can become visible in funnel plot asymmetry. 
+# Metafor comes with several options to check this, I chose ranktest and regtest
+# correct object identification
+rmac <- ranktest(rma_correct)
+#rmac
 
 ```
 
-## Whether word was pronounced both correctly as well as mispronounced
-This is a summary of whether an experiment had both correct and mispronounced versions of the word in the experiment
+```{r FunnelPlotAsymm_misp, echo=FALSE}
 
-```{r DescriptivesCoMp, echo = FALSE}
-#What kind of distractor was used?
+rma_MP = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = ~ collapse | short_cite)
 
-mix_info <- mix_co_mp %>%
-  group_by(word_correct_and_MP) %>%
-  summarize(count = n())
+# mispronounced object identification
+rmam <- ranktest(rma_MP)
+#rmam
+```
 
+Figure 1 plots the funnel plots for object identification for both correct pronunciations and mispronunciations (code adapted from Sakaluk, 2016). Funnel plot assymmetry was significant for both correct pronunciations (Kendall's $\tau$ = `r r2(rmac$tau)`, *p* `r psig(rmac$pval)`) and mispronunciations (Kendall's $\tau$ = `r r2(rmam$tau)`, *p* `r psig(rmam$pval)`). These results, in conjunction with the assymmetric funnel plot (Figure 1) indicate bias in the literature. This is particularly evident for correct pronunciations, where larger effect sizes have greater variance (bottom right corner) and there are a smaller number of more precise effect sizes (i.e. smaller variance) than expected (top left, outside the triangle).
 
-kable(mix_info)
+```{r FunnelPrep, echo = FALSE}
+### Plots adapted from Sakaluk, 2016, see also Black & Bergmann, 2017
+### https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-meta-analysis/
+
+#Themes and plot
+funnel_theme=theme_bw()+
+  theme(#panel.grid.major=element_blank(),
+    #panel.grid.minor=element_blank(),
+    #panel.border=element_blank(),
+    axis.line=element_line(),
+    text=element_text(family='Times', size=22),
+    legend.position='none')
 
 ```
 
-## Size of analysis time window
+```{r FunnelCorrect, echo = FALSE}
 
-Where possible, we noted the time window for analysis. First, let's look at the offset (in milliseconds) after the start of the word, i.e. the begin of a give analysis window for a naming effect
+#Rename a bunch of things for ease
+dat_co = db_ET_correct
+#dat_co=db_ET_correct
+dat_co <-
+  dat_co %>% 
+  rename(cite = short_cite,
+         yi = g_calc,
+         vi = g_var_calc)
 
-```{r TimeWindowOffset}
-offset_info <- time_wind_dat %>%
-  group_by(offset) %>%
-  summarize(count = n())
+#Reorder bibliographic info based on value of g (yi), so effect sizes can be plotted in descending order
+
+dat_co <-
+  dat_co %>% 
+  select(cite, expt_num, same_infant, mean_age_1, yi, vi) %>% 
+  mutate(study_ref = paste(cite, expt_num, same_infant, sep=',')) %>% 
+  arrange(desc(yi))
+
+#Get standard errors from variances
+dat_co$se = sqrt(dat_co$vi)
+
+#Calculate 95% CI values
+dat_co$lowerci = (-1.96*dat_co$se)+dat_co$yi
+dat_co$upperci = (1.96*dat_co$se)+dat_co$yi
 
 
-kable(offset_info)
+#Store the meta-analytic estimate and its standard error from whatever model you run
+#summary(rma_correct)
+estimate_co = coef(summary(rma_correct))$estimate
+se_co = coef(summary(rma_correct))$se
+
+#Store a vector of values that spans the range from 0
+#to the max value of impression (standard error) in your dataset.
+#Make the increment (the final value) small enough (I choose 0.001)
+#to ensure your whole range of data is captured
+se.seq_co=seq(0, max(dat_co$se), 0.001)
+
+#Now, compute vectors of the lower-limit and upper limit values for
+#the 95% CI region, using the range of SE that you generated in the previous step, 
+#and the stored value of your meta-analytic estimate.
+ll95_co = estimate_co-(1.96*se.seq_co)
+ul95_co = estimate_co+(1.96*se.seq_co)
+
+#You can do this for a 99% CI region too
+ll99_co = estimate_co-(3.29*se.seq_co)
+ul99_co = estimate_co+(3.29*se.seq_co)
+
+#And finally, do the same thing except now calculating the confidence interval
+#for your meta-analytic estimate based on the stored value of its standard error
+meanll95_co = estimate_co-(1.96*se_co)
+meanul95_co = estimate_co+(1.96*se_co)
+
+#Now, smash all of those calculated values into one data frame (called 'dfCI').
+#You might get a warning about '...row names were found from a short variable...'
+#You can ignore it.
+dfCI_co = data.frame(ll95_co, ul95_co, ll99_co,
+                  ul99_co, se.seq_co, estimate_co, meanll95_co, meanul95_co)
+
+#Now we can actually make the funnel plot.
+#Using your original data-frame, map standard error to your x-axis (for now) and Zr to your y-axis
+fp_co = ggplot(aes(x = se, y = yi), data = dat_co) +
+  #Regression line for the FP asymmetry
+  geom_smooth(aes(x = se, y = yi), method = "lm", colour = "darkgrey", alpha = .5, se = FALSE, data = dat_co) +
+  #Add your data-points to the scatterplot
+  geom_point(size = 2.5, colour="black") +
+  #
+  #Give the x- and y- axes informative labels
+  xlab('Standard Error') + ylab('Hedge\'s g')+
+  # give it a title
+    ggtitle("Correct") +
+    # make sure both plots have same scale
+    # still ylim because we haven't flipped yet
+    #coord_cartesian(ylim = c(0.5, 0))+
+  #Now using the 'dfCI' data-frame we created, plot dotted lines corresponding
+  #to the lower and upper limits of your 95% CI region
+  #And dashed lines corresponding to your 99% CI region
+  #Add lines corresponding to 0 and estimate
+  geom_line(aes(x = se.seq_co, y = 0), linetype = 'solid', data = dfCI_co) +
+  geom_line(aes(x = se.seq_co, y = estimate_co), linetype = 'dashed', data = dfCI_co) +
+  geom_line(aes(x = se.seq_co, y = ll95_co), linetype = 'dotted', data = dfCI_co) +
+  geom_line(aes(x = se.seq_co, y = ul95_co), linetype = 'dotted', data = dfCI_co) +
+  #  geom_line(aes(x = se.seq, y = ll99), linetype = 'dashed', data = dfCI) +
+  #  geom_line(aes(x = se.seq, y = ul99), linetype = 'dashed', data = dfCI) +
+  #Now plot dotted lines corresponding to the 95% CI of your meta-analytic estimate
+  #geom_segment(aes(x = min(se.seq), y = meanll95, xend = max(se.seq), yend = meanll95), linetype='dotted', data=dfCI) +
+  #geom_segment(aes(x = min(se.seq), y = meanul95, xend = max(se.seq), yend = meanul95), linetype='dotted', data=dfCI) +
+  #Reverse the x-axis ordering (se) so that the tip of the funnel will appear
+  #at the top of the figure once we swap the x- and y-axes...
+  scale_x_reverse()+
+  #Specify the range and interval for the tick-marks of the y-axis (Zr);
+  #Choose values that work for you based on your data
+  #scale_y_continuous(breaks=seq(-.45,0.8,0.25))+
+  #And now we flip the axes so that SE is on y- and Zr is on x-
+  coord_flip()+
+  #Finally, apply my APA-format theme (see code at end of post).
+  #You could, alternatively, specify theme_bw() instead.
+  funnel_theme
+
+#Call the pretty funnel plot
+#fp_co
+#ggsave("figures/FunnelPlot_correct.pdf")
 
 ```
 
-## Duration of post naming window
-Next we look at duration (in seconds) of the post naming window, here,too, we see a lot of heterogeneity.
+```{r FunnelMisp, echo = FALSE}
 
-```{r TimeWindowduration}
-duration_info <- db_ET_correct %>%
-  group_by(post_nam_dur) %>%
-  summarize(count = n())
-
-
-kable(duration_info)
-
-```
-
-In summary, we see little consistency in analysis methods of comparable studies looking at naming and mispronunciation effects. 
-
-
-## Mispronunciation Sensitivity in the youngest ages
-Even the youngest ages in the database (less than 1 year) show mispronunciation sensitivity
-
-```{r YoungAge, echo = FALSE}
-youngest <- subset(dat, min_age_1 < 365)
-
-unique(youngest$short_cite)
-youngest$cond_lab <- ifelse(youngest$condition == 1, "Correct", "Mispronunciation")
-
-ggplot(youngest, aes(x=cond_lab, y = g_calc, fill = cond_lab)) + 
-    geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "none",
-        axis.title.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
+  #Rename a bunch of things for ease
+dat_mp = db_ET_MP  
+#dat_mp=db_ET_MP
+  dat_mp <-
+    dat_mp %>% 
+    rename(cite = short_cite,
+           yi = g_calc,
+           vi = g_var_calc)
   
-p
-
-
-
-  jpeg(filename = "figures/Youngest.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
+  #Reorder bibliographic info based on value of g (yi), so effect sizes can be plotted in descending order
   
+  dat_mp <-
+    dat_mp %>% 
+    select(cite, expt_num, same_infant, mean_age_1, yi, vi) %>% 
+    mutate(study_ref = paste(cite, expt_num, same_infant, sep=',')) %>% 
+    arrange(desc(yi))
+  
+  #Get standard errors from variances
+  dat_mp$se = sqrt(dat_mp$vi)
+  
+  #Calculate 95% CI values
+  dat_mp$lowerci = (-1.96*dat_mp$se)+dat_mp$yi
+  dat_mp$upperci = (1.96*dat_mp$se)+dat_mp$yi
+  
+  
+  #Store the meta-analytic estimate and its standard error from whatever model you run (substitute your own values)
+  #summary(rma_MP)
+  estimate_mp = coef(summary(rma_MP))$estimate
+  se_mp = coef(summary(rma_MP))$se
+  
+  #Store a vector of values that spans the range from 0
+  #to the max value of impression (standard error) in your dataset.
+  #Make the increment (the final value) small enough (I choose 0.001)
+  #to ensure your whole range of data is captured
+  se.seq_mp=seq(0, max(dat_mp$se), 0.001)
+  
+  #Now, compute vectors of the lower-limit and upper limit values for
+  #the 95% CI region, using the range of SE that you generated in the previous step, 
+  #and the stored value of your meta-analytic estimate.
+  ll95_mp = estimate_mp-(1.96*se.seq_mp)
+  ul95_mp = estimate_mp+(1.96*se.seq_mp)
+  
+  #You can do this for a 99% CI region too
+  ll99_mp = estimate_mp-(3.29*se.seq_mp)
+  ul99_mp = estimate_mp+(3.29*se.seq_mp)
+  
+  #And finally, do the same thing except now calculating the confidence interval
+  #for your meta-analytic estimate based on the stored value of its standard error
+  meanll95_mp = estimate_mp-(1.96*se_mp)
+  meanul95_mp = estimate_mp+(1.96*se_mp)
+  
+  #Now, smash all of those calculated values into one data frame (called 'dfCI').
+  #You might get a warning about '...row names were found from a short variable...'
+  #You can ignore it.
+  dfCI_mp = data.frame(ll95_mp, ul95_mp, ll99_mp,
+                       ul99_mp, se.seq_mp, estimate_mp, meanll95_mp, meanul95_mp)
+  
+  #Now we can actually make the funnel plot.
+  #Using your original data-frame, map standard error to your x-axis (for now) and Zr to your y-axis
+  fp_mp = ggplot(aes(x = se, y = yi), data = dat_mp) +
+    #Regression line for the FP asymmetry
+    geom_smooth(aes(x = se, y = yi), method = "lm", colour = "darkgrey", alpha = .5, se = FALSE, data = dat_mp) +
+    #Add your data-points to the scatterplot
+    geom_point(size = 2.5, colour="black") +
+    #
+  #Give the x- and y- axes informative labels
+  xlab('Standard Error') + 
+    # remove y label because it will be combined with the other funnel plot
+    ylab('Hedge\'s g')+
+    # give it a title
+    ggtitle("Mispronunciation") +
+    # make sure both plots have same scale
+    # still xlim because we haven't flipped yet
+    #coord_cartesian(xlim = c(0.5, 1))+
+    #Now using the 'dfCI' data-frame we created, plot dotted lines corresponding
+    #to the lower and upper limits of your 95% CI region
+    #And dashed lines corresponding to your 99% CI region
+    #Add lines corresponding to 0 and estimate
+    geom_line(aes(x = se.seq_mp, y = 0), linetype = 'solid', data = dfCI_mp) +
+    geom_line(aes(x = se.seq_mp, y = estimate_mp), linetype = 'dashed', data = dfCI_mp) +
+    geom_line(aes(x = se.seq_mp, y = ll95_mp), linetype = 'dotted', data = dfCI_mp) +
+    geom_line(aes(x = se.seq_mp, y = ul95_mp), linetype = 'dotted', data = dfCI_mp) +
+    #  geom_line(aes(x = se.seq, y = ll99), linetype = 'dashed', data = dfCI) +
+    #  geom_line(aes(x = se.seq, y = ul99), linetype = 'dashed', data = dfCI) +
+    #Now plot dotted lines corresponding to the 95% CI of your meta-analytic estimate
+    #geom_segment(aes(x = min(se.seq), y = meanll95, xend = max(se.seq), yend = meanll95), linetype='dotted', data=dfCI) +
+    #geom_segment(aes(x = min(se.seq), y = meanul95, xend = max(se.seq), yend = meanul95), linetype='dotted', data=dfCI) +
+    #Reverse the x-axis ordering (se) so that the tip of the funnel will appear
+    #at the top of the figure once we swap the x- and y-axes...
+    scale_x_reverse()+
+    #Specify the range and interval for the tick-marks of the y-axis (Zr);
+    #Choose values that work for you based on your data
+    #scale_y_mpntinuous(breaks=seq(-.45,0.8,0.25))+
+    #And now we flip the axes so that SE is on y- and Zr is on x-
+    coord_flip()+
+    #Finally, apply my APA-format theme (see previous).
+    #You could, alternatively, specify theme_bw() instead.
+    funnel_theme +
+    theme(axis.title.y = element_blank())
+  
+  #Call the pretty funnel plot
+  #fp_mp
+#  ggsave("figures/FunnelPlot_misp.pdf")
+
+```
+
+## Figure 1
+
+```{r FunnelCombo, echo = FALSE}
+
+
+  jpeg(filename = "figures/Figure_1_Funnel_Plots_Object_Identification.jpg", 
+       width = 600, height = 400, units = "px")
+  
+  p <-   grid.arrange(fp_co, fp_mp, nrow = 1)
+                      #top = textGrob("Object Identification", gp=gpar(fontsize=25)))
+                      #top = "Figure 1. Funnel Plots")
   dev.off()
 
+    grid.draw(p)
+  
 ```
 
 
-# Meta-Analysis
+```{r PcurveExport, echo = FALSE}
 
-## Condition: Mispronunciation Sensitivity Effects
+textfile_co = "p_curve_app/p_curve_co.txt"
 
-### Correct object identification effect
+# make sure the file is made new with our loop
+if (file.exists(textfile_co)) {file.remove(textfile_co)}
+
+for(line in 1:length(db_ET_correct$n_1)){
+  if(!is.na(db_ET_correct[line,]$t)){
+    newline = paste("t(", db_ET_correct[line,]$n_1-1, ")=",db_ET_correct[line,]$t, sep = "")
+    write(newline, file = textfile_co, append = TRUE)
+    #cat("\n")
+    #write(newline, file = textfile, append = TRUE)    
+  }
+}
+
+textfile_mp = "p_curve_app/p_curve_mp.txt"
+
+# make sure the file is made new with our loop
+if (file.exists(textfile_mp)) {file.remove(textfile_mp)}
+
+for(line in 1:length(db_ET_MP$n_1)){
+  if(!is.na(db_ET_MP[line,]$t)){
+    newline = paste("t(", db_ET_MP[line,]$n_1-1, ")=",db_ET_MP[line,]$t, sep = "")
+    write(newline, file = textfile_mp, append = TRUE)
+    #cat("\n")
+    #write(newline, file = textfile, append = TRUE)    
+  }
+}
+
+```
+
+```{r ReadIn_pcurve_app,  echo = FALSE}
+
+curdir <- getwd()
+
+#Get the effect size data
+source("scripts/p_curve_app_code.R")
+
+# this gives the number of significant results
+# the Z value
+# and the significance
+pcd_correct <- pcurve_app("p_curve_co.txt",paste0(curdir, "/p_curve_app"))
+
+pcd_misp <- pcurve_app("p_curve_mp.txt",paste0(curdir, "/p_curve_app"))
+
+```
+
+We next examined the p-curves for significant values from the correctly pronounced and mispronounced conditions. The p-curve based on `r pcd_correct$ksig` statistically significant values for correct pronunciations indicates that the data contain evidential value (Z = `r r2(pcd_correct$Zppr)`, p `r psig(pcd_correct$p.Zppr)`) and there is no evidence of a large proportion of p-values just below the typical alpha threshold of .05. The p-curve based on `r pcd_misp$ksig` statistically significant values for mispronunciations indicates that the data contain evidential value (Z = `r r2(pcd_misp$Zppr)`, p `r psig(pcd_misp$p.Zppr)`) and there is no evidence of a large proportion of p-values just below the typical alpha threshold of .05.
+
+Taken together, these results suggest a tendency in the literature towards publication bias. As a result, our meta-analysis may systematically overestimate effect sizes and we therefore interpret all estimates with caution. The funnel plot asymmetry may also reflect heterogeneity in the data, perhaps due to some studies investigating more subtle effects than other studies. Yet, the p-curve analysis suggests that overall, the literature contains evidential value, reflecting a "real" effect. We therefore continue our meta-analysis.
+
+## Meta-analysis
+
+### Object Identification for Correct and Mispronounced Words
 
 ```{r MAcorrect}
 
 rma_correct = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = ~ collapse | short_cite)
 
-summary(rma_correct)
-
+#summary(rma_correct)
 #kable(round(coef(summary(rma_correct)), 2))
 
-#aov.type <- anova(rma_correct)
-
-sum_eff <- round(coef(summary(rma_correct))[1,], 2)
+sum_eff <- coef(summary(rma_correct))[1,]
 
 ```
 
-
-Correct pronunciations were significantly greater than 0:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-
-
-### Mispronunciation object identification effect
+We first calculated the meta-analytic effect for object identification in response to correctly pronounced words. The variance-weighted meta-analytic effect size Hedges’ *g* was `r r2(sum_eff$estimate)` (SE = `r r2(sum_eff$se)`) which was significantly different from zero (95% CI [`r r2(sum_eff$ci.lb)`, `r r2(sum_eff$ci.ub)`], p `r psig(sum_eff$pval)`). This is a rather large effect size (according to the criteria set by Cohen, 1988; see also Bergmann, et al., 2018; for comparative meta-analytic effect sizes in language acquisition research) and that it is significantly above zero suggests that when presented with the correctly pronounced label, infants fixated the corresponding object. Our analysis of funnel plot asymmetry, however, found evidence for publication. Although the effect size Hedges' *g* may be overestimated for object identification in response to correctly pronounced words, the p-curve results and a CI lower bound of `r r2(sum_eff$ci.lb)` suggests that this result is robust even when correcting for publication bias.
 
 ```{r MAMP}
 
 rma_MP = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = ~ collapse | short_cite)
 
-summary(rma_MP)
+#summary(rma_MP)
 
-sum_eff <- round(coef(summary(rma_MP))[1,], 2)
+sum_eff <- coef(summary(rma_MP))[1,]
 
 ```
 
+We then calculated the meta-analytic effect for object identification in response to mispronounced words. In this case, the variance-weighted meta-analytic effect size Hedges’ g was `r r2(sum_eff$estimate)` (SE = `r r2(sum_eff$se)`) which was also significantly different from zero (95% CI [`r r2(sum_eff$ci.lb)`, `r r2(sum_eff$ci.ub)`], p `r psig(sum_eff$pval)`). This is considered a small effect size (Cohen, 1988), but significantly above zero, which suggests that even when presented with a mispronounced label, infants fixated the correct object. We again note the publication bias (which was smaller in this condition), and the possibility that the effect size Hedges' *g* may be overestimated. But, as the p-curve indicated evidential value, we are confident in this result as well.
 
-Mispronunciations were significantly greater than 0:
+Heterogeneity was significant for both correctly pronounced (Q(103) = `r r2(rma_correct$QE)`, p `r psig(rma_correct$QEp)`) and mispronounced words, (Q(146) = `r r2(rma_MP$QE)`, p `r psig(rma_MP$QEp)`). This indicated that the sample contains unexplained variance leading to significant difference across our studies beyond what is to be expected based on random sampling error.
 
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-### Plot Object Identification
-
-```{r PlotObj_id}
-
-dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
-
-p <- ggplot(dat, aes(condition_label, g_calc, fill = condition_label)) + 
-  geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "none",
-        axis.title.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-#ggsave("figures/AgeEffect_log.jpg", p,height= 7,width= 6)
-
-
-
-  jpeg(filename = "figures/Object_ID.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-
- 
-```
-
-
-### Mispronunciation Sensitivity effect
+### Mispronunciation Sensitivity Meta-analytic Effect
 
 ```{r MPEffect}
 
 rma_MPeffect <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = ~ collapse | short_cite)
   
-summary(rma_MPeffect)  
+#summary(rma_MPeffect)  
 
 #rma_MPeffect_1 <- rma.mv(g_calc, g_var_calc, mods = ~condition-1, data = dat, random = ~ collapse | short_cite)
   
 #summary(rma_MPeffect_1)  
 
-
-aov.type <- anova(rma_MPeffect)
-
-sum_eff <- round(coef(summary(rma_MPeffect))[2,], 2)
+sum_eff <- coef(summary(rma_MPeffect))[2,]
 
 ```
 
-The moderator test was significant:
-`print(aov.feat)`
+The above two analyses considered the data from mispronounced and correctly pronounced words separately. To evaluate mispronunciation sensitivity, we then compared the effect size Hedges’ *g* for correct pronunciations with mispronunciations, merging the two datasets. The moderator test was significant, QM(`r r2(rma_MPeffect$m)`) = `r r2(rma_MPeffect$QM)`, p `r psig(rma_MPeffect$QMp)`.  Hedges’ *g* for mispronunciation sensitivity was `r r2(sum_eff$estimate)` (SE = `r r2(sum_eff$se)`), which indicated that the two type of responses were significantly different from one another (95% CI [`r r2(sum_eff$ci.lb)`, `r r2(sum_eff$ci.ub)`], p `r psig(sum_eff$pval)`). This confirms that although infants fixate the correct object for both correct pronunciations and mispronunciations, the observed fixations to target (as measured by the effect sizes) were significantly greater for correct pronunciations. In other words, we observe a significant difference between the two conditions and can now quantify the modulation of fixation behavior in terms of standardized effect sizes.
 
-
-There was a significant effect of condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
-(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
-
-
-## Age: Mispronunciation Sensitivity Effects with Age Moderators
-
-### Correct object identification effect with age moderator
+### Object Recognition and Mispronunciation Sensitivity Modulated by Age
 
 ```{r MAcorrect_age}
 
 rma_correct_age = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_correct, random = ~ collapse | short_cite)
 
-summary(rma_correct_age)
+#summary(rma_correct_age)
 #kable(round(coef(summary(rma_correct_age)), 2))
+#aov.type <- anova(rma_correct_age)
 
-aov.type <- anova(rma_correct_age)
-
-sum_eff <- round(coef(summary(rma_correct_age))[2,], 2)
+Csum_eff <- coef(summary(rma_correct_age))[2,]
 
 ```
-
-The moderator test was not significant:
-`print(aov.feat)`
-
-
-There was no significant effect of age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
-(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
-
-
-### Mispronunciation object identification effect with age moderator
 
 
 ```{r MAMP_age}
 
 rma_MP_age = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_MP, random = ~ collapse | short_cite)
 
-summary(rma_MP_age)
+#summary(rma_MP_age)
+#aov.type <- anova(rma_MP_age)
 
-aov.type <- anova(rma_MP_age)
-
-sum_eff <- round(coef(summary(rma_MP_age))[2,], 2)
+Msum_eff <- coef(summary(rma_MP_age))[2,]
 
 ```
 
-The moderator test was not significant:
-`print(aov.feat)`
-
-
-There was no significant effect of age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
-(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
-
-
-### Mispronunciation Sensitivity effect with age moderator
+To evaluate the different predictions for how mispronunciation sensitivity will change as infants develop, we next added the moderator age (centered, in days). In the first analyses, we investigate the impact of age separately on conditions where words were either pronounced correctly or not. Age did not significantly modulate object identification in response to correctly pronounced (QM(`r r2(rma_correct_age$m)`) = `r r2(rma_correct_age$QM)`, p `r psig(rma_correct_age$QMp)`) or mispronounced words (QM(`r r2(rma_MP_age$m)`) = `r r2(rma_MP_age$QM)`, p `r psig(rma_MP_age$QMp)`). The lack of a significant modulation indicates that there was no relationship between age and target looks in response to a correctly pronounced or mispronounced label. This relationship is plotted in Figure 2.
 
 ```{r MPEffect_age}
 
 rma_MPeffect_age <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition, data = dat, random = ~ collapse | short_cite)
   
-summary(rma_MPeffect_age)  
+# summary(rma_MPeffect_age)  
+# 
+# aov.type <- anova(rma_MPeffect_age)
 
-aov.type <- anova(rma_MPeffect_age)
-
-sum_eff <- round(coef(summary(rma_MPeffect_age))[4,], 2)
+sum_eff <- coef(summary(rma_MPeffect_age))[4,]
 
 ```
 
-The moderator test was significant:
-`print(aov.feat)`
+We then examined the interaction between age and mispronunciation sensitivity (correct vs. mispronounced words) in our whole dataset. The moderator test was significant (QMQM(`r r2(rma_MPeffect_age$m)`) = `r r2(rma_MPeffect_age$QM)`, p `r psig(rma_MPeffect_age$QMp)`). The interaction between age and mispronunciation sensitivity, however, was not significant $\beta$ = `r r2(sum_eff$estimate)`, (SE = `r r2(sum_eff$se)`, 95% CI [`r r2(sum_eff$ci.lb)`, `r r2(sum_eff$ci.ub)`], p `r psig(sum_eff$pval)`), suggesting that as infants age, their mispronunciation sensitivity remains the same.
 
+## Figure 2
 
-There was no significant interaction between condition and age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
-(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
-
-
-### Plot Mispronunciation Effect by Age (color)
-
-```{r PlotMPEffect}
+```{r PlotMPEffect, echo = FALSE}
 
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
@@ -604,15 +680,15 @@ p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) +
   
 p
 
-min(dat$mean_age_1/30.44)
-max(dat$mean_age_1/30.44)
+# min(dat$mean_age_1/30.44)
+# max(dat$mean_age_1/30.44)
 
 #ggsave("figures/AgeEffect_log.jpg", p,height= 7,width= 6)
 
 
 
-  jpeg(filename = "figures/AgeEffect_log.jpg", 
-       width = 700, height = 350, units = "px")
+  jpeg(filename = "figures/Figure_2_AgeEffect.jpg", 
+       width = 700, height = 400, units = "px")
 
   p
   
@@ -622,1354 +698,66 @@ max(dat$mean_age_1/30.44)
 
 ```
 
+### Vocabulary Size: Correlation Between Mispronunciation Sensitivity and Vocabulary
 
-## Vocabulary size: Correlation between mispronunciation sensitivity and vocabulary
-
-First, let's take a look at which vocabulary data we have available.
-
-```{r VocabularyData}
+```{r VocabularyData, echo = FALSE}
 vocab_info <- db_ET_correct %>%
   mutate(has_vocab = ifelse(!is.na(r_comprehension), "comprehension", 
                             ifelse(!is.na(r_production), "production", "none"))) %>%
   group_by(has_vocab) %>%
-  summarize(count = n())
+  summarize(count = n(),
+            papers = n_distinct(short_cite))
   
-kable(vocab_info)
+#kable(vocab_info)
+
+vocab_info2 <- db_ET_correct %>%
+  mutate(has_vocab = ifelse(!is.na(r_comprehension) | !is.na(r_production), "vocab", 
+                            "none")) %>%
+  group_by(has_vocab) %>%
+  summarize(count = n(),
+            papers = n_distinct(short_cite))
+
+vi1 <- as.data.frame(vocab_info)
+vi2 <- as.data.frame(vocab_info2)
 
 ```
 
-We have 17 correlations, roughly evenly divided between comprehension and production data. There is reason to believe that production data are different from comprehension data (the former being easier to estimate for parents in the typical questionnaire-based assessment), so we should both analyze this data separately and see whether it makes sense in a joint analysis.
+Of the `r n_distinct(dat$short_cite)` papers included in the meta-analysis, `r with(vi2, papers[has_vocab == "vocab"])` (comprehension = `r with(vi1, papers[has_vocab == "comprehension"])` papers; production = `r with(vi1, papers[has_vocab == "production"])`) analyzed the relationship between vocabulary scores and mispronunciation sensitivity. There is reason to believe that production data are different from comprehension data (the former being easier to estimate for parents in the typical questionnaire-based assessment), so we analyze this data separately.
 
-
-```{r ComprehensionMeta}
+```{r ComprehensionMeta_correct}
 #we're relying on the library meta function metacor
 compr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_comprehension) & r_comprehension > -1)
 
 metacor(cor=r_comprehension, n=n_1, studlab = short_cite, data = compr, sm = "COR")
 ```
 
-```{r ProductionMeta}
+```{r ProductionMeta_correct}
 #we're relying on the library meta function metacor
 prodr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_production) & r_production < 1)
 
 metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 ```
 
+```{r ComprehensionMeta_MP}
+#we're relying on the library meta function metacor
+compr  <- subset(db_ET_MP, !is.na(db_ET_MP$r_comprehension) & r_comprehension > -1)
 
-```{r Vocab_describe1}
-#how did vocabulary collection change over time?
-
-dv <- read.csv("data/vocab_collection.csv", header = T)
-
-years.v <- as.data.frame(seq(from = 2000, to = 2018, by = 1))
-relat.v <- c("no_vocab", "no_relationship", "positive")
-
-fake.v <- merge(years.v, relat.v, all = T)
-names(fake.v) <- c("year", "relationship")
-dat.v <- merge(dv, fake.v, by = c("year", "relationship"), all.y = T)
-dat.v$vocab <- as.character(dat.v$vocab)
-dat.v$relationship <- as.character(dat.v$relationship)
-dat.v$short_cite <- as.character(dat.v$short_cite)
-
-dat.v$vocab[is.na(dat.v$vocab)] <- "none"
-dat.v$short_cite <- ifelse(dat.v$vocab == "none", "none", dat.v$short_cite)
-
-
-dat.v$short_cite[is.na(dat.v$short_cite)] <- "none"
-
-
-dat.v$tested <- ifelse(dat.v$short_cite == "none", "no", "yes")
-
-vocab_data1 <- dat.v %>%
-  group_by(year, relationship, tested) %>%
-  summarize(count = n())
-
-vocab_data1 <- as.data.frame(vocab_data1)
-vocab_data1$count <- ifelse(vocab_data1$tested == "no", 0, vocab_data1$count)
-vocab_data1$year <- as.numeric(vocab_data1$year)
-
-vocab_data1$relationship <- ifelse(vocab_data1$relationship == "no_vocab", "None",
-                                   ifelse(vocab_data1$relationship == "positive", "Predicts",
-                                          "No Relationship"))
-vocab_data1$relationship <- factor(vocab_data1$relationship, levels = c("Predicts", "No Relationship", "None"))
-
-p <- ggplot(vocab_data1, aes(year, count, color = relationship)) + 
-  geom_line() + 
-  geom_point()+
-  scale_y_continuous(breaks = c(0, 1, 2, 3, 4), limits = c(0,4))+
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom")
-p
-
-  jpeg(filename = "figures/Vocab_findings.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
- 
-```
-  
-
-## Size of Mispronunciation: Measured in Features Changed
-
-### Number of features
-
-Size of mispronunciation, measured in features changed
-
-```{r NFeatures}
-
-dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature), data = dat.f, random = ~collapse | short_cite)
- 
- 
-summary(rma_NFeatures)
-aov.feat <- anova(rma_NFeatures)
-
-n_feat <- round(coef(summary(rma_NFeatures))[2,], 2)
-
+metacor(cor=r_comprehension, n=n_1, studlab = short_cite, data = compr, sm = "COR")
 ```
 
+```{r ProductionMeta_MP}
+#we're relying on the library meta function metacor
+prodr  <- subset(db_ET_MP, !is.na(db_ET_MP$r_production) & r_production < 1)
 
-The moderator test was significant:
-`print(aov.feat)`
-
-There was a significant effect of number of features changed:
-
-Hedges' g for `rownames(n_feat)` was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
-(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
-
-
-### Plot number of Features
-
-```{r PlotFeatEffect}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-# mf <- subset(dat_f, n_feature == "3")
-# min_age <- min(mf$mean_age_1)
-# max_age <- max(mf$mean_age_1)
-# 
-# dat_fage= dat_f%>%
-#   filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-dat_f$feat_cat <- ifelse(dat_f$n_feature == 1, "1-feature",
-                         ifelse(dat_f$n_feature == 2, "2-feature",
-                                ifelse(dat_f$n_feature == 3, "3-feature",
-                                       ifelse(dat_f$n_feature == 0, "correct", "none"))))
-
-dat_f <- subset(dat_f, feat_cat != "none")
-
-dat_f$Features_changed <- factor(dat_f$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
-
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-p <- ggplot(dat_f, aes(Features_changed, g_calc, fill = Features_changed)) + 
-  geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "none",
-        axis.title.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-
-p
-
-  jpeg(filename = "figures/Number_of_Features.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-
+metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 ```
 
-### Number of features with age moderator interaction
+### Interim Discussion
 
-Size of mispronunciation, measured in features changed
+The main goal of this paper was to assess mispronunciation sensitivity and its maturation with age. The results are clear: Although infants consider a mispronunciation as a better match with the target image than a distractor image, there was a consistent effect of mispronunciation sensitivity. This did not change with development. Of the 3 predictions and assumptions about the development of infants' sensitivity to mispronunciations discussed in the Introduction, the present results lend some support for the argument that mispronunciation sensitivity stays consistent as infants develop. This runs counter to existing theories of phono-lexical development, which predict either an increase (PRIMR ref) or decrease (Assim Model ref) in mispronunciation sensitivity. In sum, it seems that current theories of infants' phono-lexical development cannot fully capture our results and should be reconsidered with all the evidence in mind.
 
-```{r NFeatures_age}
+Alternatively, the lack of developmental change in mispronunciation sensitivity could be due to differences in the types of tasks given to infants of different ages. To examine this possibility, we include an exploratory analysis of whether different moderators and experimental design features were included at different ages. We return to this possibility after the Moderator Analyses.
 
-dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
 
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature)*age.C, data = dat.f, random = ~collapse | short_cite)
- 
- 
-#summary(rma_NFeatures)
-aov.feat <- anova(rma_NFeatures)
 
-n_feat <- round(coef(summary(rma_NFeatures))[4,], 2)
-
-```
-
-
-The moderator test was significant:
-`print(aov.feat)`
-
-But there was no significant interaction between number of features changed and age:
-
-Hedges' g for `rownames(n_feat)` was `toString(n_feat$estimate)` (SE = `toString(n_feat$se`)
-(95% CI [`toString(n_feat$ci.lb)`, `toString(n_feat$ci.ub)`], p = `toString(n_feat$pval)`)
-
-### Number of features subset to age range
-Size of mispronunciation, measured in features changed
-
-```{r NFeatures_subset}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-mf <- subset(dat_f, n_feature == "3")
-min_age <- min(mf$mean_age_1)
-max_age <- max(mf$mean_age_1)
-
-dat_fage= dat_f%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-#dat_fage$n_feature <- ordered(dat_fage$n_feature, levels = c("0", "1", "2", "3"))
-#dat_fage$n_feature <- as.numeric(dat_fage$n_feature)
-
-
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature), data = dat_f, random = ~collapse | short_cite)
- 
- 
-#summary(rma_NFeatures_agesub)
-
-```
-
-
-
-
-### Number of features with age moderator subset to age range
-Size of mispronunciation, measured in features changed
-
-No interaction between features and age
-
-```{r NFeatures_subset_age}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-mf <- subset(dat_f, n_feature == "3")
-min_age <- min(mf$mean_age_1)
-max_age <- max(mf$mean_age_1)
-
-dat_fage= dat_f%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-#dat_fage$n_feature <- ordered(dat_fage$n_feature, levels = c("0", "1", "2", "3"))
-#dat_fage$n_feature <- as.numeric(dat_fage$n_feature)
-
-
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature)*age.C, data = dat_f, random = ~collapse | short_cite)
- 
- 
-#summary(rma_NFeatures_agesub)
-
-```
-
-
-## Distractor Familiarity (familiary, unfamiliar) 
-
-```{r DistractorType}
-
-rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = db_ET_MP, random = ~ collapse | short_cite)
-  
-#summary(rma_Distractor)  
- 
-aov.type <- anova(rma_Distractor)
-
-sum_eff <- round(coef(summary(rma_TypeFeatures_Lang))[2,], 2)
-
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-No significant interaction between feature type and language family:
-
-Hedges' g for `rownames(sum_eff)` was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-### Distractor Familiarity with condition moderator
-
-```{r DistractorTypeCondition}
-
-rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
-  
-#summary(rma_Distractor)  
-
-aov.type <- anova(rma_Distractor)
-
-sum_eff <- round(coef(summary(rma_Distractor))[4,], 2)
-
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-But there was no significant interaction between distractor familiarity and condition:
-
-Hedges' g for `rownames(sum_eff)` was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-### Distractor Familiarity with age moderator
-```{r DistractorTypeAge}
-
-rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(object_pair), data = db_ET_MP, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorAge)  
-
-aov.type <- anova(rma_DistractorAge)
-
-sum_eff <- round(coef(summary(rma_DistractorAge))[4,], 2)
-
-```
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant interaction between distractor familiarity and age:
-
-Hedges' g for `rownames(sum_eff)` was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-### Distractor Familiarity with age and condition moderators
-```{r DistractorTypeConditionAge}
-
-rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
-  
-summary(rma_DistractorAge)  
-aov.type <- anova(rma_DistractorAge)
-
-sum_eff <- round(coef(summary(rma_DistractorAge))[7,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between distractor familiarity and condition, but not age:
-
-Hedges' g for `rownames(sum_eff)` was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-### Plot Distractor familiarity and condition
-
-```{r PlotDistFamEffect_NoAge}
-
-
-dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
-dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
-
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-p <- ggplot(dat, aes(condition_label, g_calc, fill = condition_label)) + 
-  geom_boxplot() + 
-  facet_grid(.~dist_code) +
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-
-p
-
-  jpeg(filename = "figures/Distractor_fam.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-
-```
-
-
-### Distractor Familiarity, subset to same age range
-
-```{r DistractorTypeAgeRangeSubset}
-
-fn <- subset(dat, object_pair=="familiar_novel")
-min_fn <- min(mf$mean_age_1)
-max_fn <- max(mf$mean_age_1)
-
-ff <- subset(dat, object_pair=="familiar_familiar")
-min_ff <- min(ff$mean_age_1)
-max_ff <- max(ff$mean_age_1)
-
-min_age <- pmax(min_fn, min_ff)
-max_age <- pmin(max_fn, max_ff)
-
-
-dat_age= db_ET_MP%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
-  
-#summary(rma_Distractor)  
-
-aov.type <- anova(rma_Distractor)
-
-sum_eff <- round(coef(summary(rma_Distractor))[2,], 2)
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant effect of distractor familiarity:
-
-Hedges' g for `rownames(sum_eff)` was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-### Distractor Familiarity with condition moderator, subset to same age range
-
-```{r DistractorTypeAgeRangeSubset_condition}
-
-fn <- subset(dat, object_pair=="familiar_novel")
-min_fn <- min(mf$mean_age_1)
-max_fn <- max(mf$mean_age_1)
-
-ff <- subset(dat, object_pair=="familiar_familiar")
-min_ff <- min(ff$mean_age_1)
-max_ff <- max(ff$mean_age_1)
-
-min_age <- pmax(min_fn, min_ff)
-max_age <- pmin(max_fn, max_ff)
-
-
-dat_age= dat%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-rma_DistractorAgeS <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
-  
-summary(rma_DistractorAgeS)  
-
-aov.type <- anova(rma_Distractor)
-
-sum_eff <- round(coef(summary(rma_Distractor))[4,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between distractor familiarity and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-### Plot Distractor Familiarity with condition, subset to same age range
-
-```{r PlotDistFamEffect_NoAge_AgeMatch}
-
-
-dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
-dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
-
-mf <- subset(dat, object_pair=="familiar_novel")
-min_age <- min(mf$mean_age_1)
-
-mf <- subset(dat, object_pair=="familiar_familiar")
-max_age <- max(mf$mean_age_1)
-
-dat_age= dat%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-
-p <- ggplot(dat_age, aes(condition_label, g_calc, fill = condition_label)) + 
-  geom_boxplot() + 
-  facet_grid(.~dist_code) +
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-
-p
-
-  jpeg(filename = "figures/Distractor_fam_age_AgeSubset.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-
-```
-
-### Distractor Familiarity with age and condition moderator, subset to same age range
-
-```{r DistractorTypeAgeRangeSubset_agecondition}
-
-mf <- subset(dat, object_pair=="familiar_novel")
-min_age <- min(mf$mean_age_1)
-
-mf <- subset(dat, object_pair=="familiar_familiar")
-max_age <- max(mf$mean_age_1)
-
-dat_age= dat%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-rma_DistractorAgeS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorAgeS)  
-
-aov.type <- anova(rma_Distractor)
-
-sum_eff <- round(coef(summary(rma_Distractor))[8,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was no significant interaction between distractor familiarity, condition, and age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-## Position of Mispronunciation (onset, medial)
-
-```{r Location}
-#table(db_ET_MP$mispron_location)
-
-db_ET_MPl = db_ET_MP %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_Location <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location, data = db_ET_MPl, random = ~collapse | short_cite)
- 
- 
-#summary(rma_Location)
-
-aov.type <- anova(rma_Location)
-
-sum_eff <- round(coef(summary(rma_Location))[2,], 2)
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant effect of mispronunciation position:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-
-### Position of Mispronunciation with age moderator
-
-```{r Location_age}
-#table(db_ET_MP$mispron_location)
-
-db_ET_MPl = db_ET_MP %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-
-rma_LocationAge <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*age.C, data = db_ET_MPl, random = ~collapse | short_cite)
- 
- 
-#summary(rma_LocationAge)
-
-aov.type <- anova(rma_LocationAge)
-
-sum_eff <- round(coef(summary(rma_LocationAge))[2,], 2)
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant interaction between mispronunciation position and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-
-### Position of Mispronunciation with condition moderator
-
-```{r Location_condition}
-#table(db_ET_MP$mispron_location)
-
-db_ET_MPl = dat %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-
-rma_LocationCondition <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*condition, data = db_ET_MPl, random = ~collapse | short_cite)
- 
-#summary(rma_LocationCondition)
- 
-aov.type <- anova(rma_LocationCondition)
-
-sum_eff <- round(coef(summary(rma_LocationCondition))[4,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-But there was no significant interaction between mispronunciation position and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-
-### Position of Mispronunciation with age and condition moderators
-
-```{r Location_condition_age}
-#table(db_ET_MP$mispron_location)
-
-db_ET_MPl = dat %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-
-rma_LocationCondition <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*condition*age.C, data = db_ET_MPl, random = ~collapse | short_cite)
- 
- 
-summary(rma_LocationCondition)
- 
-aov.type <- anova(rma_LocationCondition)
-
-sum_eff <- round(coef(summary(rma_LocationCondition))[8,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-But there was no significant interaction between mispronunciation position, condition, and age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(sum_eff$estimate)` (SE = `toString(sum_eff$se`)
-(95% CI [`toString(sum_eff$ci.lb)`, `toString(sum_eff$ci.ub)`], p = `toString(sum_eff$pval)`)
-
-
-
-## Plotting Position of Mispronunciation
-```{r PlotPositionEffect}
-
-#dat.p <- subset(dat, mispron_location == "onset" | mispron_location == "medial" |
-#                mispron_location == "offset")
-
-dat.p <- subset(dat, mispron_location == "onset" | mispron_location == "medial")
-
-
-p <- ggplot(dat.p, aes(condition_label, g_calc, fill = condition_label)) + 
-  facet_grid(.~mispron_location)+
-  geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-
-p
-
-  jpeg(filename = "figures/Mispronunciation_position.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-
-
-```
-
-## Distractor Overlap
-
-```{r DistractorOverlap}
-
-db_ET_MPo = db_ET_MP %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "novel" | distractor_overlap == "no")
-
-
-rma_DistractorOverlap <- rma.mv(g_calc, g_var_calc, mods = ~distractor_overlap, data = db_ET_MPo, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorOverlap)  
-
-aov.type <- anova(rma_DistractorOverlap)
-
-sum_eff1 <- round(coef(summary(rma_DistractorOverlap))[2,], 2)
-sum_eff2 <- round(coef(summary(rma_DistractorOverlap))[3,], 2)
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant effect of distractor overlap:
-
-Hedges' g for `row.names(sum_eff1)` was `toString(sum_eff1$estimate)` (SE = `toString(sum_eff1$se`)
-(95% CI [`toString(sum_eff1$ci.lb)`, `toString(sum_eff1$ci.ub)`], p = `toString(sum_eff1$pval)`)
-
-Hedges' g `row.names(sum_eff2)` was `toString(sum_eff2$estimate)` (SE = `toString(sum_eff2$se`)
-(95% CI [`toString(sum_eff2$ci.lb)`, `toString(sum_eff2$ci.ub)`], p = `toString(sum_eff2$pval)`)
-
-
-
-### Distractor Overlap with age moderator
-
-```{r DistractorOverlap_age}
-
-db_ET_MPo = db_ET_MP %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "novel" | distractor_overlap == "no")
-
-rma_DistractorOverlap <- rma.mv(g_calc, g_var_calc, mods = ~age.C*distractor_overlap, data = db_ET_MPo, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorOverlap)  
-aov.type <- anova(rma_DistractorOverlap)
-
-sum_eff1 <- round(coef(summary(rma_DistractorOverlap))[5,], 2)
-sum_eff2 <- round(coef(summary(rma_DistractorOverlap))[6,], 2)
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant interaction between distractor overlap and age:
-
-Hedges' g for `row.names(sum_eff1)` was `toString(sum_eff1$estimate)` (SE = `toString(sum_eff1$se`)
-(95% CI [`toString(sum_eff1$ci.lb)`, `toString(sum_eff1$ci.ub)`], p = `toString(sum_eff1$pval)`)
-
-Hedges' g `row.names(sum_eff2)` was `toString(sum_eff2$estimate)` (SE = `toString(sum_eff2$se`)
-(95% CI [`toString(sum_eff2$ci.lb)`, `toString(sum_eff2$ci.ub)`], p = `toString(sum_eff2$pval)`)
-
-
-
-### Distractor Overlap with condition moderator
-
-```{r DistractorOverlap_condition}
-
-db_ET_MPo = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "novel" | distractor_overlap == "no")
-
-rma_DistractorOverlap <- rma.mv(g_calc, g_var_calc, mods = ~condition*distractor_overlap, data = db_ET_MPo, random = ~ collapse | short_cite)
-  
-summary(rma_DistractorOverlap)  
-
-aov.type <- anova(rma_DistractorOverlap)
-
-sum_eff1 <- round(coef(summary(rma_DistractorOverlap))[5,], 2)
-sum_eff2 <- round(coef(summary(rma_DistractorOverlap))[6,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between distractor overlap and condition:
-
-Hedges' g for `row.names(sum_eff1)` was `toString(sum_eff1$estimate)` (SE = `toString(sum_eff1$se`)
-(95% CI [`toString(sum_eff1$ci.lb)`, `toString(sum_eff1$ci.ub)`], p = `toString(sum_eff1$pval)`)
-
-Hedges' g `row.names(sum_eff2)` was `toString(sum_eff2$estimate)` (SE = `toString(sum_eff2$se`)
-(95% CI [`toString(sum_eff2$ci.lb)`, `toString(sum_eff2$ci.ub)`], p = `toString(sum_eff2$pval)`)
-
-### Plotting Distractor Overlap with condition
-
-```{r PlotDistOverlapEffect}
-
-db_ET_MPo = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "novel" | distractor_overlap == "no")
-
-p <- ggplot(db_ET_MPo, aes(condition_label, g_calc, fill = condition_label)) + 
-  facet_grid(.~distractor_overlap)+
-  geom_boxplot() + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank(),
-        axis.ticks.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-
-p
-
-  jpeg(filename = "figures/Distractor_overlap.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-
-
-```
-
-
-### Distractor Overlap with age and condition moderators
-
-```{r DistractorOverlap_age_condition}
-
-db_ET_MPo = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "novel" | distractor_overlap == "no")
-
-rma_DistractorOverlap <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*distractor_overlap, data = db_ET_MPo, random = ~ collapse | short_cite)
-  
-summary(rma_DistractorOverlap)  
-
-aov.type <- anova(rma_DistractorOverlap)
-
-sum_eff1 <- round(coef(summary(rma_DistractorOverlap))[11,], 2)
-sum_eff2 <- round(coef(summary(rma_DistractorOverlap))[12,], 2)
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between distractor overlap, condition, and age:
-
-Hedges' g for `row.names(sum_eff1)` was `toString(sum_eff1$estimate)` (SE = `toString(sum_eff1$se`)
-(95% CI [`toString(sum_eff1$ci.lb)`, `toString(sum_eff1$ci.ub)`], p = `toString(sum_eff1$pval)`)
-
-Hedges' g `row.names(sum_eff2)` was `toString(sum_eff2$estimate)` (SE = `toString(sum_eff2$se`)
-(95% CI [`toString(sum_eff2$ci.lb)`, `toString(sum_eff2$ci.ub)`], p = `toString(sum_eff2$pval)`)
-
-
-
-### Plot Distractor Overlap, condition, and age
-
-```{r PlotDistOverlap_cond_age}
-
-db_ET_MPo = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "novel" | distractor_overlap == "no")
-
-p <- ggplot(db_ET_MPo, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~distractor_overlap)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) + 
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-  jpeg(filename = "figures/Distractor_overlap_age.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-
-
-## Type of MP: Vowel, consonant, or tone
-
-### Type of MP: Vowel, consonant, or tone role in object identification
-
-```{r MPtype}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-
-rma_TypeFeaturesMP <- rma.mv(g_calc, g_var_calc, mods = ~type_feature, data = db_MP_type, random = ~collapse | short_cite)
- 
- 
-#summary(rma_TypeFeaturesMP)
-
-aov.type <- anova(rma_TypeFeaturesMP)
-
-type_feat <- round(coef(summary(rma_TypeFeaturesMP))[2,], 2)
-
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-No significant effect of feature type:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Type of MP: Vowel, consonant, or tone role in object identification with age moderator
-
-```{r MPtype_age}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-
-rma_TypeFeaturesMPage <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*age.C, data = db_MP_type, random = ~collapse | short_cite)
- 
- 
-#summary(rma_TypeFeaturesMPage)
-
-aov.type <- anova(rma_TypeFeaturesMPage)
-
-type_feat <- round(coef(summary(rma_TypeFeaturesMPage))[4,], 2)
-
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-No significant effect of feature type:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Type of MP: Vowel, consonant, or tone role in object identification with language family moderator
-
-```{r MPtype_lang}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(db_MP_type, lang_family != "Sino-Tibetian")
-
-rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family, data = dat_type_sub, random = ~collapse | short_cite)
- 
-
-#summary(rma_TypeFeatures_Lang)
- 
-aov.type <- anova(rma_TypeFeatures_Lang)
-
-type_feat <- round(coef(summary(rma_TypeFeatures_Lang))[4,], 2)
-
-
-```
-The moderator test was not significant:
-`print(aov.type)`
-
-No significant interaction between feature type and language family:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Type of MP: Vowel, consonant, or tone with condition moderator
-
-
-```{r MPtype_cond}
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-#db_type <- subset(dat, type_feature != "consonant_and_vowel")
-
-rma_TypeFeaturesMPcond <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition, data = db_type, random = ~collapse | short_cite)
- 
- 
-#summary(rma_TypeFeaturesMPcond)
-
-aov.type <- anova(rma_TypeFeaturesMPcond)
-
-type_feat <- round(coef(summary(rma_TypeFeaturesMPcond))[2,], 2)
-
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-No significant interaction between feature type and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Type of MP: Vowel, consonant, or tone with condition and age moderators
-
-
-```{r MPtype_cond_age}
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-#db_type <- subset(dat, type_feature != "consonant_and_vowel")
-
-rma_TypeFeaturesMPcondage <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*age.C, data = db_type, random = ~collapse | short_cite)
- 
- 
-summary(rma_TypeFeaturesMPcondage)
-
-aov.type <- anova(rma_TypeFeaturesMPcondage)
-
-type_feat <- round(coef(summary(rma_TypeFeaturesMPcondage))[8,], 2)
-
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between feature type, condition, and age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Plot MP type: feature type, condition, and age
-
-```{r PlotCVEffect_cond_age}
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-#dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-
-dat_type$condition_label = ifelse(dat_type$condition==1, "Correct", "Mispronunciation")
-
-p <- ggplot(dat_type, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~type_feature)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) + 
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-  jpeg(filename = "figures/FeatureType_Cond_Age.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-
-
-### Type of MP: Vowel, consonant, or tone with language family and condition moderators
-
-```{r MPtype_cond_lang}
-db_MP_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(db_MP_type, lang_family != "Sino-Tibetian")
-
-rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family*condition, data = dat_type_sub, random = ~collapse | short_cite)
- 
-
-summary(rma_TypeFeatures_Lang)
- 
-aov.type <- anova(rma_TypeFeatures_Lang)
-
-type_feat <- round(coef(summary(rma_TypeFeatures_Lang))[8,], 2)
-
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between feature type, language family, and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Plot Language Family by MP type: Consonant, Vowel, or Tone?
-
-```{r PlotCVEffect_Lang}
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-
-dat_type_sub$condition_label = ifelse(dat_type_sub$condition==1, "Correct", "Mispronunciation")
-
-
-p <- ggplot(dat_type_sub, aes(condition_label, g_calc, fill = condition_label)) + 
-  geom_boxplot() + 
-  facet_grid(.~type_feature*lang_family)+
-  #geom_line(y= 0, linetype="dotted") + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-    scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.title.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  xlab("Language Family") + 
-  ylab("Effect size Hedges' g")
-p
-
-
- jpeg(filename = "figures/FeatureType_Cond_LangFam.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-### Type of MP: Vowel, consonant, or tone with language family, condition, and age moderators
-
-```{r MPtype_cond_lang_age}
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-rma_TypeFeatures_Lang <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family*condition*age.C, data = dat_type_sub, random = ~collapse | short_cite)
- 
-
-summary(rma_TypeFeatures_Lang)
- 
-aov.type <- anova(rma_TypeFeatures_Lang)
-
-type_feat <- round(coef(summary(rma_TypeFeatures_Lang))[8,], 2)
-
-
-```
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between feature type, age, and language family, and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-### Plot MP type: feature type, condition, and age
-
-```{r PlotCVEffect_cond_age_fam}
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-
-dat_type_sub$condition_label = ifelse(dat_type_sub$condition==1, "Correct", "Mispronunciation")
-
-p <- ggplot(dat_type_sub, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~type_feature*lang_family)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) + 
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-  jpeg(filename = "figures/FeatureType_Cond_Age_LangFam.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-## Language effect
-
-```{r LanguageEffectAnalyses}
-
-dat_lang <- subset(db_ET_MP, lang_family != "Sino-Tibetian")
-
-rma_lang_interaction <- rma.mv(g_calc, g_var_calc, mods = ~lang_family, data = dat_lang, random = ~ collapse | short_cite)
-#summary(rma_lang_interaction)
-
-aov.type <- anova(rma_lang_interaction)
-
-type_feat <- round(coef(summary(rma_lang_interaction))[2,], 2)
-
-
-```
-
-The moderator test was not significant:
-`print(aov.type)`
-
-There was no significant effect of language family:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Language effect with age moderator
-
-```{r LanguageEffectAnalyses_age}
-
-dat_lang <- subset(db_ET_MP, lang_family != "Sino-Tibetian")
-
-rma_lang_interaction <- rma.mv(g_calc, g_var_calc, mods = ~age.C*lang_family, data = dat_lang, random = ~ collapse | short_cite)
-summary(rma_lang_interaction)
-
-aov.type <- anova(rma_lang_interaction)
-
-type_feat <- round(coef(summary(rma_lang_interaction))[4,], 2)
-
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-There was a significant interaction between language family and age:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Plot Language effect with age
-
-
-```{r PlotLanguageEffect}
-
-
-dat_lang <- subset(dat, lang_family != "Sino-Tibetian")
-
-
-p <- ggplot(dat_lang, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~lang_family)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) + 
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-  jpeg(filename = "figures/Language_Age.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-```
-
-
-### Language effect with condition moderator
-
-
-```{r LanguageEffectAnalyses_condition}
-
-dat_lang <- subset(dat, lang_family != "Sino-Tibetian")
-
-
-rma_lang_interaction <- rma.mv(g_calc, g_var_calc, mods = ~condition*lang_family, data = dat_lang, random = ~ collapse | short_cite)
-#summary(rma_lang_interaction)
-
-aov.type <- anova(rma_lang_interaction)
-
-type_feat <- round(coef(summary(rma_lang_interaction))[4,], 2)
-
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-But, there was no significant interaction between language family and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
-
-
-### Language effect with age and condition moderators
-
-
-```{r LanguageEffectAnalyses_condition_age}
-
-dat_lang <- subset(dat, lang_family != "Sino-Tibetian")
-
-
-rma_lang_interaction <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*lang_family, data = dat_lang, random = ~ collapse | short_cite)
-#summary(rma_lang_interaction)
-
-aov.type <- anova(rma_lang_interaction)
-
-type_feat <- round(coef(summary(rma_lang_interaction))[8,], 2)
-
-
-```
-
-The moderator test was significant:
-`print(aov.type)`
-
-But, there was no significant interaction between language family, age, and condition:
-
-Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
-(95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
 
