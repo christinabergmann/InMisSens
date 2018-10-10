@@ -781,13 +781,6 @@ Hedges' g for `rownames(n_feat)` was `toString(n_feat$estimate)` (SE = `toString
 dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
                 n_feature == "2" | n_feature == "3")
 
-# mf <- subset(dat_f, n_feature == "3")
-# min_age <- min(mf$mean_age_1)
-# max_age <- max(mf$mean_age_1)
-# 
-# dat_fage= dat_f%>%
-#   filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
 dat_f$feat_cat <- ifelse(dat_f$n_feature == 1, "1-feature",
                          ifelse(dat_f$n_feature == 2, "2-feature",
                                 ifelse(dat_f$n_feature == 3, "3-feature",
