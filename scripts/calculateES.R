@@ -30,6 +30,9 @@ db_ET$d_calc <- NA
 db_ET$d_var_calc <- NA
 db_ET$es_method <- "missing"
 
+
+db_ET$imputed_corr <- ifelse(is.na(db_ET$corr), "yes", "no")
+
 db_ET$corr = ifelse(is.na(db_ET$corr), db_ET$corr_imputed, db_ET$corr)
 
 #Correlations are never perfect and cannot be higher than 1 or lower than 0, so fixing some possible imputation issues first. 
