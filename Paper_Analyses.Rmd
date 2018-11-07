@@ -121,6 +121,13 @@ full_estimate <- function(x) paste0(" = ", r2(x$estimate), ", SE = ", r2(x$se), 
 # moderator test
 mod_test <- function(x) paste0("QM(", r2(rma_MPeffect$m), ") = ", r2(rma_MPeffect$QM), ", *p*", psig(rma_MPeffect$QMp))
 
+
+# Create the function for mode.
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
 ```
 
 
@@ -252,22 +259,8 @@ Finally, some studies have found no difference in mispronunciation sensitivity a
   Why would mispronunciation sensitivity change as infants develop, and would it increase or decrease? The main hypothesis is related to vocabulary growth. Both the Perceptual Attunement (Best, 1994; 1995) and PRIMIR (Curtin & Werker, 2007; Werker & Curtin, 2005; Curtin, Byers-Heinlein, & Werker, 2011) accounts situate a change in mispronunciation sensitivity occurring along with an increase in vocabulary size, particularly with the vocabulary spurt at about 18 months. Knowing more words helps infants shift their focus to the relevant phonetic dimensions needed for word recognition. On the one hand, a smaller lexicon does not require full specification to differentiate between words; as more phonologically similar words are learned, so does the need to have fully detailed representations for those words (Charles-Luce & Luce, 1995). On the other hand, a growing vocabulary is also related to more experience or familiarity with words, which may sharpen the detail of their representation (Barton, 1980).
   
   Yet, the majority of studies examining a potential association between mispronunciation sensitivity and vocabulary size have concluded that there is no relationship (Swingley & Aslin 2000; 2002; Bailey & Plunkett, 2002; Zesiger, Lozeron, Levy, & Frauenfelder, 2012; Swingley, 2009; Ballem & Plunkett, 2005; Mani & Plunkett, 2007; Mani, Coleman, & Plunkett, 2008). One notable exception comes from Mani and Plunkett (2010: keps and tups). Here, 12-month-old infants were divided into a low vocabulary and high vocabulary group based group median vocabulary size. High vocabulary infants showed greater sensitivity to vowel mispronunciations than low vocabulary infants, although this was not the case for consonant mispronunciations. Taken together, although receiving considerable support from theories of phono-lexical processing in language acquisition, there is very little evidence for a role of vocabulary size in mispronunciation sensitivity. In our current meta-analysis, we include the relationship between mispronunciation sensitivity and vocabulary size to further disentangle the disconnect between theory and experimental results. 
-
-  Next to this core theoretically relevant investigation of the shape of development of infants' mispronunciation sensitivity, we take the opportunity of a systematic aggregation of data to address open questions regarding differences in experiment design and whether changes in procedure and stimuli tap into significantly different aspects of infants' ability to detect mispronunciations. 
-
-  In designing their mispronunciation stimuli, Swingley and Aslin (2000) chose consonant mispronunciations that were likely to confuse adults (Miller & Nicely, 1955). Subsequent research has settled on systematically modulating phonemic features to achieve mispronunciations of familiar words. By utilizing mispronunciations consisting of phonemic changes, these experiments examine infants’ sensitivity to factors that change the identity of a word on a measurable level (i.e. 1-feature, 2-features, 3-features, etc.). The importance of controlling for the degree of phonological mismatch, as measured by number of features changed, is further highlighted by studies that find graded sensitivity to both consonant (White & Morgan, 2008) and vowel (Mani & Plunkett, 2011) feature changes.
-
-  Although most research examining sensitivity to mispronunciations follows a similar design, there are some notable differences.  For example, Swingley and Aslin (2000) presented infants with pairs of familiar images, one serving as the labeled target and one as the unlabeled distractor. In contrast, White and Morgan (2008; see also Mani & Plunkett, 2011; Skoruppa et al., 2013; Swingley, 2016) presented infants with pairs of familiar (labeled target) and unfamiliar (unlabeled distractor) objects. By using an unfamiliar object as a distractor, the infant is presented with a viable option onto which the mispronounced label can be applied (Halberda, 2003; Markman, Wasow, & Hansen, 2003). Infants ages 24 and 30 months associate a novel label with an unfamiliar object, although only 30-month-olds retained this label-object pairing (Bion, Borovsky, and Fernald, 2013). In contrast, 18-month-olds did not learn to associate a novel label with an unfamiliar object, providing evidence that this ability is developing from 18 to 30 months. We may find that if mispronunciation sensitivity changes as children develop, that this change is modulated by whether the distractor used is familiar or unfamiliar. Although mispronunciation sensitivity in the presence of a familiar compared to unfamiliar distractor has not been directly compared, the baseline preference for familiar compared to novel stimuli is also thought to change as infants develop (Hunter & Ames, 1988).  Furthermore, young children have been found to look longer at objects for which they know the name, compared to objects of an unknown name (Schafer & Plukett, 1998). In other words, in absentia of a label, infants may be more or less likely to fixate on an unfamiliar object. To account for inherent preferences to the target or distractor image, mispronunciation experiments typically compare the increase in fixations to the target image from a silent baseline to post-labeling or present the same yoked pairs of target and distractor images in in both a correct and mispronounced labelling context. Considering this evidence, we may expect that in older, but not younger, children, the presence of an unfamiliar distractor may lead to greater mispronunciation sensitivity than in the presence of a familiar distractor.
-
-  Furthermore, when presenting infants with a familiar distractor image, some studies control the phonological overlap between the labels for the target and distractor. For example, when examining sensitivity to a mispronunciation of the target word "dog", the vowel mispronunciation "dag" would be paired with a distractor image that shares onset overlap, such as "duck". This ensures that infants can not use the onset of the word to differentiate between the target and distractor images (Fernald, Swingley, & Pinto, 2001). Instead, infants must pay attention to the mispronounced phoneme in order to successfully detect the change. The influence of distractor overlap also depends on the position of the mispronunciation in the word, which can be at word onset, medial, or final positions. Models of spoken word processing place more or less importance on the position of a phoneme in a word.  The COHORT model (Marslen-Wilson & Zwitserlood, 1989) describes lexical access in one direction, with the importance of each phoneme decreasing as its position comes later in the word.  In contrast, the TRACE model (McClelland & Elman, 1986) describes lexical access as constantly updating and reevaluating the incoming speech input in the search for the correct lexical entry, and therefore can recover from word onset and to a lesser extent medial mispronunciations. 
   
-  TRACE has also been used to model infants' sensitivity to mispronunciation location (Mayor & Plunkett, 2014), finding that as lexicon size increases, so does sensitivity to onset mispronunciations, whereas medial mispronunciations do not experience similar growth. In early language acquisition, infants typically know more consonant compared to vowel onset words. When tested on their recognition of familiar words, therefore, younger infants would show greater sensitivity to onset mispronunciations, which are frequently consonant mispronunciations. The prevalence of consonant onset words may contribute to the finding that consonants carry more weight in lexical processing (C-bias; see Nazzi, Poltrock, & Von Holzen, 2016 for a recent review). In mispronunciation sensitivity, this would translate to consonant mispronunciations impairing word recognition to a greater degree than vowel mispronunciations. Yet, the handful of studies directly comparing sensitivity to consonant and vowel mispronunciations mostly find symmetry as opposed to an asymmetry between consonants and vowels. English-learning 12-, 15-, 18-, and 24-month-olds (Mani & Plunkett, 2007; 2010 keps and tups) and Danish-learning 20-month-olds (Hojen et al., unpublished) demonstrate similar sensitivity to consonant and vowel mispronunciations. One study did find weak evidence for greater sensitivity to consonant compared to vowel mispronunciations (Swingley, 2016). The English-learning infants tested by Swingley were older than previous studies (mean age 28 months). In word learning, the C-bias has been found to develop later in English learning infants (Floccia, Nazzi, Delle Luche, Poltrock, & Goslin, 2014; Nazzi, Floccia, Moquet, & Butler, 2009). In the current meta-analysis, we attempt to synthesize studies examining sensitivity to consonant and vowel mispronunciations across different ages to determine whether infants generally exhibit more sensitivity to consonant compared to vowel mispronunciations in familiar word recognition as predicted by a learned account of C-bias emergence (Floccia et al., 2014; Keidel et al., 2007; Nazzi et al., 2016). We further examine the impact of language family on mispronunciation sensitivity to consonants and vowels, as C-bias emergence has been found to have a different developmental trajectory for Romance (French, Italian) compared to Germanic (British English, Danish) languages (Nazzi et al., 2016).
-  
-[KATIE] Christina had noted something to herself for this paragraph: Subset by language?
-
-  Finally, mispronunciation sensitivity in infants has been examined in many different languages, such as English, Spanish, French, Dutch, German, Catalan, Danish, and Mandarin Chinese (see Summary_Table). Infants learning different languages have different ages of acquisition for words in their early lexicon, leaving direct comparisons between languages within the same study difficult and as a result rare. Yet, studies testing infants from different language backgrounds on similar sets of stimuli find similar sensitivity to mispronunciations (Ramon-Casas et al., 2009; Ramon-Casas & Bosch, 2010). Although we do not explicitly compare overall mispronunciation sensitivity by language (although see previous paragraph for rationale to test by language family), we assess evidence of mispronunciation sensitivity from many different languages using a meta-analytic approach.
-  
-Taken together, the studies we have reviewed begin to paint a picture of the development of mispronunciation sensitivity. Each study contributes one separate brushstroke and it is only by examining all of them together that we can achieve a better understanding. In our analysis, we examine the factors modulating the development of mispronunciation sensitivity, which are both of theoretical and practical importance. Meta-analyses can not only help us summarize the current state of research, but can also help us evaluate theories to drive future research and make hands-on recommendations for experiment planning. 
+Taken together, the studies we have reviewed begin to paint a picture of the development of mispronunciation sensitivity. Each study contributes one separate brushstroke and it is only by examining all of them together that we can achieve a better understanding. Meta-analyses can not only help us summarize the current state of research, but can also help us evaluate theories to drive future research and make hands-on recommendations for experiment planning. 
 
 
 # Methods
@@ -282,27 +275,21 @@ The present meta-analysis was conducted with maximal transparency and reproducib
 
 dat_st <- dat
 
-dat_st$object_pair <- ifelse(dat_st$object_pair == "familiar_familiar", "Familiar", "Unfamiliar")
-
 Sum_table <- dat_st %>%
       group_by(short_cite) %>% 
-      summarise(Ages_Tested_months = paste(unique(trunc(mean_age_1/30.34)), collapse=', '),
+      summarise(Publication = unique(publication_status),
+        Ages_Tested_months = paste(unique(trunc(mean_age_1/30.34)), collapse=', '),
                 Vocabulary = ifelse(all(is.na(r_comprehension)) & all(is.na(r_production)), "None",
                                 ifelse(!all(is.na(r_comprehension)) & !all(is.na(r_production)), "Comprehension/Production",
-                                       ifelse(!all(is.na(r_comprehension)) & all(is.na(r_production)), "Comprehension", "Production"))),
-                Number_of_Features = paste(unique(n_feature), collapse=', '),
-                Distractor_Familiarity = paste(unique(object_pair), collapse=', '),
-                Distractor_Overlap = paste(unique(distractor_overlap), collapse=', '),
-                Mispronunciation_Position = paste(unique(mispron_location), collapse=', '),
-                Mispronunciation_type = paste(unique(type_feature), collapse=', '))
+                                       ifelse(!all(is.na(r_comprehension)) & all(is.na(r_production)), "Comprehension", "Production"))))
 
-kable(Sum_table, col.names = c("Paper", "Age", "Vocabulary", "# Features", "Distractor", "Distractor name overlap", "MP Position", "MP Type"))
+kable(Sum_table, col.names = c("Paper", "Publication format", "Age", "Vocabulary"))
 
 ```
 
 [KATIE] THIS TABLE IS DEFINITELY NOT FINISHED!
 [CHRISTINA suggestions: N features should be a range and exclude 0; we could abbreviate Comperehension/Production to Comp./Prod., etcetc]
-[KATIE] I'll think about how to implement that! Might end up having to adjust the table by hand, there is a lot of variation between studies.
+[KATIE] I've reduced the table to be about age and vocabulary, in order to have it more focused for the aim of this paper.
 
 We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list. This process yielded 110 items. We then used the google scholar search engine to search for papers citing the original Swingley & Aslin (2000) publication. This search was conducted on 22 September, 2017 and yielded 288 results. We screened the 398 items, removing 99 duplicate items. We screened remaining 299 items for their title and abstract to determine whether it met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition; (3) infants studied were under 36-months-of-age; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; 5) the stimuli were auditory speech. The final sample (n = *`r length(unique(dat$short_cite))`*) consisted of `r with(dat, n_distinct(short_cite[publication_status == "paper"]))` journal articles, `r with(dat, n_distinct(short_cite[publication_status == "proceedings"]))` proceedings paper, `r with(dat, n_distinct(short_cite[publication_status == "dissertation"]))` thesis, and `r with(dat, n_distinct(short_cite[publication_status == "gray paper"]))` unpublished reports. We will refer to these items collectively as papers. Table 1 (Summary Table) provides an overview of all papers included in the present meta-analysis.
 
@@ -321,14 +308,12 @@ pub_info <- dat %>%
 ## Data Entry
 
 The `r length(unique(dat$short_cite))` papers we identified as relevant were then coded with as much detail as possible (Tsuji, Bergmann, & Cristia, 2014; Bergmann et al., 2018). For each experiment (note that a paper typically has multiple experiments), we entered variables describing the publication, population, experiment design and stimuli, and results. For the present analyses, we focus on the following characteristics:   
+
+
 1 Condition: Were words mispronounced or not;  
 2 Mean age reported per group of infants, in days;  
 3 Vocabulary size, measured by a standardized questionnaire or list;    
-4 Size of mispronunciation, measured in features changed;  
-5 Distractor familiarity: familiar or unfamiliar;  
-6 Phonological overlap between target and distractor: onset, onset/medial, rhyme, none, novel word;  
-7 Position of mispronunciation: onset, medial, offset, or mixed;  
-8 Type of mispronunciation: consonant, vowel, or both. 
+
 
 We separated out conditions according to whether or not the target word was mispronounced to be able to investigate infants' looking to the target picture separated by whether or not words were mispronounced as well as their mispronunciation sensitivity, which is the difference between looks to the target in correct and mispronounced trials. When the same infants were further exposed to multiple mispronunciation conditions and the results were reported separately in the paper, we also entered each condition as a separate row  (e.g., consonant versus vowel mispronunciations; Mani & Plunkett, 2007).  The fact that the same infants contributed data to multiple rows (minimally those containing information on correct and mispronounced trials) leads to shared variance across effect sizes, which we account for in our analyses (see next section). We will call each row a record; in total there were `r nrow(dat)` records in our data.
 
@@ -631,7 +616,7 @@ dat_mp = db_ET_MP %>%
 
 ```
 
-## Figure 1
+## (Insert Figure 1 about here)
 
 ```{r FunnelCombo, echo = FALSE}
 
@@ -797,25 +782,48 @@ sum_eff <- coef(summary(rma_MPeffect_age))[4,]
 
 We then examined the interaction between age and mispronunciation sensitivity (correct vs. mispronounced words) in our whole dataset. The moderator test was significant `r mod_test(rma_MPeffect_age)`. This result is in line with the general observation that as infants mature they become better at language processing. The interaction between age and mispronunciation sensitivity, however, was not significant $\beta$`r full_estimate(sum_eff)`. The small estimate size, as well as inspection of Figure 2 suggests that as infants age, their mispronunciation sensitivity remains the same.
 
-## Figure 2
+## (Insert Figure 2 about here)
 
-```{r PlotMPEffect, echo = FALSE}
+```{r PlotMPEffect, echo = FALSE, fig.width=10,fig.height=11}
 
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
 p <- ggplot(dat, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
+  ggtitle("a. Object Recognition")+
   geom_point(aes(size = weights_g),show.legend=FALSE, alpha = .5) + 
   geom_line(y= 0, linetype="dotted") + 
   geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
   scale_colour_manual(values=cbPalette)+
   apatheme +
   theme(legend.title = element_blank(),
-        legend.position = "bottom",
-        text = element_text(size = 40)) + 
+        legend.position = "bottom") + 
   xlab("Age in months") + 
   ylab("Hedges' g")
   
-p
+#p
+
+
+dat.cm <- dat[,c("short_cite", "is_correct", "is_mp","condition", "g_calc", "weights_g", "mean_age_1", "n_1")]
+
+dat.c <- subset(dat.cm, is_correct == 1)
+dat.m <- subset(dat.cm, is_mp == 1)
+
+dat.cm <- merge(dat.c, dat.m, by = c("short_cite", "mean_age_1", "n_1"))
+
+dat.cm$Misp_sensitivity <- dat.cm$g_calc.x - dat.cm$g_calc.y
+
+p.diff <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity)) + 
+  ggtitle("b. Mispronunciation Sensitivity")+
+  geom_point(aes(size = n_1),show.legend=FALSE, alpha = .5) + 
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=n_1)) +
+  scale_colour_manual(values=cbPalette)+
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Mispronunciation Sensitivity")
+
 
 # min(dat$mean_age_1/30.44)
 # max(dat$mean_age_1/30.44)
@@ -823,15 +831,19 @@ p
 #ggsave("figures/AgeEffect_log.jpg", p,height= 7,width= 6)
 
 
+lay <- rbind(c(1), c(2))
+#lay <- rbind(c(1,2))
 
   jpeg(filename = "figures/Figure_2_AgeEffect.jpg", 
-       width = 700, height = 400, units = "px")
-
-  p
+       width = 500, height = 700, units = "px")
   
-  dev.off()
-  
+ger.plot.age <- grid.arrange(p, p.diff,
+                             layout_matrix = lay)
 
+dev.off()
+
+  
+grid.draw(ger.plot.age)
 
 ```
 
@@ -911,381 +923,307 @@ We next considered the relationship between vocabulary and object recognition fo
 
 The main goal of this paper was to assess mispronunciation sensitivity and its maturation with age. The results are clear: Although infants consider a mispronunciation as a better match with the target image than a distractor image, there was a consistent effect of mispronunciation sensitivity. This did not change with development. Of the 3 predictions and assumptions about the development of infants' sensitivity to mispronunciations discussed in the Introduction, the present results lend some support for the argument that mispronunciation sensitivity stays consistent as infants develop. This runs counter to existing theories of phono-lexical development, which predict either an increase (PRIMR ref) or decrease (Assim Model ref) in mispronunciation sensitivity. Furthermore, counter to the predictions for the PRIMR (PRIMR ref) and Assimilation(Assim ref) models, we found no relationship between vocabulary and target looking for correct pronunciations or mispronunciations. In sum, it seems that current theories of infants' phono-lexical development cannot fully capture our results and should be reconsidered with all the evidence in mind.
 
-Alternatively, the lack of developmental change in mispronunciation sensitivity could be due to differences in the types of tasks given to infants of different ages. In the following section, we investigate the role that different moderators play in mispronunciation sensitivity. To investigate the possibility of systematic differences in the tasks across ages, we additionally include an exploratory analysis of whether different moderators and experimental design features were included at different ages.
+Alternatively, it is possible that variation in the analysis approach lead to systematic differences in the size of mispronunciation sensitivity. Choices about the approach to data analysis have a higher possibility to be influenced by the shape of the data itself after collection, and are therefore susceptible to a higher rate of false-positives (Simmons, Nelson, & Simonsohn, 2011). Although we did not have specific predictions about these variables, such as size of time window analyzed or dependent variable calculated, we included these variables in our coding scheme for the meta-analysis dataset. As reported in the Methods section (and discussed in detail below), some of these variables varied widely across studies. In the following section, we include an exploratory analysis to investigate the possibility of systematic differences in the approach to analysis in general and across infant age.
 
-## Moderator Analyses
+[KATIE] I've changed the above paragraph to lead to exploratory analyses, not moderators. Since the fmailiar/unfamiliar analysis doesn't really work out except for if we kind of subset and torture the data, I think its more interesting to talk about how choices of analysis / researcher degrees of freedom may influence the data
 
-[cHRISTINA] I WOULD FOLLOW THE OUTLINE IN THE PREVIOUS PARAGRAPH HERE OR FLIP THE PARAGRAPH AROUND:
-1. ARE DIFFERENT MODERATORS USED AT DIFFERENT AGES? 
-TEST: sIMPLE CHI-SQUARED OF AGE GROUP VERSUS MODERATOR ASSIGNMENT (AGE GROUP DETERMINED BY LOOKING AT THE YOUNGEST AGE FOR X?)
-2. WHICH MODERATORS INFLUENCE MP SENSITIVITY
-TEST SIMPLE MA WITH MODERATOR TESTS
+## Exploratory Analyses
 
-OR 
-"FOR EACH POSSIBLE MODERATOR WHICH COULD INFLIENCE MP SENSITIVITY, WE FIRST TEST THIS POSSIBILITY AND THEN EVALUATE WHETHER THERE IS A SYSTEMATIC DIFFERENCE OF MANIPULATING THESE MODERATORS AS INFANTS MATURE, I.E. WHETHER OLDER INFANTS ARE TESTED ON A MORE DIFFICULT TASK "
-ALSO, AS FINAL FOLLOW-UP IT WOULD BE PERFECT TO JUST SUBSET ALL STUDIES WITH FAMILIAR DISTRACTORS, SAME NUMBER OF FEATURES, AND CHECK THAT OUR CONCLUSIONS HOLD UP REGARING MP SENSITIVITY
+We identified several variables to assess the influence of data analysis choices. These variables fall into two types of categories: time-related and dependent variable related. In the following analyses, we discuss the theoretical motivation for these data analysis choices, the variation present in the current meta-analysis dataset, and the influence these choices have on mispronunciation sensitivity development.
 
-[KATIE: I prefer this second option, first looking at the moderators in general and then looking at whether there is this systematic difference with age. The latter is exploratory, so I feel like this information should not preceed our planned analyses.]
+### Time-related analyses
 
-### Number of features changed
+```{r time_choices_info}
 
-```{r NFeatures_demographics}
+# trial length
 
-dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-nfeature_info <- dat.f %>%
-  group_by(n_feature) %>%
+trial_length_info <- dat %>%
+  group_by(trial_length) %>%
   summarize(n_exp_conditions =  n())
+        #post_naming = paste(unique(post_nam_dur), collapse=', '))
+
+trial.l <- cor.test(dat$trial_length, dat$mean_age_1)
+trial.length.plot <- ggplot(dat, aes(trial_length, age.C)) + geom_point() +geom_smooth(method = "lm")
+
+# post-naming
+post_name_info <- dat %>%
+  group_by(post_nam_dur) %>%
+  summarize(n_exp_conditions =  n())
+        #post_naming = paste(unique(post_nam_dur), collapse=', '))
+
+post.l <- cor.test(dat$post_nam_dur, dat$mean_age_1)
+post_nam_dur.plot <- ggplot(dat, aes(post_nam_dur, age.C)) + geom_point() +geom_smooth(method = "lm")
+
+# difference post vs. trial length
+dat$post_trial_match <- ifelse(dat$post_nam_dur == (dat$trial_length-dat$pre_nam_dur), "same", "different")
+dat$post_trial_prop <- dat$post_nam_dur/(dat$trial_length-dat$pre_nam_dur)
+
+post_trial_match_info <- dat %>%
+  group_by(post_trial_match) %>%
+  summarize(n_exp_conditions =  n())
+        #post_naming = paste(unique(post_nam_dur), collapse=', '))
+
+post_trial_prop_info <- dat %>%
+  group_by(post_trial_prop) %>%
+  summarize(n_exp_conditions =  n())
+        #post_naming = paste(unique(post_nam_dur), collapse=', '))
+
+
+post_match.l <- cor.test(dat$post_trial_prop, dat$mean_age_1)
+post_match.plot <- ggplot(subset(dat, post_trial_prop != 1), aes(post_trial_prop, age.C)) + geom_point() +geom_smooth(method = "lm")
+
+
+# offset
+offset_info <- dat %>%
+  group_by(offset) %>%
+  summarize(n_exp_conditions =  n())
+        #post_naming = paste(unique(post_nam_dur), collapse=', '))
+
+dob <- subset(dat, !is.na(offset) & offset < 1000)
+dob$offset_bin <- ifelse(dob$offset <371 & dob$offset > 359, 367, dob$offset)
+
+# offset
+offset_bin_info <- dob %>%
+  group_by(offset_bin) %>%
+  summarize(n_exp_conditions =  n())
+        #post_naming = paste(unique(post_nam_dur), collapse=', '))
+
+
+offset.l <- cor.test(dat$offset, dat$mean_age_1)
+offset.plot <- ggplot(dat, aes(offset, age.C)) + geom_point() +geom_smooth(method = "lm")
+
 
 ```
 
-To assess whether the number of features changed modulates mispronunciation sensitivity, we calculated the meta-analytic effect for object identification in response to words that were pronounced correctly and mispronounced using 1-, 2-, and 3-feature changes. We did not include data for which the number of features changed in a mispronunciation was not specified or the number of features changed was not consistent (e.g., one mispronunciation included a 2-feature change whereas another only a 1-feature change). This analysis was therefore based on a subset of the overall dataset, with `r with(nfeature_info, n_exp_conditions[n_feature == 0])` experimental conditions for correct pronunciations, `r with(nfeature_info, n_exp_conditions[n_feature == 1])` for 1-feature mispronunciations, `r with(nfeature_info, n_exp_conditions[n_feature == 2])` for 2-feature mispronunciations, and `r with(nfeature_info, n_exp_conditions[n_feature == 3])` for 3-feature mispronunciations. Each feature change (from 0 to 3; 0 representing correct pronunciations) was considered to have an equal impact on mispronunciation sensitivity, following the argument of graded sensitivity (White & Aslin, 2008; Mani & Plunkett 2011). 
+When designing mispronunciation sensitivity studies, experimenters choose the length of time each trial is presented. This includes both the length of time before the target object is named (pre-naming phase) as well as after (post-naming phase) and is determined prior to data collection. Across papers, trial length varied from `r with(trial_length_info, min(trial_length))*1000` to `r with(trial_length_info, max(trial_length))*1000` ms, with a mode of `r with(dat, getmode(trial_length))*1000` ms. There was an inverse relationship between infant age and trial length, such that younger infants were given trials of a longer length, although this correlation was not significant (*r* = `r trial.l$estimate`, *p* `r psig(trial.l$p.value)`). Presumably, younger infants may be given longer trials because their word recognition abilities may be slower than older infants (Fernald et al., 1998). 
+
+Unlike the length of trial, the length of the post-naming phase analyzed can be chosen after the experimental data is collected. Interestingly, half of the experimental conditions were analyzed using the same length of post-naming phase as the infant heard in the actual experiment `r with(post_trial_match_info, n_exp_conditions[post_trial_match == "same"])`, while the other half were analyzed using a shorter length of post-naming phase, excluding later portions of the post-naming phase `r with(post_trial_match_info, n_exp_conditions[post_trial_match == "different"])`. Across papers, the length of the post-naming phase analyzed varied from `r with(post_name_info, min(post_nam_dur))*1000` to `r with(post_name_info, max(post_nam_dur))*1000` ms, with a mode of `r with(dat, getmode(post_nam_dur))*1000` ms. Similar to trial length, there was an inverse relationship between infant age and length of post-naming phase analyzed, such that younger infants were analyzed using a longer length of post-naming phase, although here the relationship was significant (*r* = `r post.l$estimate`, *p* `r psig(post.l$p.value)`). Again, the choice to analyze a shorter post-naming time window is likely related to evidence that speed of processing is slower in younger infants (Fernald et al., 1998). Furthermore, the proportion of post-naming phase time window analyzed in comprison to the total post-naming phase presented to infants significantly decreased with increasing infant age (*r* = `r post_match.l$estimate`, *p* `r psig(post_match.l$p.value)`). Although trial length did not differ by infant age, the size of the post-naming phase time window analyzed did differ by infant age.
+
+When analyzing eye-movements, it is important to consider the amount of time it takes for an eye movement to be initiated in response to a stimulus. Previous studies examining simple stimulus response latencies first determined that infants require at least 233 ms to initiate an eye-movement in response to a stimulus (Canfield & Haith, 1991). In mispronunciation sensitivity studies, however, this has often been extended to 367 ms (e.g. Swingley & Aslin, 2000, 2002, 2007). Across papers, the majority used a similar offset value (between 360 and 370 ms) for analysis (*n* = `r with(offset_bin_info, n_exp_conditions[offset_bin == "367"])`), but offset values ranged from `r with(offset_bin_info, min(offset_bin))` to `r with(offset_bin_info, max(offset_bin))` ms, and were not reported for `r with(offset_info, n_exp_conditions[is.na(offset)])` experimental conditions. We note that Swingley (2009) also included offset values of 1133 ms to analyze responses to coda mispronunciations. There was an inverse relationship between infant age and size of offset, such that younger infants were given longer offsets, although this correlation was not significant (*r* = `r offset.l$estimate`, *p* `r psig(offset.l$p.value)`). This lack of a relationship is perhaps driven by the field's consensus that an offset of about 367 ms is appropriate for analyzing word recognition with PTL measures, including studies that evaluate mispronunciation sensitivity.
+
+Although there are a priori reasons to choose the post-naming time window (infant age) or offset time (previous studies), these choices may occur after data collection and are therefore susceptible to a higher rate of false-positives. Considering that differences in these choice were systematically different across infant ages, at least for the post-naming time window, we next explored whether the size of the analyzed post-naming phase time window or the offset time influenced sensitivity to mispronunciations. 
+
+### Length of post time
+
+```{r time_post}
+
+rma_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur), data = db_ET_MP, random = ~collapse | short_cite)
+
+ rma_post_dur_eff <- coef(summary(rma_post_dur))[2,]
 
 
-```{r NFeatures}
+ rma_post_dur_MS <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur)*condition, data = dat, random = ~collapse | short_cite)
 
-dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
+  rma_post_dur_MS_eff <- coef(summary(rma_post_dur_MS))[4,]
 
-rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature), data = dat.f, random = ~collapse | short_cite)
+  # age
+ 
+ rma_post_dur_AGE <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur)*age.C, data = db_ET_MP, random = ~collapse | short_cite)
 
- sum_eff <- coef(summary(rma_NFeatures))[2,]
+   rma_post_dur_AGE_eff <- coef(summary(rma_post_dur_MS))[4,]
 
+ 
+  rma_post_dur_AGE_MS <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur)*age.C*condition, data = dat, random = ~collapse | short_cite)
+
+    rma_post_dur_AGE_MS_eff <- coef(summary(rma_post_dur_MS))[8,]
 
 ```
 
-To understand the relationship between number of features changed and mispronunciation sensitivity, we  evaluated the effect size Hedges' *g* with number of features changed as a moderator. The moderator test was significant, `r mod_test(rma_NFeatures)`.  Hedges' *g* for number of features changed was `r g_SE(sum_eff)`, which indicated that as the number of features changed increased, the effect size Hedges' *g* significantly decreased `r CI_p(sum_eff)`. We plot this relationship in Figure 3. This confirms previous findings of a graded sensitivity to the number of features changed for both consonant (White & Morgan, 2008) and vowel (Mani & Plunkett, 2011) mispronunciations as well as the importance of controlling for the degree of phonological mismatch in experimental design.
+We first assessed whether size of post-naming phase analyzed had an impact on the size of mispronunciation sensitivity. First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images, including post-naming phase size as a moderator. The moderator test was not significant `r mod_test(rma_post_dur)` and the estimate for post-naming phase size was relatively small, $\beta$`r full_estimate(rma_post_dur_eff)`. This suggests that upon hearing a mispronunciation, infants' looks to the target image were similar regardless of the size of the post-naming phase analyzed. We next assessed whether post-naming phase size was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_post_dur_MS)`. The estimate for the interaction between post-naming phase size and condition was small but significant $\beta$`r full_estimate(rma_post_dur_MS_eff)`. This relationship is plotted in Figure 3a. The results suggest that although the size of the post-naming phase analyzed did not impact infants' likelihood to fixate the target upon hearing the mispronunciation, it did significantly impact mispronunciation sensitivity. Specifically, the difference between target fixations for correctly pronounced and mispronounced items (mispronunciation sensitivity) was significantly greater when the post-naming phase that was shorter in length.
 
-## Figure 3
+Considering that we also found a relationship between the length of the post-naming phase analyzed and infant age, such that younger ages had a longer post-naming phase time window of analysis, we next examined whether the size of post-naming phase analyzed modulated the development of mispronunciation sensitivity. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant `r mod_test(rma_post_dur_AGE)`, and a small estimate for the interaction between age and size of post-naming phase ($\beta$`r full_estimate(rma_post_dur_AGE_eff)`. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or size of the post-naming phase analyzed. We next assessed whether the relationship between size of the post-naming phase analyzed and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_post_dur_AGE_MS)`. The estimate for the  three-way-interaction between condition, size of post-naming phase, and age was small, but significant ($\beta$ = `r full_estimate(rma_post_dur_AGE_MS_eff)`. This relationship is plotted in Figure 3b. Smaller post-naming phase size lead to greater increases in mispronunciation sensitivity with development. For example, experimental conditions analyzed with a post-naming phase of 2000 ms or less, mispronunciation sensitivity increases with infant age, whereas a post-naming phase of greater than 2000 ms leads to either no impact of age on mispronunciation sensitivity or a negative relationship between age and mispronunciation sensitivity.
 
-```{r PlotFeatEffect, echo = FALSE}
+## (Insert Figure 3 about here)
 
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
+```{r Plot_post_name_cond_age, echo = FALSE, fig.width=10,fig.height=11}
 
-dat_f$feat_cat <- ifelse(dat_f$n_feature == 1, "1-feature",
-                         ifelse(dat_f$n_feature == 2, "2-feature",
-                                ifelse(dat_f$n_feature == 3, "3-feature",
-                                       ifelse(dat_f$n_feature == 0, "correct", "none"))))
+dat$condition_label <- ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
-dat_f <- subset(dat_f, feat_cat != "none")
+dat$post_size <- ifelse(dat$post_nam_dur <= 2, "2000 ms or less",
+                       ifelse(dat$post_nam_dur > 2 & dat$post_nam_dur <= 3, "2001-3000 ms", "3001 ms or greater"))
 
-dat_f$Features_changed <- factor(dat_f$feat_cat, levels = c("correct", "1-feature", "2-feature", "3-feature"))
+dat$post_size <- factor(dat$post_size, levels = c("2000 ms or less", "2001-3000 ms", "3001 ms or greater"))
 
-p <- ggplot(dat_f, aes(Features_changed, g_calc, fill = Features_changed)) + 
-  geom_violin() + 
+dat.cm <- dat[,c("short_cite", "is_correct", "is_mp", "post_size", "condition", "g_calc", "weights_g", "mean_age_1", "n_1")]
+
+dat.c <- subset(dat.cm, is_correct == 1)
+dat.m <- subset(dat.cm, is_mp == 1)
+
+dat.cm <- merge(dat.c, dat.m, by = c("short_cite", "post_size", "mean_age_1", "n_1"))
+
+dat.cm$Misp_sensitivity <- dat.cm$g_calc.x - dat.cm$g_calc.y
+
+
+p.MS <- ggplot(dat.cm, aes(post_size, Misp_sensitivity, fill = post_size)) + 
+  #facet_grid(.~post_size)+
+    geom_violin() + 
   geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
+  labs(caption="a")+
   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
   scale_fill_manual(values=cbPalette)+
   apatheme +
   theme(text = element_text(size=25),
         legend.title = element_blank(),
         legend.position = "none",
-        axis.title.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
-
-p
-
-  jpeg(filename = "figures/Figure_3_Number_of_Features.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-  #[CHRISTINA] WHAT DO YOU THINK ABOUT VIOLIN PLOTS?
-
-```
-
-```{r NFeatures_age}
-
-dat.f  <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature)*age.C, data = dat.f, random = ~collapse | short_cite)
-
- sum_eff <- coef(summary(rma_NFeatures))[4,]
-
-```
-
-Although we did not have any specific predictions about the relationship between infant age and the impact of number of features changed on mispronunciation sensitivity, we included an exploratory analysis to examine this relationship. When age was also included as a moderator, the moderator test was significant, `r mod_test(rma_NFeatures)`, but the interaction between age and number of features changed was not significant, $\beta$`r full_estimate(sum_eff)`. The small effect size for the interaction between age and number of features changed suggests that the impact of number of features changed on mispronunciation sensitivity does not change with infant age.
-
-
-```{r NFeatures_subset}
-
-dat_f <- subset(dat, n_feature == "0" | n_feature == "1" |
-                n_feature == "2" | n_feature == "3")
-
-nfeature_ages <- dat.f %>%
-  group_by(n_feature) %>%
-  summarize(min_age = r2(min(mean_age_1, na.rm=TRUE)),
-            max_age = r2(max(mean_age_1, na.rm=TRUE)),
-            mean_age = r2(mean(mean_age_1, na.rm=TRUE)))
-
-mf <- subset(dat_f, n_feature == "3")
-min_age <- min(mf$mean_age_1)
-max_age <- max(mf$mean_age_1)
-
-dat_fage= dat_f%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-rma_NFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature), data = dat_fage, random = ~collapse | short_cite)
- 
- sum_eff1 <- coef(summary(rma_NFeatures_agesub))[2,]
-
-rma_AGENFeatures_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(n_feature)*age.C, data = dat_fage, random = ~collapse | short_cite)
- 
- sum_eff2 <- coef(summary(rma_AGENFeatures_agesub))[4,]
-
-```
-
-Although all papers included in the dataset also included correct pronunciations, not all papers included all three types of feature changes (i.e. 1-3). The age range for each type of number of features changed was `r with(nfeature_ages, min_age[n_feature == 1])` - `r with(nfeature_ages, max_age[n_feature == 1])` days (*M* = `r with(nfeature_ages, mean_age[n_feature == 1])`) for 1-feature mispronunciations, `r with(nfeature_ages, min_age[n_feature == 2])` - `r with(nfeature_ages, max_age[n_feature == 2])` days (*M* = `r with(nfeature_ages, mean_age[n_feature == 2])`) for 2-feature mispronunciations, and `r with(nfeature_ages, min_age[n_feature == 3])` - `r with(nfeature_ages, max_age[n_feature == 3])` days (*M* = `r with(nfeature_ages, mean_age[n_feature == 3])`) for 3-feature mispronunciations. The reader should note that experimental conditions in which the number of features changed in a mispronunciation was not specified or the number of features changed was not consistent (e.g., one mispronunciation included a 2-feature change whereas another only a 1-feature change) are not included in these totals. An analysis focusing on the ages where all three numbers of features changed were tested (i.e. `r with(nfeature_ages, min_age[n_feature == 3])` - `r with(nfeature_ages, max_age[n_feature == 3])` days), however, did not change the pattern of results.
-
-### Distractor familiarity
-
-```{r DistractorType_misp}
-
-rma_Distractor_MP <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = db_ET_MP, random = ~ collapse | short_cite)
-
-misp_recog <- coef(summary(rma_Distractor_MP))[2,]
-
-
-rma_Distractor <- rma.mv(g_calc, g_var_calc, mods = ~condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
-
-misp_MS <- coef(summary(rma_Distractor))[4,]
-
-
-```
-
-We next assessed whether distractor familiarity has an impact on the size of mispronunciation sensitivity. First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images that were paired with either a familiar or an unfamiliar distractor image. The moderator test was not significant `r mod_test(rma_Distractor_MP)` and the estimate for distractor familiarity was relatively small, $\beta$`r full_estimate(misp_recog)`. This suggests that upon hearing a mispronunciation, infants' looks to the target image were similar for when the target image was paired with an image of a familiar or unfamiliar object. We next assessed whether distractor familiarity was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_Distractor)`, but the estimate for the interaction between distractor familiarity and condition was small and not significant $\beta$`r full_estimate(misp_MS)`. This relationship is plotted in Figure 4. The results suggest that overall, infants' familiarity with the distractor object (familiar or unfamiliar) did not impact their mispronunciation sensitivity.
-
-## Figure 4
-
-```{r PlotDistFamEffect_NoAge}
-
-
-dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
-dat$dist_code <- ifelse(dat$object_pair == "familiar_familiar", "Familiar Distractor", "Unfamiliar Distractor")
-
-# Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
-
-p.DIST_ALL <- ggplot(dat, aes(condition_label, g_calc, fill = condition_label)) + 
-  geom_violin() + 
-  geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
-  facet_grid(.~dist_code) +
-  #labs(caption="a.") + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-  scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
         axis.title.x = element_blank(),
         axis.text.x = element_blank(),
         axis.ticks.x = element_blank()) + 
   #xlab("Number of Features Changed") + 
   geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
+  ylab("Misp. Sensitivity")
 
-p.DIST_ALL
 
-# lay <- rbind(c(1,1,2),
-#       c(3,3,3))
 
-  jpeg(filename = "figures/Figure_4_Distractor_Familiarity.jpg", 
-       width = 500, height = 300, units = "px")
+p.AGE <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = post_size)) + 
+    #facet_grid(.~post_size)+
+  geom_point(aes(size = n_1),show.legend=FALSE) +
+  labs(caption="b")+
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=n_1)) +
+  scale_colour_manual(values=cbPalette)+
+  apatheme +
+  theme(legend.title = element_blank(),
+        legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Misp. Sensitivity")
+
+
+lay <- rbind(c(1), c(2))
+#lay <- rbind(c(1,2))
+
+  jpeg(filename = "figures/Figure_3_Post_name_size.jpg", 
+       width = 600, height = 600, units = "px")
   
-p.DIST_ALL
+ger.plot.age <- grid.arrange(p.MS, p.AGE,
+                             layout_matrix = lay)
 
 dev.off()
 
+grid.draw(ger.plot.age)
+  
+```
+
+### Length of offset time
+
+```{r time_offset}
+
+rma_offset <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(offset), data = db_ET_MP, random = ~collapse | short_cite)
+
+rma_offset_eff <- coef(summary(rma_offset))[2,]
+
+
+ rma_offset_MS <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(offset)*condition, data = dat, random = ~collapse | short_cite)
+
+  rma_offset_MS_eff <- coef(summary(rma_offset_MS))[4,]
+
+  # age
+ 
+ rma_offset_AGE <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(offset)*age.C, data = db_ET_MP, random = ~collapse | short_cite)
+
+   rma_offset_AGE_eff <- coef(summary(rma_offset_AGE))[4,]
+
+ 
+  rma_offset_AGE_MS <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(offset)*age.C*condition, data = dat, random = ~collapse | short_cite)
+
+    rma_offset_AGE_MS_eff <- coef(summary(rma_offset_AGE_MS))[8,]
 
 ```
 
-```{r DistractorTypeAge}
+We next assessed whether offset time had an impact on the size of mispronunciation sensitivity. First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images, including offset time as a moderator. The moderator test was not significant `r mod_test(rma_offset)` and the estimate for offset time was very small, $\beta$`r full_estimate(rma_offset_eff)`. This suggests that upon hearing a mispronunciation, infants' looks to the target image were similar regardless of the offset time used to analyze the data. We next assessed whether offset time was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_post_dur_MS)`, but the estimate for the interaction between offset time and condition was very small and not significant $\beta$`r full_estimate(rma_offset_MS_eff)`. 
 
-rma_DistractorAge <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(object_pair), data = db_ET_MP, random = ~ collapse | short_cite)
+We next examined whether offset time modulated the development of mispronunciation sensitivity. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant `r mod_test(rma_offset_AGE)`, and a very small estimate for the interaction between age and size of post-naming phase ($\beta$`r full_estimate(rma_offset_AGE_eff)`. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or offset time. We next assessed whether the relationship between offset time and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_offset_AGE_MS)`, but the three-way-interaction between condition, offset time, and age was very small and not significant ($\beta$ = `r full_estimate(rma_offset_AGE_MS_eff)`.
 
-sum_eff <- coef(summary(rma_DistractorAge))[4,]
+Taken together, these results suggest that offset time does not modulate mispronunciation sensitivity. There is no relationship between offset time and age, and we find no influence of offset time on the development of mispronunciation sensitivity.
 
+### Dependent variable-related analyses
 
-rma_DistractorAgeMS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorAgeMS)  
+```{r dv_info}
 
-sum_eff1 <- coef(summary(rma_DistractorAgeMS))[8,]
-sum_eff2 <- coef(summary(rma_DistractorAgeMS))[7,]
-
-```
-
-
-
-We next examined whether age modulates object recognition or mispronunciation sensitivity when the distractor image is familiar or unfamiliar. Based on previous results, we expected older infants to look less to the target in response to mispronunciations and to have greater mispronunciation sensitivity than younger infants when the distractor was unfamiliar compared to familiar. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant `r mod_test(rma_DistractorAge)`, and a small estimate for the interaction between age and object recognition ($\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infant looks to the target image were similar for when the target image was paired with an image of a familiar or unfamiliar object, regardless of their age. We next assessed whether the relationship between distractor familiarity and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_DistractorAgeMS)`. The estimate for the  three-way-interaction between condition, distractor familiarity, and age was small and not significant ($\beta$ = `r full_estimate(sum_eff1)`. We note that in this model, the interaction between condition and distractor familiarity was significant ($\beta$`r full_estimate(sum_eff2)`, this estimate is similar to the original estimate specifically examining this interaction in a previous model. Taken together, these results suggest that regardless of age, mispronunciation sensitivity was similar whether the distractor image was familiar or unfamiliar.
-
-```{r DistractorTypeAgeRangeSubset}
-
-object_pair_ages <- dat %>%
-  group_by(object_pair) %>%
-  summarize(min_age = r2(min(mean_age_1, na.rm=TRUE)),
-            max_age = r2(max(mean_age_1, na.rm=TRUE)),
-            mean_age = r2(mean(mean_age_1, na.rm=TRUE)),
-            sd_age = r2(sd(mean_age_1, na.rm=TRUE)))
-
-
-fn <- subset(dat, object_pair=="familiar_novel")
-
-ff <- subset(dat, object_pair=="familiar_familiar")
-
-age_diff_dist <- t.test(fn$mean_age_1, ff$mean_age_1, paired = F)
-
-#t.test(fn$mean_age_1, ff$mean_age_1)
-
-opa <- as.data.frame(object_pair_ages)
-min_age <- max(opa$min_age)
-max_age <- min(opa$max_age)
-
-
-dat_age_MP= db_ET_MP%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-rma_Distractor_MP_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair), data = dat_age_MP, random = ~ collapse | short_cite)
-
-misp_recog_agesub <- round(coef(summary(rma_Distractor_MP_agesub))[2,], 2)
-
-
-rma_DistractorAge_agesub <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(object_pair), data = dat_age_MP, random = ~ collapse | short_cite)
-  
-#summary(rma_Distractor_MP)  
-
-misp_MS_agesub <- round(coef(summary(rma_DistractorAge_agesub))[4,], 2)
-
-# misp sensitivity
-dat_age= dat%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-rma_Distractor_MS_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(object_pair)*condition, data = dat_age, random = ~ collapse | short_cite)
-
-misp_recog_Age_agesub <- round(coef(summary(rma_Distractor_MS_agesub))[4,], 2)
-
-
-rma_DistractorAgeMS_agesub <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(object_pair), data = dat_age, random = ~ collapse | short_cite)
-  
-misp_MS_Age_agesub <- round(coef(summary(rma_DistractorAgeMS_agesub))[8,], 2)
-
-  
-#summary(rma_Distractor_MS)  
-```
-
-Although we anticipated that older children may be more impacted by the presence of a unfamiliar compared to familiar distractor image, we found that age and distractor familiarity did not impact mispronunciation sensitivity. Inspection of the ages tested using different kinds of distractors, however, revealed differences. Infants tested using a familiar distractor were younger (*M* = `r with(object_pair_ages, mean_age[object_pair == "familiar_familiar"])` days, *SD* = `r with(object_pair_ages, sd_age[object_pair == "familiar_familiar"])`, range = `r with(object_pair_ages, min_age[object_pair == "familiar_familiar"])` - `r with(object_pair_ages, max_age[object_pair == "familiar_familiar"])`) than those infants tested using an unfamiliar distractor (*M* = `r with(object_pair_ages, mean_age[object_pair == "familiar_novel"])` days, *SD* = `r with(object_pair_ages, sd_age[object_pair == "familiar_novel"])`, range = `r with(object_pair_ages, min_age[object_pair == "familiar_novel"])` - `r with(object_pair_ages, max_age[object_pair == "familiar_novel"])`), which a two-sample t-test revealed to be a significant difference, *t*(`r r2(age_diff_dist$parameter)`) = `r r2(age_diff_dist$statistic)`, *p* `r psig(age_diff_dist$p.value)`).
-
-[CHRISTINA] CAN YOU TURN THE NUMBERS INTO R CODE HERE? aLSO, NOT SURE WE NEED A T-TEST TO CONFIRM THE OBVIOUS.
-[Katie: Is the t-test okay?]
-
-To ensure that the lack of a difference wasn't due to the ages of infants tested with different types of distractors, we repeated the previous model analyses on a subset of papers that tested infants at ages where both familiar and unfamiliar distractors were used (`r min_age` - `r max_age` days). We first considered object recognition is response to a mispronunciation. Here, the pattern of results for the subset of infants was similar to that of the entire dataset; the moderator test was not significant `r mod_test(rma_Distractor_MP_agesub)` and the estimate for distractor familiarity was small, $\beta$`r full_estimate(misp_recog_agesub)`. However, it should be noted that although small, the effect size estimate for distractor familiarity doubled from $\beta$`r r2(misp_recog$estimate)` in the entire dataset to $\beta$`r r2(misp_recog_agesub$estimate)` in the subset. We next assessed the relationship between distractor familiarity and mispronunciation sensitivity. Similar to the analysis with the entire dataset, the moderator test was significant `r mod_test(rma_Distractor_MS_agesub)`. Unlike the analysis with the entire dataset, however, the estimate for the interaction between distractor familiarity and condition was significant $\beta$`r full_estimate(misp_recog_Age_agesub)`, but small and similar to the estimate for this interaction in the full dataset $\beta$ = `r r2(misp_MS$estimate)`.
-
-Although the age range is relatively small in the subset of infant ages tested with both familiar and unfamiliar distractors (`r r2(max_age/30.44 - min_age/30.44)` months), these ages span the beginning of the vocabulary spurt. Considering infants' object looking behavior may be influenced by whether the label for the object is known (Schafer & Plunkett, 1998), however, this age range may still be informative for understanding the role of distractor familiarity on mispronunciation sensitivity and whether this is modulated by age. Similar to the full dataset, however, including age as a moderator of object recognition in response to familiar and unfamiliar distractors resulted in a moderator test that was not significant `r mod_test(rma_DistractorAge_agesub)`, and a small estimate for the interaction between age and object recognition ($\beta$`r full_estimate(misp_MS_agesub)`. Finally, we assessed whether the relationship between distractor familiarity and mispronunciation sensitivity was modulated by age in the subset of data. Again, similar to the full dataset, the moderator test was not significant `r mod_test(rma_DistractorAgeMS_agesub)` and the estimate for the three-way-interaction between condition, distractor familiarity, and age was small and not significant ($\beta$ = `r full_estimate(misp_MS_Age_agesub)`.
-
-[Katie: ultimately, the subset analysis doesn't show anything :( What conclusions can we draw?]
-
-
-
-### Phonological overlap between target and distractor
-
-```{r DistractorOverlap_descrip}
-
-dist_overlap_info <- dat %>%
-  group_by(distractor_overlap) %>%
+dv_info <- dat %>%
+  group_by(within_measure) %>%
   summarize(n_exp_conditions =  n())
 
-```
+dv.l <- summary(lm(age.C ~ within_measure, data = dat))
 
-To assess whether phonological overlap between the target and distractor image labels has an impact on the size of mispronunciation sensitivity, we examined the meta-analytic effect for object identification in response to mispronunciations and mispronunciation sensitivity when the target-distractor pairs either had no overlap or shared the same onset phoneme. We did not include data for which the overlap included both the onset and medial phonemes (*n* = `r with(dist_overlap_info, n_exp_conditions[distractor_overlap == "onset/medial"])`), coda phonemes (*n* = `r with(dist_overlap_info, n_exp_conditions[distractor_overlap == "coda"])`), or for targets paired with an unfamiliar distractor image `r with(dist_overlap_info, n_exp_conditions[distractor_overlap == "novel"])`. The analysis was therefore based on a subset of the overall dataset, with `r with(dist_overlap_info, n_exp_conditions[distractor_overlap == "onset"])` experimental conditions containing onset phoneme overlap between the target and distractor and `r with(dist_overlap_info, n_exp_conditions[distractor_overlap == "no"])` containing no overlap between target and distractor.
-
-[CHRISTINA] SEEMS OK BUT I AM CONFUSED WHY OVERLAP IS THE BASELINE AND WHY YOU BRING IN NOVEL. I THINK YOU NEED TO SPELL THIS OUT MORE. 
-
-[KATIE: I think we had talked about it and decided to include novel. I don't think it needs to be here necessarily, so I'll take it out, especially if its confusing.]
-
-
-```{r DistractorOverlap}
-db_ET_MPo = db_ET_MP %>%
-  filter(distractor_overlap == "onset"  |  distractor_overlap == "no")
-
-db_ET_MPo$distractor_overlap <- factor(db_ET_MPo$distractor_overlap, levels = c("onset", "no"))
-
-
-rma_DistractorOverlap <- rma.mv(g_calc, g_var_calc, mods = ~distractor_overlap, data = db_ET_MPo, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorOverlap)  
-sum_eff1 <- coef(summary(rma_DistractorOverlap))[2,]
-
-
-db_ET_MPo_MS = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "no")
-
-db_ET_MPo_MS$distractor_overlap <- factor(db_ET_MPo_MS$distractor_overlap, levels = c("onset", "no"))
-
-
-rma_DistractorOverlapMS <- rma.mv(g_calc, g_var_calc, mods = ~condition*distractor_overlap, data = db_ET_MPo_MS, random = ~ collapse | short_cite)
-
-#summary(rma_DistractorOverlapMS)
-
-sum_eff2 <- coef(summary(rma_DistractorOverlapMS))[4,]
+dv.age.plot <- ggplot(dat, aes(within_measure, age.C)) +     geom_violin() + 
+  geom_jitter(height = 0, width = 0.1, alpha = 0.5)
 
 ```
 
+Mispronunciation studies evaluate infants' proportion of target looks (PTL) in response to correct and mispronounced words. Experiments typically include a phase where no naming event has occured, whether correctly pronounced or mispronounced, which we refer to as the baseline. The purpose of the baseline is to ensure that infants do not have systematic preferences for the target or distractor (greater interest in a cat compared to cup) which may drive PTL scores in the post-naming phase. As described in the Data Analysis sub-section of the Methods, there was considerable variation across papers in way that baseline was calculated, resulting in different measured outcomes or dependent variables. Over half of the experimental conditions (*n* = `r with(dv_info, n_exp_conditions[within_measure == "pre_post_naming_effect"])`) subtracted the PTL score for a pre-naming phase from the PTL score for a post-naming phase. This results in one value, which is then compared with a chance value of 0. When positive, this indicates that infants increased their looks to the target after hearing the naming label (correct or mispronounced) relative to the pre-naming baseline PTL. We will refer to this dependent variable as the Difference Score. Another dependent variable, which was used in `r with(dv_info, n_exp_conditions[within_measure == "pre_post"])` experimental conditions, directly compared compared the post- and pre-naming PTL scores with one another. This requires two values, one for the pre-naming phase and one for the post-naming phase. A greater post compared to pre-naming phase PTL indicates that increased their target looks after hearing the naming label. We will refer to this dependent variable as Pre vs. Post. Finally, the remaining `r with(dv_info, n_exp_conditions[within_measure == "post"])` experimental conditions compared the post-naming PTL score with a chance value of 50%. Here, the infants' pre-naming phase preferences are not considered and instead target fixations are evaluated based on the likelihood to fixate one of two pictures. We will refer to this dependent variable as Post. 
 
-Regarding object identification in response to mispronunciations, when distractor overlap was included as a moderator, the moderator test was not significant `r mod_test(rma_DistractorOverlap)` and the estimate for distractor overlap was relatively small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for when the target image was paired with a distractor image that contained overlap on the onset phoneme or no overlap with the target word, or was an unfamiliar object. We next assessed whether target-distractor overlap was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant `r mod_test(rma_DistractorOverlapMS)`. The estimate for the interaction between condition and distractor overlap was small, but significant ($\beta$ `r full_estimate(sum_eff2)`, suggesting that mispronunciation sensitivity was greater when target-distractor pairs shared the same onset phoneme compared to when they shared no phonological overlap. This relationship be seen in Figure 5a. 
+The Difference Score and Pre vs. Post can be considered similar to one another, in that they are calculated on the same type of data and consider pre-naming preferences. The Post dependent variable, in contrast, does not consider pre-naming preferences. To our knowledge, there is no theory or evidence to drive choice of dependent variable, which may explain the wide variation in dependent variable reported in the papers included in this meta-analysis. We next explored whether the type of dependent variable calculated influenced sensitivity to mispronunciations. Considering that the dependent variable Post differs in its consideration of pre-naming preferences, we directly compared mispronunciation sensitivity between Post as a reference condition and both Difference Score and Pre vs. Post dependent variables.
+
+```{r dependent_variable}
+
+dat$dv_label <- ifelse(dat$within_measure=="post", "Post",
+                       ifelse(dat$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+dat$dv_label <- factor(dat$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+db_ET_MP$dv_label <- ifelse(db_ET_MP$within_measure=="post", "Post",
+                       ifelse(db_ET_MP$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+db_ET_MP$dv_label <- factor(db_ET_MP$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+##########
+
+rma_within <- rma.mv(g_calc, g_var_calc, mods = ~dv_label, data = db_ET_MP, random = ~collapse | short_cite)
+
+rma_within_effprepost <- coef(summary(rma_within))[2,]
+rma_within_effdiff <- coef(summary(rma_within))[3,]
 
 
-```{r DistractorOverlap_age}
+ rma_within_MS <- rma.mv(g_calc, g_var_calc, mods = ~dv_label*condition, data = dat, random = ~collapse | short_cite)
 
-# object recognition
-db_ET_MPo = db_ET_MP %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "no")
+  rma_within_MS_effprepost <- coef(summary(rma_within_MS))[5,]
+  rma_within_MS_effdiff <- coef(summary(rma_within_MS))[6,]
 
-db_ET_MPo$distractor_overlap <- factor(db_ET_MPo$distractor_overlap, levels = c("onset", "no"))
-
-rma_DistractorOverlap_age <- rma.mv(g_calc, g_var_calc, mods = ~age.C*distractor_overlap, data = db_ET_MPo, random = ~ collapse | short_cite)
   
-sum_eff1 <- coef(summary(rma_DistractorOverlap_age))[4,]
+  # age
+ 
+ rma_within_AGE <- rma.mv(g_calc, g_var_calc, mods = ~dv_label*age.C, data = db_ET_MP, random = ~collapse | short_cite)
 
+   rma_within_AGE_effprepost <- coef(summary(rma_within_AGE))[5,]
+   rma_within_AGE_effdiff <- coef(summary(rma_within_AGE))[6,]
+   
+  rma_within_AGE_MS <- rma.mv(g_calc, g_var_calc, mods = ~dv_label*age.C*condition, data = dat, random = ~collapse | short_cite)
 
-# mispronunciation sensitivity
-dat_MPo = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "no")
-
-dat_MPo$distractor_overlap <- factor(dat_MPo$distractor_overlap, levels = c("onset", "no"))
-
-rma_DistractorOverlap_age_MS <- rma.mv(g_calc, g_var_calc, mods = ~age.C*distractor_overlap*condition, data = dat_MPo, random = ~ collapse | short_cite)
-  
-#summary(rma_DistractorOverlap_age_MS)
-
-sum_eff2 <- coef(summary(rma_DistractorOverlap_age_MS))[8,]
-
+    rma_within_AGE_MS_effprepost <- coef(summary(rma_within_AGE_MS))[11,]
+    rma_within_AGE_MS_effdiff <- coef(summary(rma_within_AGE_MS))[12,]
+ 
 ```
 
-Although we did not have any specific predictions about the relationship between infant age and the impact of distractor overlap on mispronunciation sensitivity, we included an exploratory analysis to examine this relationship. First, for object recognition in response to mispronunciations, when age in addition to distractor overlap was also included as a moderator, the moderator test was not significant, `r mod_test(rma_DistractorOverlap_age)`, and the estimate for the interaction between age and distractor overlap was small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for both onset and no overlap, regardless of infant age. We next assessed whether the relationship between distractor overlap and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant, `r mod_test(rma_DistractorOverlap_age_MS)` and the estimate for the three-way interaction between age, condition, and distractor overlap was significant, but relatively small ($\beta$ = `r full_estimate(sum_eff2)`. As can be seen in Figure 5b, the difference between correct pronunciations and mispronunciations (mispronunciation sensitivity) stays steady across infant ages for both target words paired with distractors containing onset overlap with the target word as well as distractors containing no overlap. As infants aged, however, overall recognition (regardless of condition) increased for target-distractor pairs containing onset overlap, whereas for overall recognition decreased for target-distractor pairs containing no overlap. 
+We first assessed whether the choice of dependent variable had an impact on the size of mispronunciation sensitivity. First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images, including dependent variable as a moderator. The moderator test was significant `r mod_test(rma_within)`. The estimates for both the Pre vs. Post ($\beta$`r full_estimate(rma_within_effprepost)`) and Difference Score ($\beta$`r full_estimate(rma_within_effdiff)`) dependent variables were significantly smaller than that of the Post dependent variable. This suggests that reported looks to the target upon hearing a mispronunciation were greatest when the dependent variable was Post. We next assessed whether he dependent variable was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_within_MS)`. The estimate for the interaction between Pre vs. Post and condition was significantly smaller than that of the Post dependent variable ($\beta$`r full_estimate(rma_within_MS_effprepost)`), but the difference between the Difference Score and Post in the interaction with condition was small and not significant ($\beta$`r full_estimate(rma_within_MS_effdiff)`). This relationship is plotted in Figure 4a. The results suggest that dependent variable calculated significantly impacted the size fo the mispronunciation sensitivity effect, such that Post. vs. Pre showed a smaller mispronunciation sensitivity effect than Post, but no difference between the Difference Score and Post.
 
-## Figure 5
+We next examined whether the type of dependent variable calculated modulated the development of mispronunciation sensitivity. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was significant `r mod_test(rma_post_dur_AGE)`, but the estimates for the interaction between Pre vs. Post and age ($\beta$`r full_estimate(rma_within_AGE_effprepost)`) as well as Difference Score and age ($\beta$`r full_estimate(rma_within_AGE_effdiff)`) were not different from that of the Post dependent variable. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or type of dependent variable. We next assessed whether the relationship between dependent variable and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_within_AGE_MS)`. The estimate for the interaction between Pre vs. Post, condition, and age was significantly smaller than that of the Post dependent variable ($\beta$`r full_estimate(rma_within_AGE_MS_effprepost)`), but the difference between the Difference Score and Post in the interaction with condition and age was small and not significant ($\beta$`r full_estimate(rma_within_AGE_MS_effdiff)`). This relationship is plotted in Figure 4b. When the dependent variable was Pre vs. Post, mispronunciation sensitivity decreased with infant development, while in comparison, when the dependent variable was Post, mispronunciation sensitivity increased with infant development. There was no difference in mispronunciation sensitivity change with infant development between the Post and Difference Score dependent variables.
 
-```{r PlotDistOverlap_cond_age}
+## (Insert Figure 4 about here)
 
-db_ET_MPo = dat %>%
-  filter(distractor_overlap == "onset"  | distractor_overlap == "no")
+```{r Plot_Within_cond_age_diff_score, echo = FALSE, fig.width=10,fig.height=11}
 
-db_ET_MPo$distractor_overlap <- factor(db_ET_MPo$distractor_overlap, levels = c("onset", "no"))
+dat.cm <- dat[,c("short_cite", "is_correct", "is_mp", "within_measure", "condition", "g_calc", "weights_g", "mean_age_1", "n_1")]
 
-db_ET_MPo$condition_label <- ifelse(db_ET_MPo$condition==1, "Correct", "Mispronunciation")
+dat.c <- subset(dat.cm, is_correct == 1)
+dat.m <- subset(dat.cm, is_mp == 1)
 
-db_ET_MPo$distractor_label <- ifelse(db_ET_MPo$distractor_overlap=="onset", "Onset Overlap", "No Overlap")
+dat.cm <- merge(dat.c, dat.m, by = c("short_cite", "within_measure", "mean_age_1", "n_1"))
+
+dat.cm$Misp_sensitivity <- dat.cm$g_calc.x - dat.cm$g_calc.y
+
+dat.cm$condition_label <- ifelse(dat.cm$is_correct.x==1, "Correct", "Mispronunciation")
+
+dat.cm$dv_label <- ifelse(dat.cm$within_measure=="post", "Post",
+                       ifelse(dat.cm$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+dat.cm$dv_label <- factor(dat.cm$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
 
 
-p.DIOV_M <- ggplot(db_ET_MPo, aes(condition_label, g_calc, fill = condition_label)) + 
-  facet_grid(.~distractor_label)+
+ms.agg <- ggplot(dat.cm, aes(dv_label, Misp_sensitivity, fill = dv_label)) + 
+  #facet_grid(.~dv_label)+
     geom_violin() + 
   geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
   labs(caption="a")+
@@ -1300,566 +1238,126 @@ p.DIOV_M <- ggplot(db_ET_MPo, aes(condition_label, g_calc, fill = condition_labe
         axis.ticks.x = element_blank()) + 
   #xlab("Number of Features Changed") + 
   geom_hline(yintercept = 0, linetype="dotted") + 
-  ylab("Effect size Hedges' g")
+  ylab("Misp. Sensitivity")
 
 
 
-p.DIOV_AGE <- ggplot(db_ET_MPo, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~distractor_label)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) +
+ms.age <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = dv_label)) + 
+    #facet_grid(.~dv_label)+
+  geom_point(aes(size = n_1),show.legend=FALSE) +
   labs(caption="b")+
   geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=n_1)) +
   scale_colour_manual(values=cbPalette)+
   apatheme +
   theme(legend.title = element_blank(),
         legend.position = "bottom") + 
   xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
+  ylab("Misp. Sensitivity")
 
 
 lay <- rbind(c(1), c(2))
+#lay <- rbind(c(1,2))
 
-  jpeg(filename = "figures/Figure_5_Distractor_overlap_age.jpg", 
+  jpeg(filename = "figures/Figure_4_Dependent_variable.jpg", 
        width = 500, height = 600, units = "px")
   
-ger.plot.age <- grid.arrange(p.DIOV_M, p.DIOV_AGE,
+ger.plot.age <- grid.arrange(ms.agg, ms.age,
                              layout_matrix = lay)
 
 dev.off()
 
+grid.draw(ger.plot.age)
+
+```
+
+## Controlling for researcher choice
+
+```{r reanalysis_misp_sens_dv_label}
+
+dat$dv_label <- ifelse(dat$within_measure=="post", "Post",
+                       ifelse(dat$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+dat$dv_label <- factor(dat$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+db_ET_MP$dv_label <- ifelse(db_ET_MP$within_measure=="post", "Post",
+                       ifelse(db_ET_MP$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+db_ET_MP$dv_label <- factor(db_ET_MP$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+db_ET_correct$dv_label <- ifelse(db_ET_correct$within_measure=="post", "Post",
+                       ifelse(db_ET_correct$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+db_ET_correct$dv_label <- factor(db_ET_correct$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+
+rma_correct_DV = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = list(~ collapse | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_correct_DV, rma_correct)
+
+rma_MP_DV = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = list(~ collapse | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_MP_DV, rma_MP)
+
+
+rma_MPeffect_DV <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = list(~ collapse | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_MPeffect_DV, rma_MPeffect)
+
+
+rma_correct_age_DV = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_correct, random = list(~ collapse | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_correct_age_DV, rma_correct_age)
+
+
+rma_MP_age_DV = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_MP, random = list(~ collapse | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_MP_age_DV, rma_MP_age)
+
+
+rma_MPeffect_age_DV <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition, data = dat, random = list(~ collapse | short_cite, ~ dv_label | short_cite))
   
-```
-
-### Position of mispronunciation
-
-```{r Location_descrip}
-
-misp_location_info <- dat %>%
-  group_by(mispron_location) %>%
-  summarize(n_exp_conditions =  n())
+#anova(rma_MPeffect_age_DV, rma_MPeffect_age)
 
 
 ```
 
-To assess whether the position of the mispronunciation has an impact on mispronunciation sensitivity, we calculated the meta-analytic effect for object identification in response to mispronunciations on the onset and medial phonemes. We did not include data for which the mispronunciation was located on the coda (*n* = `r with(misp_location_info, n_exp_conditions[mispron_location == "coda"])`), varied in regard to position (*n* = `r with(misp_location_info, n_exp_conditions[mispron_location == "coda/medial" | mispron_location == "onset/medial" | mispron_location == "onset/medial/coda"])`), or was not reported (*n* = `r with(misp_location_info, n_exp_conditions[is.na(mispron_location)])`). The analysis was therefore based on a subset of the overall dataset, with `r with(misp_location_info, n_exp_conditions[mispron_location == "onset"])` experimental conditions comparing a mispronunciation on the onset phoneme and `r with(misp_location_info, n_exp_conditions[mispron_location == "medial"])` experimental conditions comparing a mispronunciation on the medial phoneme.
-
-```{r Location_misp}
-#table(db_ET_MP$mispron_location)
-
-db_ET_MPl = db_ET_MP %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-db_ET_MPl$mispron_location <- factor(db_ET_MPl$mispron_location, levels = c("onset", "medial"))
-
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_Location_MP <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location, data = db_ET_MPl, random = ~collapse | short_cite)
-
-sum_eff2 <- coef(summary(rma_Location_MP))[2,]
- 
+```{r reanalysis_misp_sens_post_dur}
 
 
+rma_correct_post_dur = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = list(~ collapse | short_cite, ~ as.factor(post_nam_dur) | short_cite))
 
-db_ET_MPl = dat %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
+#anova(rma_correct_post_dur, rma_correct)
 
-db_ET_MPl$mispron_location <- factor(db_ET_MPl$mispron_location, levels = c("onset", "medial"))
+rma_MP_post_dur = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = list(~ collapse | short_cite, ~ as.factor(post_nam_dur) | short_cite))
 
-rma_LocationCondition <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*condition, data = db_ET_MPl, random = ~collapse | short_cite)
- 
-sum_eff2 <- coef(summary(rma_LocationCondition))[4,]
+#anova(rma_MP_post_dur, rma_MP)
 
 
-```
+rma_MPeffect_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = list(~ collapse | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+
+#anova(rma_MPeffect_post_dur, rma_MPeffect)
 
 
-Regarding object identification in response to mispronunciations, when mispronunciation location was included as a moderator, the moderator test was not significant `r mod_test(rma_Location_MP)` and the estimate for distractor overlap was small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for when the mispronunciation was located on the onset or  medial phonemes. We next assessed whether mispronunciation location was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_LocationCondition)`, but the estimate for the interaction between mispronunciation location and condition was small and not significant, $\beta$`r full_estimate(sum_eff2)`. These results suggest that overall, the location of the mispronunciation (onset, medial) did not impact mispronunciation sensitivity.
+rma_correct_age_post_dur = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_correct, random = list(~ collapse | short_cite, ~ as.factor(post_nam_dur) | short_cite))
 
-```{r PlotPositionEffect}
-
-# #dat.p <- subset(dat, mispron_location == "onset" | mispron_location == "medial" |
-# #                mispron_location == "offset")
-# 
-# dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
-# 
-# dat.p = dat %>%
-#   filter(mispron_location == "onset"  | mispron_location == "medial")
-# 
-# dat.p$mispron_location <- factor(dat.p$mispron_location, levels = c("onset", "medial"))
-# 
-# 
-# p <- ggplot(dat.p, aes(condition_label, g_calc, fill = condition_label)) + 
-#   facet_grid(.~mispron_location)+
-#   geom_boxplot() + 
-#   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
-#   scale_fill_manual(values=cbPalette)+
-#   apatheme +
-#   theme(text = element_text(size=25),
-#         legend.title = element_blank(),
-#         legend.position = "bottom",
-#         axis.title.x = element_blank(),
-#         axis.text.x = element_blank(),
-#         axis.ticks.x = element_blank()) + 
-#   #xlab("Number of Features Changed") + 
-#   geom_hline(yintercept = 0, linetype="dotted") + 
-#   ylab("Effect size Hedges' g")
-# 
-# p
-# 
-#   jpeg(filename = "figures/Figure_7_Mispronunciation_position.jpg", 
-#        width = 500, height = 300, units = "px")
-# 
-#   p
-#   
-#   dev.off()
+#anova(rma_correct_age_post_dur, rma_correct_age)
 
 
-```
+rma_MP_age_post_dur = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_MP, random = list(~ collapse | short_cite, ~ as.factor(post_nam_dur) | short_cite))
 
-```{r Location_misp_age}
-#table(db_ET_MP$mispron_location)
-
-db_ET_MPl = db_ET_MP %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-db_ET_MPl$mispron_location <- factor(db_ET_MPl$mispron_location, levels = c("onset", "medial"))
-
-#rma_NFeatures <- rma.mv(g_calc, g_var_calc, mods = ~as.ordered(n_feature), data = db_ET_MP, random = ~collapse | short_cite)
-rma_Location_MP_age <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*age.C, data = db_ET_MPl, random = ~collapse | short_cite)
- 
-sum_eff1 <- coef(summary(rma_Location_MP_age))[4,]
+#anova(rma_MP_age_post_dur, rma_MP_age)
 
 
-
-db_ET_MPl = dat %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-db_ET_MPl$mispron_location <- factor(db_ET_MPl$mispron_location, levels = c("onset", "medial"))
-
-rma_LocationCondition_age <- rma.mv(g_calc, g_var_calc, mods = ~mispron_location*condition*age.C, data = db_ET_MPl, random = ~collapse | short_cite)
- 
-sum_eff2 <- coef(summary(rma_LocationCondition))[8,]
-
-
-```
-
-According to TRACE, infants should become more sensitive to onset mispronunciations as their lexicon size grows, but sensitivity to medial mispronunciations should stay the same (Mayor & Plunkett, 2014). To examine this relationship, we included age as a moderator. First, for object recognition in response to mispronunciations, when age in addition to mispronunciation location was also included as a moderator, the moderator test was not significant, `r mod_test(rma_Location_MP)` and the estimate for the interaction between distractor overlap and age was small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for both onset and medial mispronunciations, regardless of infant age. We next assessed whether the relationship between mispronunciation location and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant, `r mod_test(rma_LocationCondition)`, but the estimate for the three-way interaction between mispronunciation loction, condition, and age was small and not significant, $\beta$`r full_estimate(sum_eff2)`. These results provide further evidence that location of the mispronunciation (onset, medial) did not impact mispronunciation sensitivity.
-
-```{r MispLocationAgeRangeSubset}
-
-misp_location_ages <- dat %>%
-  group_by(mispron_location) %>%
-  summarize(min_age = r2(min(mean_age_1, na.rm=TRUE)),
-            max_age = r2(max(mean_age_1, na.rm=TRUE)),
-            mean_age = r2(mean(mean_age_1, na.rm=TRUE)),
-            sd_age = r2(sd(mean_age_1, na.rm=TRUE)))
-
-
-fn <- subset(dat, mispron_location=="onset")
-
-ff <- subset(dat, mispron_location=="medial")
-
-age_misp_location <- t.test(fn$mean_age_1, ff$mean_age_1, paired = F)
-
-#t.test(fn$mean_age_1, ff$mean_age_1)
-
-mla <- as.data.frame(misp_location_ages)
-mla <- subset(mla, mispron_location == "onset"  | mispron_location == "medial")
-min_age <- max(mla$min_age)
-max_age <- min(mla$max_age)
-
-
-dat_age_MP= db_ET_MP%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-dat_age_MP = dat_age_MP %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-dat_age_MP$mispron_location <- factor(dat_age_MP$mispron_location, levels = c("onset", "medial"))
-
-rma_Location_MP_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(mispron_location), data = dat_age_MP, random = ~ collapse | short_cite)
-
-misp_recog_agesub <- coef(summary(rma_Location_MP_agesub))[1,]
-
-
-rma_LocationAge_agesub <- rma.mv(g_calc, g_var_calc, mods = ~age.C*as.factor(mispron_location), data = dat_age_MP, random = ~ collapse | short_cite)
+rma_MPeffect_age_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition, data = dat, random = list(~ collapse | short_cite, ~ as.factor(post_nam_dur) | short_cite))
   
-#summary(rma_Location_MP)  
-
-misp_MS_agesub <- coef(summary(rma_LocationAge_agesub))[4,]
-
-
-
-
-# misp sensitivity
-dat_age= dat%>%
-  filter(mean_age_1>=min_age&mean_age_1<=max_age)
-
-dat_age = dat_age %>%
-  filter(mispron_location == "onset"  | mispron_location == "medial")
-
-dat_age$mispron_location <- factor(dat_age$mispron_location, levels = c("onset", "medial"))
-
-
-rma_Location_MS_agesub <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(mispron_location)*condition, data = dat_age, random = ~ collapse | short_cite)
-
-misp_recog_Age_agesub <- coef(summary(rma_Location_MS_agesub))[4,]
-
-
-rma_LocationAgeMS_agesub <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition*as.factor(mispron_location), data = dat_age, random = ~ collapse | short_cite)
-  
-misp_MS_Age_agesub <- coef(summary(rma_LocationAgeMS_agesub))[8,]
-
-  
-#summary(rma_Distractor_MS)  
-```
-
-Although we anticipated that older children may be more impacted by the position of a mispronunciation, we found no relationship. Inspection of the ages tested using on onset and medial mispronunciations, however, revealed differences. Infants tested on onset mispronunciations were older (*M* = `r with(misp_location_ages, mean_age[mispron_location == "onset"])` days, *SD* = `r with(misp_location_ages, sd_age[mispron_location == "onset"])`, range = `r with(misp_location_ages, min_age[mispron_location == "onset"])` - `r with(misp_location_ages, max_age[mispron_location == "onset"])`) than those infants tested on medial mispronunciations (*M* = `r with(misp_location_ages, mean_age[mispron_location == "medial"])` days, *SD* = `r with(misp_location_ages, sd_age[mispron_location == "medial"])`, range = `r with(misp_location_ages, min_age[mispron_location == "medial"])` - `r with(misp_location_ages, max_age[mispron_location == "medial"])`), which a two-sample t-test revealed to be a significant difference, *t*(`r r2(age_misp_location$parameter)`) = `r r2(age_misp_location$statistic)`, *p* `r psig(age_misp_location$p.value)`).
-
-To ensure that the lack of a difference wasn't due to the ages of infants tested with onset and medial mispronunciations, we repeated the previous model analyses on a subset of papers that tested infants at ages where onset and medial mispronunciations were tested (`r min_age` - `r max_age` days). The analyses on this subset of data did not differ from that of the analyses conducted on the entire data set.
-
-[Katie: ultimately, the subset analysis doesn't show anything :( What conclusions can we draw?]
-
-
-### Type of mispronunciation (consonant or vowel)
-
-```{r CV_descript}
-
-CV_info <- dat %>%
-  group_by(type_feature) %>%
-  summarize(n_exp_conditions =  n())
-
-CV_location_info <- dat %>%
-  group_by(type_feature, mispron_location) %>%
-  summarize(n_exp_conditions =  n())
-
-```
-
-To assess whether the type of mispronunciation impacts sensitivity to mispronunciations, we calculated the meta-analytic effect for object identification in response to the type of mispronunciation. Although most theoretical discussion of mispronunciation type has focused on consonants and vowels, our dataset also included tone mispronunciations. In our analysis, we were interested in the difference between consonants and vowels, but also include an exploratory analysis of responses to tones, consonants, and vowels. We therefore conducted two sets of analyses, one analyzing consonants and vowels alone and a second comparing responses to tones with that of consonants and vowels, separately. For the latter analysis, tones were coded as the reference condition. We did not include data for which mispronunciation type varied within experiment and was not reported separately (*n* = `r with(CV_info, n_exp_conditions[type_feature == "consonant_and_vowel" | type_feature == "consonant_vowel_tone"])`). The analysis was therefore based on a subset of the overall dataset, with `r with(CV_info, n_exp_conditions[type_feature == "consonant"])` experimental conditions comparing a consonant mispronunciation, `r with(CV_info, n_exp_conditions[type_feature == "vowel"])` experimental conditions comparing a vowel mispronunciation, and `r with(CV_info, n_exp_conditions[type_feature == "tone"])` experimental conditions comparing a tone mispronunciation. Below, we first report the set of analyses comparing consonants with vowels before moving on to the second set of exploratory analyses comparing tones with that of consonants and vowels.
-
-[KATIE] WHAT DO YOU THINK ABOUT THIS? WE HAVE THE TONES AND ITS A NOVEL, INTERESTING THING, I THINK, AND PERHAPS WORTH IT TO INCLUDE A COMPARISON OF TONES ALONGSIDE THE MORE THEORETICALLY IMPORTANT COMPARISON BETWEEN CONSONANTS AND VOWELS.
-
-```{r MPtype_cv}
-
-# C vs. V
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel")
-
-db_MP_type$type_feature <- factor(db_MP_type$type_feature, levels = c("consonant", "vowel"))
-
-rma_TypeFeaturesMP <- rma.mv(g_calc, g_var_calc, mods = ~type_feature, data = db_MP_type, random = ~collapse | short_cite)
- 
-sum_eff1 <- coef(summary(rma_TypeFeaturesMP))[2,]
-
-
-
-# C vs. V with condition 
-
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel")
-
-db_type$type_feature <- factor(db_type$type_feature, levels = c("consonant", "vowel"))
-
-rma_TypeFeaturesMP_Condition <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition, data = db_type, random = ~collapse | short_cite)
-
-sum_eff2 <- coef(summary(rma_TypeFeaturesMP_Condition))[4,]
-
-```
-
-
-We first analyzed experimental conditions where mispronunciation type was either a consonant or vowel. Regarding object identification in response to mispronunciations, when mispronunciation type was included as a moderator, the moderator test was not significant, `r mod_test(rma_Location_MP)` and the estimate for mispronunciation type was small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for when the mispronunciation was a consonant or a vowel. We next assessed whether type of mispronunciation (consonant or vowel) was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_LocationCondition)`, but the estimate for the interaction between mispronunciation type and condition was small and not significant, $\beta$`r full_estimate(sum_eff2)`. These results suggest that overall, the type of  mispronunciation (consonant vs. vowel) did not impact mispronunciation sensitivity.
-
-
-```{r MPtype_cv_age}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-db_MP_type$type_feature <- factor(db_MP_type$type_feature, levels = c("consonant", "vowel"))
-
-rma_TypeFeaturesMPage <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*age.C, data = db_MP_type, random = ~collapse | short_cite)
- 
-sum_eff1 <- coef(summary(rma_TypeFeaturesMPage))[4,]
-
- 
-
-# with condition
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel")
-
-db_type$type_feature <- factor(db_type$type_feature, levels = c("consonant", "vowel"))
-
-rma_TypeFeaturesMP_Condition <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*age.C, data = db_type, random = ~collapse | short_cite)
-
-sum_eff2 <- coef(summary(rma_TypeFeaturesMP_Condition))[8,]
-
-```
-
-We next examined whether age modulates object recognition or mispronunciation sensitivity when the mispronunciation is a consonant or vowel. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant, `r mod_test(rma_TypeFeaturesMPage)` and the estimate for the interaction between mispronunciation type and age was small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for when the mispronunciation was on a consonant or vowel phoneme, regardless of their age. We next assessed whether the relationship between mispronunciation type (consonant or vowel) and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant, `r mod_test(rma_LocationCondition)`, and the estimate for the three-way interaction between mispronunciation type, condition, and age was small, but significant, $\beta$`r full_estimate(sum_eff2)`. As can be seen in Figure 6, as infants age, mispronunciation sensitivity grows larger for vowel mispronunciations but becomes smaller for consonant mispronunciations. Noticeably, mispronunciation sensitivity appears greater for consonant compared to vowel mispronunciations at younger ages, but this difference shifts as infants age.
-
-## Figure 6
-
-```{r PlotCVEffect_cond_age}
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-#dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-
-dat_type$condition_label = ifelse(dat_type$condition==1, "Correct", "Mispronunciation")
-
-p <- ggplot(dat_type, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~type_feature)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) + 
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-  jpeg(filename = "figures/Figure_6_FeatureType_Cond_Age.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-
-```{r MPtype_cv_lang_descript}
-
-family <- dat %>%
-  group_by(lang_family) %>%
-  summarize(count = n())
-
-lang_family <- dat %>%
-  group_by(native_lang, lang_family) %>%
-  summarize(count = n())
-
-cv_family <- dat %>%
-  group_by(type_feature, lang_family) %>%
-  summarize(count = n())
-
-```
-
-```{r MPtype_cv_lang}
-
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-db_MP_type$type_feature <- factor(db_MP_type$type_feature, levels = c("consonant", "vowel"))
-
-db_MP_type <- subset(db_MP_type, lang_family != "Sino-Tibetian")
-
-
-rma_TypeFeaturesMPfam <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family, data = db_MP_type, random = ~collapse | short_cite)
- 
-sum_eff1 <- coef(summary(rma_TypeFeaturesMPfam))[4,]
-
- 
-
-# with condition
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel")
-
-db_type$type_feature <- factor(db_type$type_feature, levels = c("consonant", "vowel"))
-
-db_type <- subset(db_type, lang_family != "Sino-Tibetian")
-
-rma_TypeFeaturesMPC <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*lang_family, data = db_type, random = ~collapse | short_cite)
-
-sum_eff2 <- coef(summary(rma_TypeFeaturesMPC))[7,]
-sum_eff3 <- coef(summary(rma_TypeFeaturesMPC))[8,]
-
-# summary(glht(rma_TypeFeaturesMPC, linfct=cbind(contrMat(rep(1,8), type="Tukey"))), test=adjusted("none"))
-# 
-# ranef(rma_TypeFeaturesMPC)
-
-```
-
-To examine whether infants' native language impacts sensitivity to consonant and vowel mispronunciations, we classified infants into language families. Infants learning American English (*n* = `r with(lang_family, count[native_lang == "American English"])`), British English (*n* = `r with(lang_family, count[native_lang == "British English"])`), Danish (*n* = `r with(lang_family, count[native_lang == "Danish"])`), Dutch (*n* = `r with(lang_family, count[native_lang == "Dutch"])`), and German (*n* = `r with(lang_family, count[native_lang == "German"])`) were classified into the Germanic language family (*n* = `r with(family, count[lang_family == "Germanic"])`). Infants learning Catalan (*n* = `r with(lang_family, count[native_lang == "Catalan"])`), Spanish (*n* = `r with(lang_family, count[native_lang == "Spanish"])`), French (*n* = `r with(lang_family, count[native_lang == "French"])`), Catalan and Spanish simultaneously (i.e. bilinguals; *n* = `r with(lang_family, count[native_lang == "Catalan-Spanish"])`), and Swiss French (*n* = `r with(lang_family, count[native_lang == "Swiss French"])`) were classified into the Romance language family (*n* = `r with(family, count[lang_family == "Romance"])`). 
-
-For object recognition in response to a mispronunciation, including language family as a moderator resulted in a moderator test that was not significant, `r mod_test(rma_TypeFeaturesMPage)`, and the estimate for the interaction between mispronunciation type and language family was small, $\beta$`r full_estimate(sum_eff1)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for when the mispronunciation was on a consonant or vowel phoneme, regardless of the language family of their native language. We next assessed whether the relationship between mispronunciation type (consonant or vowel) and mispronunciation sensitivity was modulated by language family. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as language family as additional moderators. The moderator test was significant, `r mod_test(rma_TypeFeaturesMPage)`, and the estimate for the three-way interaction between mispronunciation type, condition, language family was large and significant , $\beta$`r full_estimate(sum_eff3)`. As can be seen in Figure 7, mispronunciation sensitivity for consonants was similar for Germanic and Romance languages. Mispronunciation sensitivity for vowels, however, was greater for Germanic compared to Romance languages.
-
-[KATIE] I'M NOT REALLY SURE WHAT THE CONDITION BY LANGUAGE FAMILY INTERACTION MEANS. SHOULD WE EVEN INTERPRET IT? MAYBE THAT THE ROMANCE LANGUAGE FAMILY HAD LOWER MISPRONUNCIATION SENSITIVITY?
-
-## Figure 7
-
-```{r PlotCVEffect_Lang}
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-
-dat_type_sub$condition_label = ifelse(dat_type_sub$condition==1, "Correct", "Mispronunciation")
-
-
-p <- ggplot(dat_type_sub, aes(condition_label, g_calc, fill = condition_label)) + 
-  facet_grid(.~type_feature*lang_family)+
-    geom_violin() + 
-  geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
-  #geom_line(y= 0, linetype="dotted") + 
-  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-    scale_fill_manual(values=cbPalette)+
-  apatheme +
-  theme(text = element_text(size=25),
-        legend.title = element_blank(),
-        legend.position = "bottom",
-        axis.title.x = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_blank()) + 
-  #xlab("Number of Features Changed") + 
-  geom_hline(yintercept = 0, linetype="dotted") + 
-  xlab("Language Family") + 
-  ylab("Effect size Hedges' g")
-p
-
-
- jpeg(filename = "figures/Figure_7_FeatureType_Cond_LangFam.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-```{r MPtype_cv_lang_age}
-
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" )
-
-db_MP_type$type_feature <- factor(db_MP_type$type_feature, levels = c("consonant", "vowel"))
-
-db_MP_type <- subset(db_MP_type, lang_family != "Sino-Tibetian")
-
-
-rma_TypeFeaturesMPfam <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*lang_family*age.C, data = db_MP_type, random = ~collapse | short_cite)
- 
- sum_eff1 <- coef(summary(rma_TypeFeaturesMPfam))[8,]
-
-
-# with condition
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel")
-
-db_type$type_feature <- factor(db_type$type_feature, levels = c("consonant", "vowel"))
-
-db_type <- subset(db_type, lang_family != "Sino-Tibetian")
-
-rma_TypeFeaturesMPC <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*lang_family*age.C, data = db_type, random = ~collapse | short_cite)
-
-sum_eff2 <- coef(summary(rma_TypeFeaturesMPC))[7,]
-sum_eff3 <- coef(summary(rma_TypeFeaturesMPC))[8,]
-
-# summary(glht(rma_TypeFeaturesMPC, linfct=cbind(contrMat(rep(1,8), type="Tukey"))), test=adjusted("none"))
-# 
-# ranef(rma_TypeFeaturesMPC)
-
-```
-
-Finally, we examined the relationship between language family and infant age and mispronunciation sensitivity to consonants and vowels. For object recognition in response to a mispronunciation, including language family and infant age as a moderator resulted in a moderator test that was significant, `r mod_test(rma_TypeFeaturesMPage)`, and the estimate for the three-way interaction between mispronunciation type, language family, and age was small, but significant , $\beta$`r full_estimate(sum_eff3)`. As can be seen in Figure 8, looks to the target in response to a mispronunciation increased with age for infants learning a Germanic language, regardless of whether those mispronunciations were consonants or vowels. In contrast, infants learning Romance languages have an even greater increase with age in target looks in response to consonant mispronunciations, but there was no change with age for vowel mispronunciations. We next assessed whether the relationship between mispronunciation type (consonant or vowel) and mispronunciation sensitivity was modulated by language family and age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as language family and age as additional moderators. The moderator test was significant, `r mod_test(rma_TypeFeaturesMPC)`, and the estimate for the four-way interaction between mispronunciation type, condition, language family, and age was small, but significant , $\beta$`r full_estimate(sum_eff3)`. As can also be seen in Figure 8, for infants learning Germanic languages, increasing age was related to increasing mispronunciation sensitivity for vowel mispronunciations, but decreasing sensitivity for consonant mispronunciations. In contrast, infants learning Romance languages have an even greater increase with age in sensitivity to vowel mispronunciations. Surprisingly, sensitivity to consonant mispronunciations shows a reversal in infants learning Romance languages: the growth in target looks for consonant mipronunciations increases and surpases that of target looks for correct pronunciations.
-
-[KATIE] AGAIN, THERE ARE ADDITIONAL INTERACTIONS THAT ARE SIGNIFICANT... SHOULD THEY BE INTERPRETED? ALSO, WTF ROMANCE LANGUAGES? IS IT JUST NOT ENOUGH DATA?
-
-## Figure 8
-
-```{r PlotCVEffect_cond_age_fam}
-
-dat_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" )
-dat_type$type_feature <- ifelse(dat_type$type_feature == "consonant", "Consonant", "Vowel")
-
-#db_MP_type <- subset(db_ET_MP, type_feature != "consonant_and_vowel")
-
-dat_type_sub <- subset(dat_type, lang_family != "Sino-Tibetian")
-
-
-dat_type_sub$condition_label = ifelse(dat_type_sub$condition==1, "Correct", "Mispronunciation")
-
-p <- ggplot(dat_type_sub, aes(mean_age_1/30.44, g_calc, color = condition_label)) + 
-    facet_grid(.~type_feature*lang_family)+
-  geom_point(aes(size = weights_g),show.legend=FALSE) + 
-  geom_line(y= 0, linetype="dotted") + 
-  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) +
-  scale_colour_manual(values=cbPalette)+
-  apatheme +
-  theme(legend.title = element_blank(),
-        legend.position = "bottom") + 
-  xlab("Age in months") + 
-  ylab("Effect size Hedges' g")
-  
-p
-
-
-  jpeg(filename = "figures/Figure_8_FeatureType_Cond_Age_LangFam.jpg", 
-       width = 500, height = 300, units = "px")
-
-  p
-  
-  dev.off()
-  
-```
-
-
-```{r MPtype_cvt}
-
-# C vs. V vs. T
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" | type_feature == "tone")
-
-db_MP_type$type_feature <- factor(db_MP_type$type_feature, levels = c("tone", "consonant", "vowel"))
-
-rma_TypeFeaturesMPT <- rma.mv(g_calc, g_var_calc, mods = ~type_feature, data = db_MP_type, random = ~collapse | short_cite)
- 
-# C vs. V vs. T with condition 
-
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel"| type_feature == "tone")
-
-db_type$type_feature <- factor(db_type$type_feature, levels = c("tone", "consonant", "vowel"))
-
-rma_TypeFeaturesMP_ConditionT <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition, data = db_type, random = ~collapse | short_cite)
-
-sum_eff2c <- coef(summary(rma_TypeFeaturesMP_ConditionT))[5,]
-sum_eff2v <- coef(summary(rma_TypeFeaturesMP_ConditionT))[6,]
+#anova(rma_MPeffect_age_post_dur, rma_MPeffect_age)
 
 
 ```
-
-
-Although we had no predictions regarding mispronunciation sensitivity to tone mispronunciations, we included an exploratory analysis to examine whether responses to tone mispronunciations were different from that of consonants or vowels. Regarding object identification in response to mispronunciations, when mispronunciation type was included as a moderator, the moderator test was not significant QM(`r r2(rma_TypeFeaturesMPT$m)`) = `r r2(rma_TypeFeaturesMPT$QM)`, *p* `r psig(rma_TypeFeaturesMPT$QMp)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were similar for tone mispronunciations in comparison with both consonants and vowels. We next assessed whether type of mispronunciation (tone, consonant, vowel) was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, QM(`r r2(rma_TypeFeaturesMP_ConditionT$m)`) = `r r2(rma_TypeFeaturesMP_ConditionT$QM)`, *p* `r psig(rma_TypeFeaturesMP_ConditionT$QMp)`. The interaction between condition and consonant mispronunciations was not significant $\beta$ = `r r2(sum_eff2c$estimate)`, (SE = `r r2(sum_eff2c$se)`, 95% CI [`r r2(sum_eff2c$ci.lb)`, `r r2(sum_eff2c$ci.ub)`], *p* `r psig(sum_eff2c$pval)`), suggesting that there was no difference in looks to the target in response to consonant and tone mispronunciations. The interaction between condition and vowel mispronunciations was also not significant $\beta$ = `r r2(sum_eff2v$estimate)`, (SE = `r r2(sum_eff2v$se)`, 95% CI [`r r2(sum_eff2v$ci.lb)`, `r r2(sum_eff2v$ci.ub)`], *p* `r psig(sum_eff2v$pval)`), suggesting that there was no difference in looks to the target in response to vowel and tone mispronunciations. 
-
-```{r MPtype_cvt_age}
-db_MP_type <- subset(db_ET_MP, type_feature == "consonant" | type_feature == "vowel" | type_feature == "tone")
-
-db_MP_type$type_feature <- factor(db_MP_type$type_feature, levels = c("tone", "consonant", "vowel"))
-
-rma_TypeFeaturesMPage <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*age.C, data = db_MP_type, random = ~collapse | short_cite)
- 
- 
-
-# with condition
-db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" | type_feature == "tone")
-
-db_type$type_feature <- factor(db_type$type_feature, levels = c("tone", "consonant", "vowel"))
-
-rma_TypeFeaturesMP_Condition <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*age.C, data = db_type, random = ~collapse | short_cite)
-
-sum_eff1 <- coef(summary(rma_TypeFeaturesMP_Condition))[11,]
-sum_eff2 <- coef(summary(rma_TypeFeaturesMP_Condition))[12,]
-
-```
-
-
-We further included an exploratory analysis of the relationship between infant age and the impact of tone mispronunciations in comparison to consonant and vowel mispronunciations. First, for object recognition in response to mispronunciations, when age in addition to mispronunciation location was also included as a moderator, the moderator test was not significant, QM(`r r2(rma_TypeFeaturesMPage$m)`) = `r r2(rma_TypeFeaturesMPage$QM)`, *p* `r psig(rma_TypeFeaturesMPage$QMp)`. This suggests that upon hearing a mispronunciation, infants looks to the target image were not different between tone and vowel or tone and consonant mispronunciations, regardless of their age. We next assessed whether the relationship between mispronunciation type (tone, consonant, vowel) and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant, QM(`r r2(rma_TypeFeaturesMP_Condition$m)`) = `r r2(rma_TypeFeaturesMP_Condition$QM)`, *p* `r psig(rma_TypeFeaturesMP_Condition$QMp)`, but the interactions between condition, age, and both consonant mispronciations ($\beta$ = `r r2(sum_eff1$estimate)`, SE = `r r2(sum_eff1$se)`, 95% CI [`r r2(sum_eff1$ci.lb)`, `r r2(sum_eff1$ci.ub)`], *p* `r psig(sum_eff1$pval)`) and vowel mispronunciations ($\beta$ = `r r2(sum_eff2$estimate)`, SE = `r r2(sum_eff2$se)`, 95% CI [`r r2(sum_eff2$ci.lb)`, `r r2(sum_eff2$ci.ub)`], *p* `r psig(sum_eff2$pval)`) were not significant. Infants' sensitivity to tone mispronunciations compared to consonant or vowel mispronunciations did not differ with age.
-
-[KATIE] WORTH IT TO INCLUDE LANGUAGE FAMILY ANALYSES TOO? I'M THINKING NO
-
-
-
 
 
 # Discussion
@@ -1877,67 +1375,24 @@ To Summarize:
   + no relationship?
   + talk about how few studies report it
 
-** Size of Mispronunciation **
+** Data Analysis Choices **
 
-  + graded sensitivity to number of features changed in a mispronunciation
-  + importance for controlling in experimental design
-  + Perhaps a call for more studies to include multiple number of features changed, so that this can be assessed? There was a narrow age where this was actually manipulated.
-
-** Distractor Familiarity **
-
-  + Not really sure, check the results. A key interaction is significant in one model but not the other.
-  + Again, ages not matched very well for the two groups here. Similar pattern of results for age subset analysis.
-
-** Phonological overlap between target and distractor **
-
-  + mispronunciation sensitivity was greater when target-distractor pairs shared the same onset phoneme compared to when they shared no phonological overlap
-  + this is rather the opposite of what one would expect, right?
-  + [Katie: Yeah! Its really strange, so the time course analysis suggestion of yours is a very good one!]
-  + Maybe it would be useful to have time course analyses to address this issue further
-  + As infants aged, overall recognition (regardless of condition) increased for target-distractor pairs containing onset overlap, whereas overall recognition decreased for target-distractor pairs containing no overlap. 
-
-** Position of mispronunciation **
-
-  + really no impact at all
-
-** Type of mispronunciation **
-
-  + Overall, no difference between consonants and vowels 
-  + Consonant mispronunciation sensitivity decreases with age
-  + Vowel mispronunciation sensitivity increases with age
-  + mispronunciation sensitivity for consonants similar for Germanic and Romance languages
-  + Mispronunciation sensitivity for vowels greater for Germanic compared to Romance languages
-  + For Germanic infants, increasing age was related to increasing mispronunciation sensitivity for vowel mispronunciations, but decreasing sensitivity for consonant mispronunciations. 
-  + For Romance infants, an even greater increase with age in sensitivity to vowel mispronunciations. 
-  + For Romance infants, the growth in target looks for consonant mipronunciations increases and surpases that of target looks for correct pronunciations
-  + exploratory analyses with tone mispronunciations suggest no great difference in sensitivity when compared to consonant and vowel mispronunciations
-
-
-
-
-
-
-
-
-
+  + Post-naming phase size and dependent variable impact misp sensitivity development
+  + Offset time does not impact misp sensitivity development
+  + the first two do not have theoretical frameworks to guide researchers, whereas offset time does
+  
+  
 
 When it comes to designing studies, best practices and current standards might not always overlap. Indeed, across a set of previous meta-analyses it was shown that particularly infant research does not adjust sample sizes according to the effect in question (Bergmann et al., in press). A meta-analysis is a first step in improving experiment planning by measuring the underlying effect and its variance, which is directly related to the sample needed to achieve satisfactory power in the null hypothesis significance testing framework. Failing to take effect sizes into account can both yield to underpowered research and to testing too many participants, both consequences are undesirable for a number of reasons that have been discussed in depth elsewhere. We will just briefly mention two that we consider most salient for theory building: Underpowered studies will lead to false negatives more frequently than expected, which in turn results in an unpublished body of literature (citationcitation). Overpowered studies mean that participants were tested unnecessarily, which has substantial ethical consequences particularly when working with infants and other difficult to recruit and test populations. 
 
 From Christina: let's make a note to put sth in the discussion about our curve being surprisingly flat for correctly pronounced words bc people adapt their analysis windows? Bc if you look at Molly's reaction time paper, there is a steep increase.
 
-Discussing the Moderator Analyses
-Maybe put them together into the ones that worked out as we predicted and those that didn't? So, here is evidence that supports existing arguments, that doesn't need to be a huge chunk. But then more space devoted to moderator analyses that didn't work out according to predictions.
 
 
 
 
 
 
-
-
-It should be noted that the majority of consonant mispronunciations were located on the onset phoneme (*n* = `r with(CV_location_info, n_exp_conditions[type_feature == "consonant" & mispron_location == "onset"])`; total consonant conditions, *n* = `r with(CV_info, n_exp_conditions[type_feature == "consonant"])`), while the majority of vowel mispronunciations were located on the medial phoneme (*n* = `r with(CV_location_info, n_exp_conditions[type_feature == "vowel" & mispron_location == "medial"])`; total vowel conditions, *n* = `r with(CV_info, n_exp_conditions[type_feature == "vowel"])`).  In their analysis using TRACE, Mayor and Plunkett (2014) found that the difference between sensitivity to consonant and vowel mispronunciations was due to infants' lexical knowlege consisting of a majority consonant onset words. 
-
-[KATIE] COME BACK TO THIS.
 
 
 \newpage
