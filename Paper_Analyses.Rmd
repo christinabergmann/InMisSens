@@ -943,7 +943,16 @@ trial_length_info <- dat %>%
         #post_naming = paste(unique(post_nam_dur), collapse=', '))
 
 trial.l <- cor.test(dat$trial_length, dat$mean_age_1)
-trial.length.plot <- ggplot(dat, aes(trial_length, age.C)) + geom_point() +geom_smooth(method = "lm")
+
+library(reshape)
+tdl <- dat[,c("short_cite", "trial_length", "post_nam_dur")]
+tdl <- melt(tdl, id = "short_cite")
+
+trial_length_hist <- ggplot(dat,aes(x=value)) + 
+  apatheme+
+    geom_histogram(data=subset(tdl,variable == 'trial_length'),fill = "red", alpha = 0.5) +
+    geom_histogram(data=subset(tdl,variable == 'post_nam_dur'),fill = "blue", alpha = 0.5)
+
 
 # post-naming
 post_name_info <- dat %>%
