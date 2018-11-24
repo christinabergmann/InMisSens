@@ -13,7 +13,7 @@ author:
 
 affiliation:
   - id            : "1"
-    institution   : "Language Development Laboratory, University of Maryland, USA"
+    institution   : "Department of Hearing and Speech Sciences, University of Maryland, USA"
   - id            : "2"
     institution   : "Laboratoire Psychologie de la Perception, Université Paris Descartes"
   - id            : "3"
@@ -95,6 +95,9 @@ library(multcomp)
 library(poibin)
 library(tidyverse)
 
+# can't call reshape here, because it will interfere with other libraries
+#library(reshape)
+
 r2 <- function(x){ round(x, 3)}
 
 psig <- function(x){
@@ -119,7 +122,7 @@ full_estimate <- function(x) paste0(" = ", r2(x$estimate), ", SE = ", r2(x$se), 
 
 
 # moderator test
-mod_test <- function(x) paste0("QM(", r2(rma_MPeffect$m), ") = ", r2(rma_MPeffect$QM), ", *p*", psig(rma_MPeffect$QMp))
+mod_test <- function(x) paste0("QM(", r2(x$m), ") = ", r2(x$QM), ", *p*", psig(x$QMp))
 
 
 # Create the function for mode.
@@ -210,15 +213,18 @@ cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00",
 
 # Introduction
 
-Acquiring a first language means that young learners are solving a host of tasks in a short amount of time. As infants develop into toddlers during their second and third years they learn new words in earnest while simultaneously refining their knowledge about the sounds that make up these words [Primir, Kuhl, Best]. In a mature phono-lexical system, word recognition must balance flexibility to slight variation (e.g., speaker identity, accented speech) while distinguishing between phonetic details that differentiate words in their native language (e.g. cat-hat). To build robust language knowledge, it seems ueful to acquire this ability early during development. Indeed, before children can correctly pronounce a word, they already are aware that slight phonological deviations might signal a change in word meaning []. This mispronunciation sensitivity reflects the specificity with which infants represent the phonological information of familiar words. As infants continue to develop into expert language users, their language processing matures and becomes more efficient, including their knowledge of what consistutes a permissible versus word-changing phonological deviation. In this paper, we aggregate and analyze the almost 20 years of literature investigating mispronunciation sensitivity in infants in an attempt to uncover its characteristics and the trajectory of its development.
+Acquiring a first language means that young learners are solving a host of tasks in a short amount of time. As infants develop into toddlers during their second and third years they learn new words in earnest while simultaneously refining their knowledge about the sounds that make up these words [Primir, Kuhl, Best]. In a mature phono-lexical system, word recognition must balance flexibility to slight variation (e.g., speaker identity, accented speech) while distinguishing between phonetic details that differentiate words in their native language (e.g. cat-hat). To build robust language knowledge, it seems ueful to acquire this ability early during development. Indeed, before children can correctly pronounce a word, they already are aware that slight phonological deviations might signal a change in word meaning [Clark & Clark, 1977]. This mispronunciation sensitivity reflects the specificity with which infants represent the phonological information of familiar words. As infants continue to develop into expert language users, their language processing matures and becomes more efficient, including their knowledge of what consistutes a permissible versus word-changing phonological deviation. In this paper, we aggregate and analyze the almost 20 years of literature investigating mispronunciation sensitivity in infants in an attempt to uncover its characteristics and the trajectory of its development.
 
-  At the turn of the millenia, infant language acquisition researchers had established that during their first years of life, infants are sensitive to changes in the phonetic detail of newly segmented words (Jusczyk & Aslin, 1995) and learned minimal pairs (Stager & Werker, 1997). Furthermore, when presented with familiar image pairs, children fixate on one image upon hearing its label (Fernald, Pinto, Swingley, Weinberg, & McRoberts, 1998; Tincoff & Jusczyk, 1999). Swingley and Aslin (2000) were the first to tie these lines of research together and investigate mispronunciation sensitivity in infant familiar word recognition: Children aged 18 to 23 months learning American English saw pairs of images (e.g. a baby and a dog) and their eye movements to each image were recorded and subsequently coded offline. On "correct" trials, children heard the correct label for one of the images (e.g. "baby"). On "mispronounced" trials, children heard a mispronounced label of one of the images (e.g. "vaby"). The mean proportion of fixations to the target image (here: a baby) was calculated separately for both correct and mispronounced trials by dividing the target looking time by the sum of total looking time to both target and a distractor (proportion of target looking or PTL). Mean fixations in correct trials were significantly greater than in mispronounced trials, and in both conditions looks to the target were significantly greater than chance. We refer to this pattern of a difference between looks to correct and mispronounced words as *mispronunciation sensitivity* and of looks to the target image above chance in each condition as *recognition*. Swingley and Aslin (2000) concluded that already before the second birthday, children represent words with sufficient detail to be sensitive to mispronunciations.  
+  At the turn of the millenia, infant language acquisition researchers had established that during their first years of life, infants are sensitive to changes in the phonetic detail of newly segmented words (Jusczyk & Aslin, 1995) and learned minimal pairs (Stager & Werker, 1997). Furthermore, when presented with familiar image pairs, children fixate on one image upon hearing its label (Fernald, Pinto, Swingley, Weinberg, & McRoberts, 1998; Tincoff & Jusczyk, 1999). Swingley and Aslin (2000) were the first to tie these lines of research together and investigate mispronunciation sensitivity in infant familiar word recognition: Children aged 18 to 23 months learning American English saw pairs of images (e.g. a baby and a dog) and their eye movements to each image were recorded and subsequently coded offline. On "correct" trials, children heard the correct label for one of the images (e.g. "baby"). On "mispronounced" trials, children heard a mispronounced label of one of the images (e.g. "vaby"). The mean proportion of fixations to the target image (here: a baby) was calculated separately for both correct and mispronounced trials by dividing the target looking time by the sum of total looking time to both target and a distractor (proportion of target looking or PTL). Mean fixations in correct trials were significantly greater than in mispronounced trials, and in both conditions looks to the target were significantly greater than chance. We refer to this pattern of a difference between looks to correct and mispronounced words as *mispronunciation sensitivity* and of looks to the target image above chance in each condition as *object identification*. Swingley and Aslin (2000) concluded that already before the second birthday, children represent words with sufficient detail to be sensitive to mispronunciations.  
 
-[Christina: changed concepts to mechanisms in the next paragraph, because I want to refer to what they represent, but I am not sure it\s the right term]
+[Christina: changed concepts to mechanisms in the next paragraph, because I want to refer to what they represent, but I am not sure it's the right term]
+[Katie: Karen (Mulak) talks about these terms as concepts. Mechanisms to me means some sort of internalization, that they would have had this ability all along and just need to apply it. It could be that we fundamentally disagree on this, but to me these are things that infants discover. Later on we use principles. What about "principles that infants must discover"... "in order to form adult-like word representations"? I took away "which are both present in the mature language processing system".]
 
-  The study of Swingley and Aslin (2000) as well as subsequent studies examining mispronunciation sensitivity address two complementary mechanisms in early phonological development: *phonological constancy* and *phonological distinctiveness*, which are both present in the mature language processing system. Phonological constancy is the ability to resolve phonological variation across different instances of a word, as long as the variation does not compromise the overall identity of the word. For example, different speakers - particularly across genders and accents - produce the same word with notable acoustic variation, although the word remains the same. In contrast, phonological distinctiveness describes the ability to differentiate between different words that happen to be phonologically similar, such as bad/bed or cat/hat. To successfully recognize words, speakers of a given language must therefore simultaneously use both phonological constancy and distinctiveness to determine where phonological variation is appropriate and where it changes a word's meaning. Both abilities have to be acquired, because language systems differ in which sounds signal a meaning change. 
+  The study of Swingley and Aslin (2000) as well as subsequent studies examining mispronunciation sensitivity address two complementary principles that infants must discover in early phonological development in order to form adult-like word representations: *phonological constancy* and *phonological distinctiveness*. Phonological constancy is the ability to resolve phonological variation across different instances of a word, as long as the variation does not compromise the overall identity of the word. For example, different speakers - particularly across genders and accents - produce the same word with notable acoustic variation, although the word remains the same. In contrast, phonological distinctiveness describes the ability to differentiate between different words that happen to be phonologically similar, such as bad/bed or cat/hat. To successfully recognize words, speakers of a given language must therefore simultaneously use both phonological constancy and distinctiveness to determine where phonological variation is appropriate and where it changes a word's meaning. Both abilities have to be acquired, because language systems differ in which sounds signal a meaning change. 
 
-  In the current study, we focus on infants' developing ability to correctly apply the principles of phonological distinctiveness and constancy by using a meta-analytic approach to investigate mispronunciation sensitivity. Considering that infants are sensitive to mispronunciations and that, in general, their processing matures with development, we examine the shape of mispronunciation sensitivity over the course of the second and third year. There are three distinct possibilities how mispronunciation sensitivity might change as infants become native speakers, which are all respectively predicted by theoretical accounts and supported by single studies. By aggregating all publicly available evidence using meta-analysis, we can examine developmental trends making use of data from a much larger and diverse sample of infants than is possible in most single studies (see Frank et al., 2018; for a notable exception). Before we outline the meta-analytical approach and its advantages in detail, we first discuss the proposals this study seeks to disentangle and the data supporting each of the accounts.
+[Katie: since we actually don't have theoretical framework support for the no-change theory, I've changed around the sentence below to explicitly say that only 2 of the 3 are predicted by theoretical accounts.]
+
+  In the current study, we focus on infants' developing ability to correctly apply the principles of phonological distinctiveness and constancy by using a meta-analytic approach to investigate mispronunciation sensitivity. Considering that infants are sensitive to mispronunciations and that, in general, their processing matures with development, we examine the shape of mispronunciation sensitivity over the course of the second and third year. There are three distinct possibilities how mispronunciation sensitivity might change as infants become native speakers, which are all respectively supported by single studies and two predicted by theoretical accounts. By aggregating all publicly available evidence using meta-analysis, we can examine developmental trends making use of data from a much larger and diverse sample of infants than is possible in most single studies (see Frank et al., 2018; for a notable exception). Before we outline the meta-analytical approach and its advantages in detail, we first discuss the proposals this study seeks to disentangle and the data supporting each of the accounts.
   
   Young infants may begin cautiously in their approach to word recognition, rejecting any phonological variation in familiar words and only later learning to accept appropriate variability. According to the Perceptual Attunement account, this describes a shift away from specific native phonetic patterns to a more mature understanding of the abstract phonological structure of words (Best 1994, 1995). This shift is predicted to coincide with the vocabulary spurt around 18 months, and is therefore related to vocabulary growth. In this case, we would expect the size of mispronunciation sensitivity to be larger at younger ages and *decrease* as the child matures and learn more words, although children continue to detect mispronunciations.
 Indeed, young infants are more perturbed by accented speakers than older infants in their recognition of familiar words (Best, Tyler, Gooding, Orlando, & Quann, 2009; Mulak, Best, & Tyler, 2013) or learning of new words (Schmale, Hollich, & Seidl, 2011).
@@ -227,7 +233,7 @@ Indeed, young infants are more perturbed by accented speakers than older infants
   
   Finally, sensitivity to mispronunciation may not be modulated by development at all. Infants' overall language processing becomes more efficient, but their sensitivity to mispronunciations may not change. Across infancy and toddlerhood, mispronunciations would thus be detected and lead to less looks at a target than correct pronunciations, but the size of this effect would not change, nor be related to vocabulary size. This pattern is not predicted by any mainstream theory of language acquisition, but for completeness we mention it here.
 
-  Research following the seminal study by Swingley and Aslin (2000) has extended mispronunciation sensitivity to infants as young as 12 months (Mani & Plunkett, 2010), indicating that from early stages of the developing lexicon onwards, infants can and do detect mispronunciations. Regarding the change in mispronunciation sensitivity over development, however, only a handful of studies have compared more than one age group on the same mispronunciation task (see Table X), making the current meta-analysis very informative. One study has found evidence for infants to become *less* sensitive to mispronunciations as children develop. Mani and Plunkett (2011) presented 18- and 24-month-olds with mispronunciations varying in the number of features changed (see below for a discussion of the role of features). 18-month-olds were sensitive to mispronunciations, regardless of the number of features changed. 24-month-olds, in contrast, fixated the target image equally for both correct and 1-feature mispronounced trials, although they were sensitive to larger mispronunciations. In other words, for 1-feature mispronunciations at least, sensitivity decreased from 18 to 24 months, providing support to the prediction that mispronunciation sensitivity may decrease with development.
+  Research following the seminal study by Swingley and Aslin (2000) has extended mispronunciation sensitivity to infants as young as 9 months (Bergelson & Swingley, 2017), indicating that from early stages of the developing lexicon onwards, infants can and do detect mispronunciations. Regarding the change in mispronunciation sensitivity over development, however, only a handful of studies have compared more than one age group on the same mispronunciation task (see Table X), making the current meta-analysis very informative. One study has found evidence for infants to become *less* sensitive to mispronunciations as children develop. Mani and Plunkett (2011) presented 18- and 24-month-olds with mispronunciations varying in the number of features changed (see below for a discussion of the role of features). 18-month-olds were sensitive to mispronunciations, regardless of the number of features changed. 24-month-olds, in contrast, fixated the target image equally for both correct and 1-feature mispronounced trials, although they were sensitive to larger mispronunciations. In other words, for 1-feature mispronunciations at least, sensitivity decreased from 18 to 24 months, providing support to the prediction that mispronunciation sensitivity may decrease with development.
 
   In contrast, other studies have found evidence for *greater* mispronunciation sensitivity as children develop. More precisely, the difference in target looking for correct and mispronounced trials is smaller in younger infants and grows as infants develop. Mani and Plunkett (2007) tested 15-, 18-, and 24-month-olds learning British English; although all three groups were sensitive to mispronunciations, 15-month-olds showed a less robust sensitivity. An increase in sensitivity to mispronunciations has also been found from 20 to 24 months (van der Feest & Fikkert, 2015) and 15 to 18 months (Altvater Mackensen et al., 2013) in Dutch infants, as well as German infants from 22 to 25 months (Altvater-Mackensen, 2010). Furthermore, van der Feest and Fikkert (2015) found that sensitivity to specific kinds of mispronunciations develop at different ages depending on language infants are learning. In other words, the native language constraints which *kinds* of mispronunciations infants are sensitive to first, and that as infants develop, they become sensitive to other mispronunciations. These studies award support to the prediction that mispronunciation sensitivity improves with development.
 
@@ -249,7 +255,7 @@ The present meta-analysis was conducted with maximal transparency and reproducib
 
 ## Study Selection
 
-```{r SummaryTable}
+```{r SummaryTable, results = "asis"}
 
 dat_st <- dat
 
@@ -267,8 +273,10 @@ apa_table(Sum_table, col.names = c("Paper", "Publication format", "Age", "Vocabu
 
 ```
 [Christina] I've shortened the labels and wanted to try out apa_table
+[Katie] I like the idea, but does it work for you? It doesn't work for me...
+[Katie] We have it currently set at less than 31 months, not 36, so I've changed below.
 
-We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list. This process yielded 110 items. We then used the google scholar search engine to search for papers citing the original Swingley & Aslin (2000) publication. This search was conducted on 22 September, 2017 and yielded 288 results. We screened the resulting 398 items, removing 99 duplicate items. We screened remaining 299 items for their title and abstract to determine whether it met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition and mispronunciations; (3) infants studied were under 36-months-of-age; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; (5) the stimuli were auditory speech. The final sample (n = *`r length(unique(dat$short_cite))`*) consisted of `r with(dat, n_distinct(short_cite[publication_status == "paper"]))` journal articles, `r with(dat, n_distinct(short_cite[publication_status == "proceedings"]))` proceedings paper, `r with(dat, n_distinct(short_cite[publication_status == "dissertation"]))` thesis, and `r with(dat, n_distinct(short_cite[publication_status == "gray paper"]))` unpublished reports. We will refer to these items collectively as papers. Table 1 (Summary Table) provides an overview of all papers included in the present meta-analysis.
+We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list. This process yielded 110 items. We then used the google scholar search engine to search for papers citing the original Swingley & Aslin (2000) publication. This search was conducted on 22 September, 2017 and yielded 288 results. We screened the resulting 398 items, removing 99 duplicate items. We screened remaining 299 items for their title and abstract to determine whether it met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition and mispronunciations; (3) infants studied were under 31-months-of-age; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; (5) the stimuli were auditory speech. The final sample (n = *`r length(unique(dat$short_cite))`*) consisted of `r with(dat, n_distinct(short_cite[publication_status == "paper"]))` journal articles, `r with(dat, n_distinct(short_cite[publication_status == "proceedings"]))` proceedings paper, `r with(dat, n_distinct(short_cite[publication_status == "dissertation"]))` thesis, and `r with(dat, n_distinct(short_cite[publication_status == "gray paper"]))` unpublished reports. We will refer to these items collectively as papers. Table 1 (Summary Table) provides an overview of all papers included in the present meta-analysis.
 
 
 ```{r DescriptivesPubtype}
@@ -302,7 +310,7 @@ db_ET_correct$within_measure_descriptive <- ifelse(db_ET_correct$within_measure 
 ifelse(db_ET_correct$within_measure == "pre_post", "post-naming compared to pre-naming phase", "post-pre difference score compared with chance (=0)"))
 
 comparison_info <- db_ET_correct %>%
-  group_by(within_measure_descriptive) %>%
+  group_by(within_measure) %>%
   summarize(n_unique = n_distinct(short_cite), count = n())
 
 #kable(comparison_info, col.names = c("Type of comparison", "# Papers", "# Effect Size"))
@@ -323,18 +331,22 @@ corr_info <- dat %>%
 
 ```
 [Christina] I think it would be useful to say how many records, not papers, report each measure. e.g. "(n = xxx records from yyy papers)". Would that be ok?
+[Katie] Totally! I think that gives a good bit of information. Good suggestion!
 
-Mispronunciation sensitivity studies typically examine infants' proportion of target looks (PTL) in comparison to some baseline measurement. PTL is calculated by dividing the percentage of looks to the target by the total percentage of looks to both the target and distractor images. Across papers the baseline comparison varied; we used the baseline reported by the authors of each paper. Most papers (*n* = `r with(db_ET_correct, n_distinct(short_cite[within_measure == "pre_post_naming_effect"]))`) subtracted the PTL score for a pre-naming phase from the PTL score for a post-naming phase and report a difference score.
+Mispronunciation sensitivity studies typically examine infants' proportion of target looks (PTL) in comparison to some baseline measurement. PTL is calculated by dividing the percentage of looks to the target by the total percentage of looks to both the target and distractor images. Across papers the baseline comparison varied; we used the baseline reported by the authors of each paper. Most papers (*n* = `r with(comparison_info, count[within_measure == "pre_post_naming_effect"])` records from `r with(comparison_info, n_unique[within_measure == "pre_post_naming_effect"])` papers) subtracted the PTL score for a pre-naming phase from the PTL score for a post-naming phase and report a difference score.
 
 [Christina] Katie, do you know whether the difference is computed based on items, participants, trials...? Is there consistency?
+[Katie] From working with Nivi, we did it participants x condition or participants x trial (but mostly the former). But, this is not something we reported in papers. I don't think I read it at all when putting together the dataset for this either.
 
-Other papers either compared post- and pre-naming PTL with one another (*n* = `r with(db_ET_correct, n_distinct(short_cite[within_measure == "pre_post"]))`), thus reporting two variables, or compared post-naming PTL with a chance level of 50%, (*n* = `r with(db_ET_correct, n_distinct(short_cite[within_measure == "post"]))`). For all these comparisons, positive values (either as reported or after subtraction of chance level or a pre-naming PTL) indicate target looks towards the target object after hearing the label, i.e. a recognition effect. Standardized effect sizes based on mean differences, as calculated here, preserve the sign. Consequently, positive effect sizes reflect more looks to the target picture after naming, and larger positive effect sizes indicate comparatively more looks to the target. 
+Other papers either compared post- and pre-naming PTL with one another (*n* = `r with(comparison_info, count[within_measure == "pre_post"])` records from `r with(comparison_info, n_unique[within_measure == "pre_post"])` papers), thus reporting two variables, or compared post-naming PTL with a chance level of 50%, (*n* = `r with(comparison_info, count[within_measure == "post"])` records from `r with(comparison_info, n_unique[within_measure == "post"])` papers). For all these comparisons, positive values (either as reported or after subtraction of chance level or a pre-naming PTL) indicate target looks towards the target object after hearing the label, i.e. a recognition effect. Standardized effect sizes based on mean differences, as calculated here, preserve the sign. Consequently, positive effect sizes reflect more looks to the target picture after naming, and larger positive effect sizes indicate comparatively more looks to the target. 
 
 We report effect sizes for infants' looks to target pictures after hearing a correctly pronounced or a mispronounced label (object identification) as well as the difference between effect sizes for correct and mispronounced trials (i.e. mispronunciation sensitivity). The effect size we report in the present paper are based on comparison of means, standardized by their variance. The most well-known effect size from this group is Cohen's *d* [@cohen]. To correct for the small sample sizes common in infant research, however, we use as a dependent variable Hedges' *g* instead of Cohen's *d* (Hedges, 1981; Morris, 2000). 
 
 [Christina] These numbers seem wrong! Again, how about (xx effect sizes from yy papers)?
+[Katie] Well, they are kind of wrong :) Two papers report both for different experimental conditions. I've given the explanation now, not sure if that is good enough, but I'm really not sure how to say it a different way.
+[Katie] Do you want number of records and papers for the imputed correlations as well? You've put a -1, assuming there was something wrong with one of the papers or something like that? How does that shake out for number of records?
 
-We calculated Hedges' *g* using the raw means and standard deviations reported in the paper (*n* = `r with(es_info, n_distinct(n_unique[es_method == "group_means_one" | es_method == "group_means_two"]))`) or using reported t-values (*n* = `r with(es_info, n_distinct(n_unique[es_method == "t_one" | es_method == "t_two"]))`). Raw means and standard deviations were extracted from figures for `r with(dat, n_distinct(short_cite[ x_from_graph == "yes"]))` papers. In a within-participation design, when two means are compared (i.e. looking during pre- and post-naming) it is necessary to obtain correlations between the two measurements at the participant level to calculate effect sizes and effect size variance based on t-values. Upon request we were provided with correlation values for one paper (Altvater-Mackensen, 2010); we were able to compute correlations using means, standard deviations, and t-values for *n* = `r with(corr_info, n_unique[imputed_corr == "no"]) - 1` (following Csibra, et al. 2016, Appendix B; see also Rabagliati, Ferguson, & Lew-Williams, 2018). Correlations were imputed for the remaining papers (see Black & Bergmann, 2017, for the same procedure). We could compute a total of `r sum(dat$is_mp == 0)` effect sizes for correct pronunciations and `r sum(dat$is_mp == 1)` for mispronunciations.
+We calculated Hedges' *g* using the raw means and standard deviations reported in the paper (*n* = `r with(es_info, sum(count[es_method == "group_means_one" | es_method == "group_means_two"]))` records from `r with(es_info, sum(n_unique[es_method == "group_means_one" | es_method == "group_means_two"]))` papers) or using reported t-values (*n* = `r with(es_info, sum(count[es_method == "t_one" | es_method == "t_two"]))` records from `r with(es_info, sum(n_unique[es_method == "t_one" | es_method == "t_two"]))` papers). Two papers reported raw means and standard deviations for some experimental conditions and just t-values for the remaining experimental conditions (Swingley, 2016; Altvater-Mackensen et al., 2014). Raw means and standard deviations were extracted from figures for `r with(dat, n_distinct(short_cite[ x_from_graph == "yes"]))` papers. In a within-participation design, when two means are compared (i.e. looking during pre- and post-naming) it is necessary to obtain correlations between the two measurements at the participant level to calculate effect sizes and effect size variance based on t-values. Upon request we were provided with correlation values for one paper (Altvater-Mackensen, 2010); we were able to compute correlations using means, standard deviations, and t-values for *n* = `r with(corr_info, n_unique[imputed_corr == "no"]) - 1` (following Csibra, et al. 2016, Appendix B; see also Rabagliati, Ferguson, & Lew-Williams, 2018). Correlations were imputed for the remaining papers (see Black & Bergmann, 2017, for the same procedure). We could compute a total of `r sum(dat$is_mp == 0)` effect sizes for correct pronunciations and `r sum(dat$is_mp == 1)` for mispronunciations.
 
 To take into account the fact that the same infants contributed to multiple datapoints, we analyze our results in a multilevel approach using the R [@R] package metafor [@metafor]. This means we model as random effect that effect sizes from the same paper share are based on more similar studies than those across papers and that nested therein effects can stem from the same infants. 
 
@@ -343,9 +355,10 @@ To take into account the fact that the same infants contributed to multiple data
 In the psychological sciences, there is a documented reluctance to publish null results. As a result, significant results tend to be over-reported and thus might be over-represented in our meta-analyses (see Ferguson & Heene, 2012). To examine whether this is also the case in the mispronunciation sensitivity literature, which would bias the data analyzed in this meta-analysis, we conduct two tests. We first examine whether effect sizes are distributed as expected based on sampling error using the rank correlation test of funnel plot asymmetry with the R [@R] package metafor [@metafor]. Effect sizes with low variance are expected to fall closer to the estimated mean, while effect sizes with high variance should show an increased, evenly-distributed spread around the estimated mean. Publication bias would lead to an uneven spread. 
 
 Second, we analyze all of the significant results in the dataset using a p-curve from the p-curve app (v4.0, p-curve.com; @pcurve). This p-curve tests for evidential value by examining whether the p-values follow the expected distribution of a right skew in case the alternative hypothesis is true, versus a flat distribution that speaks for no effect being present in the population and all significant effect being spurious. 
-Responses to correctly pronounced and mispronounced labels are predicted to show different patterns of looking behavior, with some studies reporting no significant looks to the target when hearing a mispronounced label 
+Responses to correctly pronounced and mispronounced labels are predicted to show different patterns of looking behavior. In other words, there is an expectation that infants should look to the target when hearing a correct pronunciation, but some studies may report either significant looks or no  significant looks to the target when hearing a mispronounced label
 
 [Christina] Katie, is that right, can you add a citation? 
+[Katie] I've rewritten it a bit to be explicit about the difference between expectations for correct and mispronounced labels. I'm not sure what to cite though. The papers that find significant looks or no significant looks? That's basically the meta-analysis. Or some citation that talks about what looking to the target upon hearing a mispronunciation means in comparison to what target looks being decreased for mispronunciations relative to correct pronunciations means? I'm not so sure whether anyone has actually talked about that difference before, not sure what to cite.
 
 (i.e. there might be no effect present in the population, see e.g., ); as a result, we conduct these two analyses to assess publication bias separately for both conditions.
 
@@ -703,9 +716,8 @@ sum_eff <- coef(summary(rma_MP))[1,]
 
 We then calculated the meta-analytic effect for object identification in response to mispronounced words. In this case, the variance-weighted meta-analytic effect size Hedges' *g* was `r g_SE(sum_eff)` which was also significantly different from zero `r CI_p(sum_eff)`. This is considered a small effect size (Cohen, 1988), but significantly above zero, which suggests that even when presented with a mispronounced label, infants fixated the correct object. In other words, infants are able to resolve mispronunciations, a key skill in language processing We again note the publication bias (which was smaller in this condition), and the possibility that the effect size Hedges' *g* may be overestimated. But, as the p-curve indicated evidential value, we are confident in the overall patterns, namely that infants fixate the target even after hearing a mispronounced label. 
 
-Heterogeneity was significant for both correctly pronounced (Q(103) = `r r2(rma_correct$QE)`, *p* `r psig(rma_correct$QEp)`) and mispronounced words, (Q(146) = `r r2(rma_MP$QE)`, *p* `r psig(rma_MP$QEp)`). This indicated that the sample contains unexplained variance leading to significant difference across our studies beyond what is to be expected based on random sampling error. We therefore continue with our moderator analysis to investigate possible sources of this variance. 
-
 [Christina] I am not sure about the placement of this paragraph because the next section cannot explain this heterogeneity, so maybe we should move it down to the beginning of the age part?
+[Katie] I think that makes sense, moving it!
 
 ### Mispronunciation Sensitivity Meta-analytic Effect
 
@@ -724,6 +736,8 @@ sum_eff <- coef(summary(rma_MPeffect))[2,]
 ```
 
 The above two analyses considered the data from mispronounced and correctly pronounced words separately. To evaluate mispronunciation sensitivity, we compared the effect size Hedges' *g* for correct pronunciations with mispronunciations directly. To this end, we combined the two datasets. The moderator test was significant, `r mod_test(rma_MPeffect)`. The estimate for mispronunciation sensitivity was `r g_SE(sum_eff)`, and infants' looking times across conditions were significantly different `r CI_p(sum_eff)`. This confirms that although infants fixate the correct object for both correct pronunciations and mispronunciations, the observed fixations to target (as measured by the effect sizes) were significantly greater for correct pronunciations. In other words, we observe a significant difference between the two conditions and can now quantify the modulation of fixation behavior in terms of standardized effect sizes and their variance. This first result has both theoretical and practical implications, as we can now reason about the amount of perturbance caused by mispronunciations and can plan future studies to further investigate this effect with suitable power. 
+
+Heterogeneity was significant for both correctly pronounced (Q(103) = `r r2(rma_correct$QE)`, *p* `r psig(rma_correct$QEp)`) and mispronounced words, (Q(146) = `r r2(rma_MP$QE)`, *p* `r psig(rma_MP$QEp)`), as well as mispronunciation sensitivity, which included the moderator condition, (QE(249) = `r r2(rma_MPeffect$QE)`, *p* `r psig(rma_MPeffect$QEp)`). This indicated that the sample contains unexplained variance leading to significant difference across our studies beyond what is to be expected based on random sampling error. We therefore continue with our moderator analysis to investigate possible sources of this variance. 
 
 ### Object Recognition and Mispronunciation Sensitivity Modulated by Age
 
@@ -751,12 +765,14 @@ Msum_eff <- coef(summary(rma_MP_age))[2,]
 
 ```
 
-To evaluate the different predictions we laid out in the introduction for how mispronunciation sensitivity will change as infants develop, we next added the moderator age (centered, in days). 
+To evaluate the different predictions we laid out in the introduction for how mispronunciation sensitivity will change as infants develop, we next added the moderator age (centered; continuous and measured in days but transformed into months for ease of interpreting estimates by dividing by 30.44 for Figure 2). 
 [Christina] What about the whole months thing?
+[Katie] We had an explanation in the methods section for this, I've now added it again here.
 
-In the first analyses, we investigate the impact of age separately on conditions where words were either pronounced correctly or not. Age did not significantly modulate object identification in response to correctly pronounced (`r mod_test(rma_correct_age)`) or mispronounce words (`r mod_test(rma_MP_age)`). The lack of a significant modulation together with the small estimates indicates that there was no relationship between age and target looks in response to a correctly pronounced or mispronounced label. This relationship is plotted in Figure 2. 
+In the first analyses, we investigate the impact of age separately on conditions where words were either pronounced correctly or not. Age did not significantly modulate object identification in response to correctly pronounced (`r mod_test(rma_correct_age)`) or mispronounced words (`r mod_test(rma_MP_age)`). The lack of a significant modulation together with the small estimates (correct: $\beta$ `r full_estimate(Csum_eff)`; mispronunciation: $\beta$ `r full_estimate(Msum_eff)`) indicates that there was no relationship between age and target looks in response to a correctly pronounced or mispronounced label. We plot both object recognition and mispronunciation sensitivity as a function of age in Figure 2. 
 
 [Christina] OK there is a mismatch between what you write and the numbers, can you verify?
+[Katie] Good catch. For some reason, it was just copying over the moderator test from mispronunciation sensitivity, even though I was calling for the age moderator analysis. There is no significant moderator test, but it was just pasting the same one again and again. I've fixed my code, so it should be correct now!
 
 ```{r MPEffect_age}
 
@@ -843,7 +859,7 @@ grid.draw(ger.plot.age)
 ### Vocabulary Size: Correlation Between Mispronunciation Sensitivity and Vocabulary
 
 ```{r VocabularyData, echo = FALSE}
-vocab_info <- db_ET_correct %>%
+vocab_info <- dat %>%
   mutate(has_vocab = ifelse(!is.na(r_comprehension), "comprehension", 
                             ifelse(!is.na(r_production), "production", "none"))) %>%
   group_by(has_vocab) %>%
@@ -852,7 +868,7 @@ vocab_info <- db_ET_correct %>%
   
 #kable(vocab_info)
 
-vocab_info2 <- db_ET_correct %>%
+vocab_info2 <- dat %>%
   mutate(has_vocab = ifelse(!is.na(r_comprehension) | !is.na(r_production), "vocab", 
                             "none")) %>%
   group_by(has_vocab) %>%
@@ -862,16 +878,24 @@ vocab_info2 <- db_ET_correct %>%
 vi1 <- as.data.frame(vocab_info)
 vi2 <- as.data.frame(vocab_info2)
 
+
+
 ```
 
-Of the `r n_distinct(dat$short_cite)` papers included in the meta-analysis, `r with(vi2, papers[has_vocab == "vocab"])` analyzed the relationship between vocabulary scores and object recognition for correct pronunciations and mispronunciations (comprehension = `r with(vi1, papers[has_vocab == "comprehension"])` papers; production = `r with(vi1, papers[has_vocab == "production"])`). There is reason to believe that production data are different from comprehension data (the former being easier to estimate for parents in the typical questionnaire-based assessment), so we analyze this data separately.
+
+Of the `r n_distinct(dat$short_cite)` papers included in the meta-analysis, `r with(vi2, papers[has_vocab == "vocab"])` analyzed the relationship between vocabulary scores and object recognition for correct pronunciations and mispronunciations (comprehension = `r with(vi1, papers[has_vocab == "comprehension"])` papers and `r with(vi1, count[has_vocab == "comprehension"])` records; production = `r with(vi1, papers[has_vocab == "production"])` papers and `r with(vi1, count[has_vocab == "production"])` records). There is reason to believe that production data are different from comprehension data (the former being easier to estimate for parents in the typical questionnaire-based assessment; Kidd citation), and we therefore planned to analyze these two types of vocabulary measurement separately. However, only `r with(vi1, papers[has_vocab == "production"])` papers reported correlations with productive vocabulary scores, limiting the conclusions that can be drawn. In our vocabulary analysis, we therefore focus exclusively on the relationship between comprehension and mispronunciation sensitivity.
+
 
 [Christina] Removed the previous comment chaos.
 So can you not only list papers but also n conditions above? With just 1 paper for production, I wouldn't analyze it to be honest. it's just not enough data. 
 I also liked your comments about the time line of this whole thing, can you extract the years of papers which report this? Might be extremely useful in the discussion and strengthens our case that there is no effect, bc people don't find the predicted relation with vocab. 
 Also, cann you add a citation for comp vs prod? I think Evan Kidd had a paper on it, if you don't have one handy, I can look it up.
+[Katie] I couldn't find what you are referring to. Could you add the Evan Kidd paper? Also, I added a histogram figure below, but I'm not so very sure that it is good enough to add to the paper (its under the heading "Potential Vocabulary Figure"). Let me know what you think.
 
 ```{r ComprehensionMeta_correct}
+
+# coweeta.uga.edu/publications/10436.pdf, page 80 as a model for writing up these results
+
 #we're relying on the library meta function metacor
 compr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_comprehension) & r_comprehension > -1)
 
@@ -880,82 +904,190 @@ CC <- metacor(cor=r_comprehension, n=n_1, studlab = short_cite, data = compr, sm
 # https://rdrr.io/cran/meta/man/forest.html
 #forest(CC)
 
+# number of positive correlations
+#CC$TE
+rel <- ifelse(CC$TE > 0, "pos", "neg")
+pos_rel <- sum(rel == "pos")
+neg_rel <- sum(rel == "neg")
+tot_rel <- pos_rel + neg_rel
+
+min_cor <- min(CC$TE)
+max_cor <- max(CC$TE)
+
+
+
 ```
 
 ```{r ProductionMeta_correct}
 #we're relying on the library meta function metacor
-prodr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_production) & r_production < 1)
+#prodr  <- subset(db_ET_correct, !is.na(db_ET_correct$r_production) & r_production < 1)
 
-CP <- metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
+#CP <- metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
+
+#Higher production scores were also associated with greater object recognition in response to correct pronunciations for 9 of 16 experimental conditions, with correlation values ranging from -0.23 to 0.44. The mean effect size XXX was again small and not significantly different from zero with 0.0601 (CI [-0.0331; 0.1533] *p* = .2061). For both comprehension and production scores, the small correlation effect sizes and large variances suggest a lack of relationship between vocabulary and object recognition for correct pronunciations. However, we note again that comparatively few studies report the correlation between vocabulary and infants' responses to correct pronunciations to begin with and thus we cannot draw any firm conclusions based on this small sample of studies.
 
 ```
 
-[Katie: below, I'm using coweeta.uga.edu/publications/10436.pdf, page 80 as a model for writing up these results. I haven't the funniest clue what I'm doing! :p]
-[Christina] looks good to me.
-
-We first considered the relationship between vocabulary and object recognition for correct pronunciations. Higher comprehension scores were associated with greater object recognition in response to correct pronunciations for 9 of 12 experimental conditions, with correlation values ranging from -0.17 to 0.48. The mean effect size XXX was small with 0.0897, which did not differ significantly from zero (CI [-0.0105; 0.1900] *p* = .0795). However, the lower bound of the CI is close to zero, and one might hypothesize that with more power the small relationship might become significant. At the same time, a larger sample might confirm our conclusion that there is no relationship. 
-
-Higher production scores were also associated with greater object recognition in response to correct pronunciations for 9 of 16 experimental conditions, with correlation values ranging from -0.23 to 0.44. The mean effect size XXX was again small and not significantly different from zero with 0.0601 (CI [-0.0331; 0.1533] *p* = .2061). For both comprehension and production scores, the small correlation effect sizes and large variances suggest a lack of relationship between vocabulary and object recognition for correct pronunciations. However, we note again that comparatively few studies report the correlation between vocabulary and infants' responses to correct pronunciations to begin with and thus we cannot draw any firm conclusions based on this small sample of studies.
-
-[Christina] I think bc the effect is small but apparently consistent, we can reason that we might have a power problem and thus cannot draw firm conclusions.
+We first considered the relationship between vocabulary and object recognition for correct pronunciations. Higher comprehension scores were associated with greater object recognition in response to correct pronunciations for `r pos_rel` of `r tot_rel` experimental conditions, with correlation values ranging from `r min_cor` to `r max_cor`. The mean effect size Pearson's *r* of `r r2(CC$TE.fixed)` was small and did not differ significantly from zero (CI [`r r2(CC$lower.fixed)`; `r r2(CC$upper.fixed)`] *p* `r psig(CC$pval.fixed)`). However, the lower bound of the CI is close to zero, and one might hypothesize that with more power the small relationship might become significant. At the same time, a larger sample might confirm our conclusion that there is no relationship. As a result, we can not draw firm conclusions about the relationship between comprehension scores and object recognition in response to correct pronunciations.
 
 ```{r ComprehensionMeta_MP}
 #we're relying on the library meta function metacor
 compr  <- subset(db_ET_MP, !is.na(db_ET_MP$r_comprehension) & r_comprehension > -1)
 
 MC <- metacor(cor=r_comprehension, n=n_1, studlab = short_cite, data = compr, sm = "COR")
+
+# number of positive correlations
+#CC$TE
+rel <- ifelse(MC$TE > 0, "pos", "neg")
+pos_rel <- sum(rel == "pos")
+neg_rel <- sum(rel == "neg")
+tot_rel <- pos_rel + neg_rel
+
+min_cor <- min(MC$TE)
+max_cor <- max(MC$TE)
+
 ```
 
 ```{r ProductionMeta_MP}
 #we're relying on the library meta function metacor
-prodr  <- subset(db_ET_MP, !is.na(db_ET_MP$r_production) & r_production < 1)
+# prodr  <- subset(db_ET_MP, !is.na(db_ET_MP$r_production) & r_production < 1)
+# 
+# MP <- metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
 
-MP <- metacor(cor=r_production, n=n_1, studlab = short_cite, data = prodr, sm = "COR")
+#For production, however, lower production scores were associated with greater object recognition in response to mispronunciations for 16 of 31 experimental conditions, with correlation values ranging from -0.28 to 0.44. The mean effect size XXX was -0.0402, (CI [-0.1043; 0.0238] *p* = .2181).
+
 ```
 
-We next considered the relationship between vocabulary and object recognition for mispronunciations. Higher comprehension scores were associated with greater object recognition in response to correct pronunciations for 17 of 31 experimental conditions, with correlation values ranging from -0.35 to 0.57. The mean effect size XXX was 0.0377, but did not differ significantly from zero (CI[-0.0260; 0.1014] *p* = .2465). For production, however, lower production scores were associated with greater object recognition in response to mispronunciations for 16 of 31 experimental conditions, with correlation values ranging from -0.28 to 0.44. The mean effect size XXX was -0.0402, (CI [-0.1043; 0.0238] *p* = .2181). For both comprehension and production scores, the small correlations and large variances suggest a lack of relationship between vocabulary and object recognition for mispronunciations. We again emphasize that we cannot draw firm conclusions due to the small number of studies we were able to include here. 
+We next considered the relationship between vocabulary and object recognition for mispronunciations. Higher comprehension scores were associated with greater object recognition in response to correct pronunciations for `r pos_rel` of `r tot_rel` experimental conditions, with correlation values ranging from `r min_cor` to `r max_cor`. The mean effect size Pearson's *r* of `r r2(MC$TE.fixed)` was small and did not differ significantly from zero (CI [`r r2(MC$lower.fixed)`; `r r2(MC$upper.fixed)`] *p* `r psig(MC$pval.fixed)`). Similar to the relationship between comprehension scores and correct pronunciation object identification, the small correlations and large variances suggest a lack of relationship between vocabulary and object recognition for mispronunciations. We again emphasize that we cannot draw firm conclusions due to the small number of studies we were able to include here. 
 
-[Christina] Is there a reason the above numbers aren't read out as before?
-Also, I think the effect size is pearson's r, because that's what we put in, right?
+## Potential Vocabulary Figure
+
+```{r Vocab_describe1}
+#how did vocabulary collection change over time?
+
+dv <- read.csv("data/vocab_collection.csv", header = T)
+
+years.v <- as.data.frame(seq(from = 2000, to = 2018, by = 1))
+relat.v <- c("no_vocab", "no_relationship", "positive")
+
+fake.v <- merge(years.v, relat.v, all = T)
+names(fake.v) <- c("year", "relationship")
+dat.v <- merge(dv, fake.v, by = c("year", "relationship"), all.y = T)
+dat.v$vocab <- as.character(dat.v$vocab)
+dat.v$relationship <- as.character(dat.v$relationship)
+dat.v$short_cite <- as.character(dat.v$short_cite)
+
+dat.v$vocab[is.na(dat.v$vocab)] <- "none"
+dat.v$short_cite <- ifelse(dat.v$vocab == "none", "none", dat.v$short_cite)
+
+
+dat.v$short_cite[is.na(dat.v$short_cite)] <- "none"
+
+
+dat.v$tested <- ifelse(dat.v$short_cite == "none", "no", "yes")
+
+
+
+dat.v$relationship <- ifelse(dat.v$relationship == "no_vocab", "None",
+                                   ifelse(dat.v$relationship == "positive", "Predictive",
+                                          "No Relationship"))
+dat.v$relationship <- factor(dat.v$relationship, levels = c("Predictive", "No Relationship", "None"))
+
+d.v <- subset(dat.v, short_cite != "none")
+
+d.v$Year <- d.v$year
+
+vocab_year <- ggplot(d.v,aes(x=Year, fill = relationship)) + 
+  apatheme+
+  geom_histogram(alpha = 0.5, bins = 20) +
+    scale_fill_manual(values=cbPalette)+
+     theme(legend.position = "bottom",
+           legend.title = element_blank())
+
+vocab_year
+
+  jpeg(filename = "figures/Vocab_findings.jpg", 
+       width = 500, height = 300, units = "px")
+
+vocab_year
+  
+  dev.off()
+  
+#   
+# 
+# vocab_data1 <- dat.v %>%
+#   group_by(year, relationship, tested) %>%
+#   summarize(count = n())
+# 
+# vocab_data1 <- as.data.frame(vocab_data1)
+# vocab_data1$count <- ifelse(vocab_data1$tested == "no", 0, vocab_data1$count)
+# vocab_data1$year <- as.numeric(vocab_data1$year)
+# 
+# vocab_data1$relationship <- ifelse(vocab_data1$relationship == "no_vocab", "None",
+#                                    ifelse(vocab_data1$relationship == "positive", "Predicts",
+#                                           "No Relationship"))
+# vocab_data1$relationship <- factor(vocab_data1$relationship, levels = c("Predicts", "No Relationship", "None"))
+# 
+# 
+# p <- ggplot(vocab_data1, aes(year, count, color = relationship)) + 
+#   geom_line() + 
+#   geom_point()+
+#   scale_y_continuous(breaks = c(0, 1, 2, 3, 4), limits = c(0,4))+
+#   scale_colour_manual(values=cbPalette)+
+#   apatheme +
+#   theme(legend.title = element_blank(),
+#         legend.position = "bottom")
+# p
+# 
+#   jpeg(filename = "figures/Vocab_findings.jpg", 
+#        width = 500, height = 300, units = "px")
+# 
+#   p
+#   
+#   dev.off()
+#  
+```
+
 
 ### Interim Discussion
 
-The main goal of this paper was to assess mispronunciation sensitivity and its maturation with age. The results seem clear: Although infants consider a mispronunciation as a better match with the target image than a distractor image, there was a consistent effect of mispronunciation sensitivity. This did not change with development. Of the 3 predictions and assumptions about the development of infants' sensitivity to mispronunciations discussed in the Introduction, the present results lend some support for the argument that mispronunciation sensitivity stays consistent as infants develop. This runs counter to existing theories of phono-lexical development, which predict either an increase (PRIMR ref) or decrease (Assim Model ref) in mispronunciation sensitivity. Furthermore, counter to the predictions for the PRIMR (PRIMR ref) and Assimilation(Assim ref) models, we found no relationship between vocabulary and target looking for correct pronunciations or mispronunciations. In sum, it seems that current theories of infants' phono-lexical development cannot fully capture our results and should be reconsidered with all the evidence in mind.
+The main goal of this paper was to assess mispronunciation sensitivity and its maturation with age. The results seem clear: Although infants consider a mispronunciation as a better match with the target image than a distractor image, there was a consistent effect of mispronunciation sensitivity. This did not change with development. Of the 3 predictions and assumptions about the development of infants' sensitivity to mispronunciations discussed in the Introduction, the present results lend some support for the argument that mispronunciation sensitivity stays consistent as infants develop. This runs counter to existing theories of phono-lexical development, which predict either an increase (PRIMR ref) or decrease (Assim Model ref) in mispronunciation sensitivity. Furthermore, counter to the predictions for the PRIMR (PRIMR ref) and Assimilation(Assim ref) models, we found no relationship between vocabulary and target looking for correct pronunciations or mispronunciations, although our analyses may be underpowered. In sum, it seems that current theories of infants' phono-lexical development cannot fully capture our results and should be reconsidered with all the evidence in mind.
 
-Alternatively, an effect of maturation might have been masked by other factors we have not yet captured in our analyses. A strong candidate that emerged during the construction of the present dataset and careful reading of the original papers is the analysis approach. We observed, as mentioned in the Methods section, large variance in the dependent variable reported, and additionally noted variance in the time window chosen for analyses. Researchers might adapt their analysis strategy to age or they might be influenced by having observed the data. In the latter case, we expect an increase in significant results, which at the same time can (partially) explain the publication bias we observe (Simmons, Nelson, & Simonsohn, 2011). 
+Alternatively, an effect of maturation might have been masked by other factors we have not yet captured in our analyses. A strong candidate that emerged during the construction of the present dataset and careful reading of the original papers is the analysis approach. We observed, as mentioned in the Methods section, large variance in the dependent variable reported, and additionally noted variance in the size of the time window chosen for analyses. Researchers might adapt their analysis strategy to age or they might be influenced by having observed the data. In the latter case, we expect an increase in significant results, which at the same time can (partially) explain the publication bias we observe (Simmons, Nelson, & Simonsohn, 2011). 
 
-We included size of time window analyzed or dependent variable calculated in our coding of the dataset because they are consistently reported and might be useful for experiment design in the future by highlighting typical choices and helping establish field standards. In the following section, we include an exploratory analysis to investigate the possibility of systematic differences in the approach to analysis in general and across infant age. Our analyses will show that a standard, a priori registered analysis of looking while listening paradigms is needed and can improve the health of a currently biased literature. 
-
-[Christina] The last sentence is a bit clunky, please improve. 
-
+We included details related to timing and type of dependent variable calculated in our coding of the dataset because they are consistently reported and might be useful for experiment design in the future by highlighting typical choices and helping establish field standards. In the following section, we include an exploratory analysis to investigate the possibility of systematic differences in the approach to analysis in general and across infant age. The purpose of this analysis is to better understand the influence of choices made in analyzing mispronunciation sensitivity studies as well as the influence these choices may have on our understanding of mispronunciation sensitivity development.
 
 ## Exploratory Analyses
 
 [Christina] This section talked about several variables in 2 categories, but in reality there are only 2 variables, right? I am not 100% sure about total trial length as being the first or being mentioned at all, might it be better to focus on time window analyzed and then say "Oh, btw, total trial length totally does nothing so we don't have to discuss it further" I am not sure, so feel free to re-rewrite this, but now it better lines up with everything before because trial length kinda comes out of nowhere. 
+[Katie] That's fair! I think we don't need the full analysis for total time presented, but I'd like to still mention all of them because it really shows that its something about this post-naming time window choice that influences it, and not just fishing around for variability until we find something that works. In the end there are 2 interesting analyses, but offset could have been interesting (but wasn't). Therefore, I'd still like to refer to the timing variables as a type of category. Otherwise, we say we'll do size of time window analyzed, but then we have information about other timing stuff as well.
 
+We identified two sets of variables which had the potential to vary across papers to assess the influence of data analysis choices on resulting effect size: timing (size of time window analyzed; offset time) and which dependent variable(s) were reported. In the following, we discuss the possible theoretical motivation for these data analysis choices, the variation present in the current meta-analysis dataset, and the influence these analysis choices have on mispronunciation sensitivity development. We focus specifically on the size of the mispronunciation sensitivity effect, considering the whole dataset and including condition (correct pronunciation, mispronunciation) as moderator. 
 
-We identified two sets of variables which varied across papers to assess the influence of data analysis choices on resulting effect size: the time course of a trial and time window analyzed and which dependent variable(s) were reported. In the following, we discuss the possible theoretical motivation for these data analysis choices, the variation present in the current meta-analysis dataset, and the influence these analysis choices have on mispronunciation sensitivity development.
-
-### Time-related analyses
+### Timing
 
 ```{r time_choices_info}
 
-# trial length
 
-trial_length_info <- dat %>%
-  group_by(trial_length) %>%
+# can't call reshape earlier, because it will interfere with other libraries
+library(reshape)
+
+# trial length
+dat$post_nam_actual <- dat$trial_length - dat$pre_nam_dur
+
+post_length_info <- dat %>%
+  group_by(post_nam_actual) %>%
   summarize(n_exp_conditions =  n())
         #post_naming = paste(unique(post_nam_dur), collapse=', '))
 
-trial.l <- cor.test(dat$trial_length, dat$mean_age_1)
+trial.l <- cor.test(dat$post_nam_actual, dat$mean_age_1)
 
-library(reshape)
-tdl <- dat[,c("short_cite", "trial_length", "post_nam_dur")]
+tdl <- dat[,c("short_cite", "post_nam_actual", "post_nam_dur")]
 tdl <- melt(tdl, id = "short_cite")
 
 trial_length_hist <- ggplot(dat,aes(x=value)) + 
   apatheme+
-    geom_histogram(data=subset(tdl,variable == 'trial_length'),fill = "red", alpha = 0.5) +
+    geom_histogram(data=subset(tdl,variable == 'post_nam_actual'),fill = "red", alpha = 0.5) +
     geom_histogram(data=subset(tdl,variable == 'post_nam_dur'),fill = "blue", alpha = 0.5)
 
 
@@ -969,7 +1101,7 @@ post.l <- cor.test(dat$post_nam_dur, dat$mean_age_1)
 post_nam_dur.plot <- ggplot(dat, aes(post_nam_dur, age.C)) + geom_point() +geom_smooth(method = "lm")
 
 # difference post vs. trial length
-dat$post_trial_match <- ifelse(dat$post_nam_dur == (dat$trial_length-dat$pre_nam_dur), "same", "different")
+dat$post_trial_match <- ifelse(dat$post_nam_dur == dat$post_nam_actual, "same", "different")
 dat$post_trial_prop <- dat$post_nam_dur/(dat$trial_length-dat$pre_nam_dur)
 
 post_trial_match_info <- dat %>%
@@ -1006,34 +1138,33 @@ offset_bin_info <- dob %>%
 offset.l <- cor.test(dat$offset, dat$mean_age_1)
 offset.plot <- ggplot(dat, aes(offset, age.C)) + geom_point() +geom_smooth(method = "lm")
 
+detach("package:reshape", unload=TRUE)
 
 ```
 
-[Christina] Ideally load all libraries in the beginning of the doc. (reshape)
 
 [Christina] Is there a reason you choose mode and not median? 
+[Katie] Hmm, I felt like mode would be interesting, because it gives the most popular choice (74 experimental conditions). But, the median is only 500 ms less, so we could use that too (9 experimental conditions).
 
 [Christina] Would it make sense to present dependent variable first? 
+[Katie] I don't have a strong opinion on this. If you think it would be better, then I can change it.
 
-[Christina] So if you go with my suggestion from above, I would just add this sentence at the beginning of the next paragraph: "Before we focus on analysis choice relating to time windows, we must first discuss overall trial length, because it limits the overall time window available to analyze and might thus predict which time window was analyzed."
+In a typical trial in a mispronunciation sensitivity study, the target-distractor image pairs are first presented in silence, followed by auditory presentation of a carrier phrase or isolated presentation of the target word (correctly pronounced or mispronounced). When designing mispronunciation sensitivity studies, experimenters can choose the length of time each trial is presented. This includes both the length of time before the target object is named (pre-naming phase) as well as after (post-naming phase) and is determined prior to data collection. To examine the size of the time window analyzed in the post-naming phase, we must first consider overall length of time post-naming, because it limits the overall time window available to analyze and might thus predict which time window was analyzed. Across papers, actual post-naming phase length varied from `r with(post_length_info, min(post_nam_actual))*1000` to `r with(post_length_info, max(post_nam_actual))*1000` ms, with a median value of `r with(dat, median(post_nam_actual))*1000` ms. There was an inverse relationship between infant age and actual post-naming phase length, such that younger infants were presented with longer a longer post-naming phase, although this correlation was not significant (*r* = `r trial.l$estimate`, *p* `r psig(trial.l$p.value)`). Presumably, younger infants may be exposed to longer trials because their word recognition abilities are expected to be slower than older infants (Fernald et al., 1998). 
 
-When designing mispronunciation sensitivity studies, experimenters can choose the length of time each trial is presented. This includes both the length of time before the target object is named (pre-naming phase) as well as after (post-naming phase) and is determined prior to data collection. Across papers, trial length varied from `r with(trial_length_info, min(trial_length))*1000` to `r with(trial_length_info, max(trial_length))*1000` ms, with a mode of `r with(dat, getmode(trial_length))*1000` ms. There was an inverse relationship between infant age and trial length, such that younger infants were presented with longer trials, although this correlation was not significant (*r* = `r trial.l$estimate`, *p* `r psig(trial.l$p.value)`). Presumably, younger infants may be exposed to longer trials because their word recognition abilities may be slower than older infants (Fernald et al., 1998). 
-
-Unlike the length of trial, the length of the post-naming phase analyzed can be chosen after the experimental data is collected. Interestingly, half of the experimental conditions were analyzed using the same length of post-naming phase as the infant heard in the actual experiment (`r with(post_trial_match_info, n_exp_conditions[post_trial_match == "same"])`), while the other half were analyzed using a shorter length of post-naming phase, excluding later portions of the post-naming phase (`r with(post_trial_match_info, n_exp_conditions[post_trial_match == "different"])`). Across papers, the length of the post-naming phase analyzed varied from `r with(post_name_info, min(post_nam_dur))*1000` to `r with(post_name_info, max(post_nam_dur))*1000` ms, with a mode of `r with(dat, getmode(post_nam_dur))*1000` ms. Similar to trial length, there was an inverse relationship between infant age and length of post-naming phase analyzed, such that younger infants'looking times were analyzed using a longer post-naming phase, here the relationship was significant (*r* = `r post.l$estimate`, *p* `r psig(post.l$p.value)`). Again, the choice to analyze a shorter post-naming time window is likely related to evidence that speed of processing is slower in younger infants (Fernald et al., 1998). 
-
-[Christina] I think the proportion needs more explanation, also because later we have proportions of looks to target. 
-
-Furthermore, the proportion of post-naming phase time window analyzed in comparison to the total post-naming phase presented to infants significantly decreased with increasing infant age (*r* = `r post_match.l$estimate`, *p* `r psig(post_match.l$p.value)`). To summarize, we observe variation in time-related aspects related to infants' age. This variation is most pronounced, and even significant, for the time window that is being analyzed after the target label has been heard. 
+Unlike the actual post-naming phase length, the size of the post-naming time window analyzed can be chosen after the experimental data is collected. Interestingly, half of the experimental conditions were analyzed using the same length of post-naming phase as the infant heard in the actual experiment (`r with(post_trial_match_info, n_exp_conditions[post_trial_match == "same"])`), while the other half were analyzed using a shorter length of post-naming phase, excluding later portions of the post-naming phase (`r with(post_trial_match_info, n_exp_conditions[post_trial_match == "different"])`). Across papers, the length of the post-naming phase analyzed varied from `r with(post_name_info, min(post_nam_dur))*1000` to `r with(post_name_info, max(post_nam_dur))*1000` ms, with a median value of `r with(dat, median(post_nam_dur))*1000` ms. Similar to actual post-naming phase length, there was an inverse relationship between infant age and the size of the post-naming time window analyzed, such that younger infants' looking times were analyzed using a longer post-naming time window, here the relationship was significant (*r* = `r post.l$estimate`, *p* `r psig(post.l$p.value)`). Again, the choice to analyze a shorter post-naming time window is likely related to evidence that speed of processing is slower in younger infants (Fernald et al., 1998). To summarize, we observe variation in time-related aspects related to infants' age. This variation is most pronounced, and even significant, for the time window that is being analyzed after the target label has been heard. 
 
 [Christina] The canfield & haith paper is for visual stimuli, right? So add that before "stimulus". And then add to the next sentence that the longer latnecies are because ther eis addiitonal language processing required which EEg shows in adults to take X ms (400 for N400?). 
+[Katie] I agree with the reasoning, but I don't think referring to adult ERP literature is the way to go. I've rewritten these sentences to be more faithful to the misp sensitivity literature.
+
 
 [Christina] Can you add info how many papers did not report the analyzed variables? Across this whole section, I mean. 
+[Katie] All papers reported the actual post-naming phase length and the size of the post-naming time window analyzed.
 
-When analyzing eye-movements, it is important to consider the amount of time it takes for an eye movement to be initiated in response to a stimulus. Previous studies examining simple stimulus response latencies first determined that infants require at least 233 ms to initiate an eye-movement in response to a stimulus (Canfield & Haith, 1991). In mispronunciation sensitivity studies, however, this has often been extended to 367 ms (e.g. Swingley & Aslin, 2000, 2002, 2007). Across papers, the majority used a similar offset value (between 360 and 370 ms) for analysis (*n* = `r with(offset_bin_info, n_exp_conditions[offset_bin == "367"])`), but offset values ranged from `r with(offset_bin_info, min(offset_bin))` to `r with(offset_bin_info, max(offset_bin))` ms, and were not reported for `r with(offset_info, n_exp_conditions[is.na(offset)])` experimental conditions. We note that Swingley (2009) also included offset values of 1133 ms to analyze responses to coda mispronunciations. There was an inverse relationship between infant age and size of offset, such that younger infants were given longer offsets, although this correlation was not significant (*r* = `r offset.l$estimate`, *p* `r psig(offset.l$p.value)`). This lack of a relationship is possibly driven by the field's consensus that an offset of about 367 ms is appropriate for analyzing word recognition with PTL measures, including studies that evaluate mispronunciation sensitivity.
+Another potential source of variation in studies that analyze eye-movements is the amount of time it takes for an eye movement to be initiated in response to a visual stimulus, which we refer to as offset time. Previous studies examining simple stimulus response latencies first determined that infants require at least 233 ms to initiate an eye-movement in response to a stimulus (Canfield & Haith, 1991). In the first infant mispronunciation sensitivity study, Swingley and Aslin (2000) used an offset time of 367 ms, which was "an 'educated guess' based on studies... showing that target and distractor fixations tend to diverge at around 400 ms." (Swingley & Aslin, 2000, p. 155). Upon inspecting the offset time values used in the papers in our meta-analysis, the majority used a similar offset time value (between 360 and 370 ms) for analysis (*n* = `r with(offset_bin_info, n_exp_conditions[offset_bin == "367"])`), but offset values ranged from `r with(offset_bin_info, min(offset_bin))` to `r with(offset_bin_info, max(offset_bin))` ms, and were not reported for `r with(offset_info, n_exp_conditions[is.na(offset)])` experimental conditions. We note that Swingley (2009) also included offset values of 1133 ms to analyze responses to coda mispronunciations. There was an inverse relationship between infant age and size of offset, such that younger infants were given longer offsets, although this correlation was not significant (*r* = `r offset.l$estimate`, *p* `r psig(offset.l$p.value)`). This lack of a relationship is possibly driven by the field's consensus that an offset of about 367 ms is appropriate for analyzing word recognition with PTL measures, including studies that evaluate mispronunciation sensitivity.
 
-Although there are a priori reasons to choose the post-naming time window (infant age) or offset time (previous studies), these choices may occur after data collection and might therefore lead to a higher rate of false-positives (Gelman, A., & Loken, E. (2013). The garden of forking paths: Why multiple comparisons can be a problem, even when there is no “fishing expedition” or “p-hacking” and the research hypothesis was posited ahead of time. Department of Statistics, Columbia University.). Considering that these choices were systematically different across infant ages, at least for the post-naming time window, we next explored whether the size of the analyzed post-naming time window or the offset time influenced sensitivity to mispronunciations. 
+Although there are a priori reasons to choose the post-naming time window (infant age) or offset time (previous studies), these choices may occur after data collection and might therefore lead to a higher rate of false-positives (Gelman, A., & Loken, E. (2013). Considering that these choices were systematically different across infant ages, at least for the post-naming time window, we next explored whether the size of time window analyzed or the offset time influenced sensitivity to mispronunciations. 
 
-### Length of post naming time window
+#### Size of post-naming time window analyzed
 
 ```{r time_post}
 
@@ -1055,41 +1186,31 @@ rma_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur), dat
  
   rma_post_dur_AGE_MS <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur)*age.C*condition, data = dat, random = ~same_infant_calc | short_cite)
 
-    rma_post_dur_AGE_MS_eff <- coef(summary(rma_post_dur_MS))[8,]
+    rma_post_dur_AGE_MS_eff <- coef(summary(rma_post_dur_AGE_MS))[8,]
 
+    
+# First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images, including post-naming time window size as a moderator. The moderator test was not significant `r mod_test(rma_post_dur)` and the estimate for post-naming phase size was relatively small, $\beta$`r full_estimate(rma_post_dur_eff)`. 
+
+#[Christina] Even if a test is not significant, this next sentence is always wrong because we did not test whether it's the same (i.e. we did not do an equivalence or Bayesian test!)
+#This suggests that upon hearing a mispronunciation, infants' looks to the target image did not differ as a result of the size of the post-naming time window analyzed. We next assessed whether post-naming phase size was related to mispronunciation sensitivity. 
+
+#[Christina] To be sure, you base this again on the combined data and only plot differences for easier visualizations in figure 3? Ideally make that clear. Also, some suggestions to vary this sentence (also earlier in the paper)
+#"To investigate mispronunciation sensitivity, we considered data from both conditions in a joint analysis"
+#"Analyzing all data with condition (c, mp) as additional moderator leads to the following results"
+#etcetc    
+
+    
+# For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant `r mod_test(rma_post_dur_AGE)`, and a small estimate for the interaction between age and size of post-naming phase ($\beta$`r full_estimate(rma_post_dur_AGE_eff)`. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or size of the post-naming phase analyzed. We next assessed whether the relationship between size of the post-naming phase analyzed and mispronunciation sensitivity was modulated by age.    
+        
 ```
 
 [Christina] I think it's a bit inconsistent whether it's post naming phase or window, how about window? Phase sounds wrong to me. or analysis window? I also find phase size odd, and again prefer window (window size). Your call though. 
+[Katie] I agree and I've updated it to refer to window size when talking about the analyzed portion and to  phase when refering to it as the entire actual presentation time.
 
 
-We first assessed whether size of post-naming phase analyzed had an impact on the size of the reported mispronunciation sensitivity. First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images, including post-naming window size as a moderator.
+We first assessed whether size of the post-naming time window analyzed had an impact on the overall size of the reported mispronunciation sensitivity. We considered data from both conditions in a joint analysis and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_post_dur_MS)`. The estimate for the interaction between post-naming phase size and condition was small but significant $\beta$`r full_estimate(rma_post_dur_MS_eff)`. This relationship is plotted in Figure 3a. The results suggest that the size of the post-naming phase analyzed significantly impacted mispronunciation sensitivity. Specifically, the difference between target fixations for correctly pronounced and mispronounced items (mispronunciation sensitivity) was significantly greater when the post-naming phase that was shorter in length.
 
-[Christina] the next bit is weird, in the pdf it's significant, but you write it's not. Also, I think the beta is quite large anbd the CI reasonably distinct from 0. 
-
-
-The moderator test was not significant `r mod_test(rma_post_dur)` and the estimate for post-naming phase size was relatively small, $\beta$`r full_estimate(rma_post_dur_eff)`. 
-
-[Christina] Even if a test is not significant, this next sentence is always wrong because we did not test whether it's the same (i.e. we did not do an equivalence or Bayesian test!)
-This suggests that upon hearing a mispronunciation, infants' looks to the target image were similar regardless of the size of the post-naming phase analyzed. We next assessed whether post-naming phase size was related to mispronunciation sensitivity. 
-
-[Christina] To be sure, you base this again on the combined data and only plot differences for easier visualizations in figure 3? Ideally make that clear. Also, some suggestions to vary this sentence (also earlier in the paper)
-"To investigate mispronunciation sensitivity, we considered data from both conditions in a joint analysis"
-"Analyzing all data with condition (c, mp) as additional moderator leads to the following results"
-etcetc
-
-We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_post_dur_MS)`. The estimate for the interaction between post-naming phase size and condition was small but significant $\beta$`r full_estimate(rma_post_dur_MS_eff)`. This relationship is plotted in Figure 3a. The results suggest that although the size of the post-naming phase analyzed did not impact infants' likelihood to fixate the target upon hearing the mispronunciation, it did significantly impact mispronunciation sensitivity. Specifically, the difference between target fixations for correctly pronounced and mispronounced items (mispronunciation sensitivity) was significantly greater when the post-naming phase that was shorter in length.
-
-Considering that we also found a relationship between the length of the post-naming phase analyzed and infant age, such that younger ages had a longer post-naming phase time window of analysis, we next examined whether the size of post-naming phase analyzed modulated the development of mispronunciation sensitivity. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant `r mod_test(rma_post_dur_AGE)`, and a small estimate for the interaction between age and size of post-naming phase ($\beta$`r full_estimate(rma_post_dur_AGE_eff)`. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or size of the post-naming phase analyzed. We next assessed whether the relationship between size of the post-naming phase analyzed and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_post_dur_AGE_MS)`. 
-
-[Christina] lots of NAs here in the pdf
-
-The estimate for the  three-way-interaction between condition, size of post-naming phase, and age was small, but significant ($\beta$ = `r full_estimate(rma_post_dur_AGE_MS_eff)`. This relationship is plotted in Figure 3b. Smaller post-naming phase size lead to greater increases in mispronunciation sensitivity with development. 
-
-[Christina] The next sentence as weird, check whether my corrections make sense
-
-For example, when experimental conditions were analyzed with a post-naming phase of 2000 ms or less, mispronunciation sensitivity increases with infant age, whereas there is no or a negative relation of mispronunciation sensitivity and age if the analyzed post-naming phase is greater than 2000 ms leads. In other words, all three possible hypotheses might be supported depending on analysis choices made. 
-
-[Christina] I think it's important to remind the reader here that this is our key question, namely how age and mp sensitivity are related.
+Considering that we also found a relationship between the length of the post-naming time window analyzed and infant age, such that younger ages had a longer window of analysis, we next examined whether the size of post-naming time window analyzed modulated the development of mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_post_dur_AGE_MS)`. The estimate for the  three-way-interaction between condition, size of post-naming phase, and age was small, but significant ($\beta$ = `r full_estimate(rma_post_dur_AGE_MS_eff)`. As can be seen in Figure 3b, smaller post-naming time window size leads to greater increases in mispronunciation sensitivity with development. For example, when experimental conditions were analyzed with a post-naming time window of 2000 ms or less, mispronunciation sensitivity is found to increase with infant age. If the post-naming time window analyzed is greater than 2000 ms, however, there is no or a negative relation of mispronunciation sensitivity and age. In other words, all three possible hypotheses might be supported depending on analysis choices made regarding the size of the post-naming time window to analyze. This is especially important, considering that our key question is how mispronunciation sensitivity changes with development. These results suggest that conclusions about the relationship between infant age and mispronunciation sensitivity may be mediated by the size of the post-naming time window analyzed.
 
 ## (Insert Figure 3 about here)
 
@@ -1116,7 +1237,7 @@ p.MS <- ggplot(dat.cm, aes(post_size, Misp_sensitivity, fill = post_size)) +
   #facet_grid(.~post_size)+
     geom_violin() + 
   geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
-  labs(caption="a")+
+  labs(title="a")+
   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
   scale_fill_manual(values=cbPalette)+
   apatheme +
@@ -1135,7 +1256,7 @@ p.MS <- ggplot(dat.cm, aes(post_size, Misp_sensitivity, fill = post_size)) +
 p.AGE <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = post_size)) + 
     #facet_grid(.~post_size)+
   geom_point(aes(size = n_1),show.legend=FALSE) +
-  labs(caption="b")+
+  labs(title="b")+
   geom_line(y= 0, linetype="dotted") + 
   geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=n_1)) +
   scale_colour_manual(values=cbPalette)+
@@ -1161,7 +1282,7 @@ grid.draw(ger.plot.age)
   
 ```
 
-### Offset after target naming
+#### Offset time after target naming
 
 ```{r time_offset}
 
@@ -1187,25 +1308,10 @@ rma_offset_eff <- coef(summary(rma_offset))[2,]
 
 ```
 
-We next assessed whether the time between the target was named and the start of the analysis, namely offset time, had an impact on the size of the reported mispronunciation sensitivity. First, we calculated the meta-analytic effect size for object identification in response to mispronounced target words/images, including offset time as a moderator. 
-
-[Christina] again, the pdf tells me sth different
-
-The moderator test was not significant `r mod_test(rma_offset)` and the estimate for offset time was very small, $\beta$`r full_estimate(rma_offset_eff)`. 
-
-[Christina] Again, we didn't test, so say sth like "did not differ significantly." 
-
-This suggests that upon hearing a mispronunciation, infants' looks to the target image were similar regardless of the offset time used to analyze the data. We next assessed whether offset time was related to mispronunciation sensitivity. 
-
-[Christina] Again, rewording suggestion: "When investigating mispronunciation sensitivity by including condition, the moderator test with was ... 
-
-We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_post_dur_MS)`, but the estimate for the interaction between offset time and condition was almost zero $\beta$`r full_estimate(rma_offset_MS_eff)`. 
-
 [Christina] Generally, it might be easier to kick out all object recognition analyses (what do they tell us?) and start out that we only analyze MP sensitivity, i.e. consider the whole dataset and always include condition as moderator. 
+[Katie] Agreed! I've gotten rid of all of the object recognition analyses and added an explanation at the beginning of the Exploratory Analysis section.
 
-We next examined whether offset time modulated the development of mispronunciation sensitivity. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was not significant `r mod_test(rma_offset_AGE)`, and a very small estimate for the interaction between age and size of post-naming phase ($\beta$`r full_estimate(rma_offset_AGE_eff)`. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or offset time. We next assessed whether the relationship between offset time and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_offset_AGE_MS)`, but the three-way-interaction between condition, offset time, and age was very small and not significant ($\beta$ = `r full_estimate(rma_offset_AGE_MS_eff)`.
-
-Taken together, these results suggest that offset time does not modulate mispronunciation sensitivity. There is no relationship between offset time and age, and we find no influence of offset time on the development of mispronunciation sensitivity.
+We next assessed whether the time between the target was named and the start of the analysis, namely offset time, had an impact on the size of the reported mispronunciation sensitivity. When we included both condition and offset time as moderators, the moderator test was significant, `r mod_test(rma_post_dur_MS)`, but the estimate for the interaction between offset time and condition was almost zero $\beta$`r full_estimate(rma_offset_MS_eff)`. Although we found no relationship between offset time and infant age, we also examined whether the size of offset time modulated the development of mispronunciation sensitivity. When both offset time and condition were included as moderators, the moderator test was significant `r mod_test(rma_offset_AGE_MS)`, but the three-way-interaction between condition, offset time, and age was very small and not significant ($\beta$ = `r full_estimate(rma_offset_AGE_MS_eff)`. Taken together, these results suggest that offset time does not modulate mispronunciation sensitivity. There is no relationship between offset time and age, and we find no influence of offset time on the development of mispronunciation sensitivity.
 
 ### Dependent variable-related analyses
 
@@ -1225,12 +1331,10 @@ dv.age.plot <- ggplot(dat, aes(within_measure, age.C)) +     geom_violin() +
 Mispronunciation studies evaluate infants' proportion of target looks (PTL) in response to correct and mispronounced words. Experiments typically include a phase where no naming event has occured, whether correctly pronounced or mispronounced, which we refer to as the baseline. The purpose of the baseline is to ensure that infants do not have systematic preferences for the target or distractor (greater interest in a cat compared to a cup) which may drive PTL scores in the post-naming phase. As described in the Data Analysis sub-section of the Methods, there was considerable variation across papers in way that baseline was calculated, resulting in different measured outcomes or dependent variables. Over half of the experimental conditions (*n* = `r with(dv_info, n_exp_conditions[within_measure == "pre_post_naming_effect"])`) subtracted the PTL score for a pre-naming phase from the PTL score for a post-naming phase. This results in one value, which is then compared with a chance value of 0. When positive, this indicates that infants increased their looks to the target after hearing the naming label (correct or mispronounced) relative to the pre-naming baseline PTL. We will refer to this dependent variable as the Difference Score. Another dependent variable, which was used in `r with(dv_info, n_exp_conditions[within_measure == "pre_post"])` experimental conditions, directly compared the post- and pre-naming PTL scores with one another. This requires two values, one for the pre-naming phase and one for the post-naming phase. A greater post compared to pre-naming phase PTL indicates that increased their target looks after hearing the naming label. We will refer to this dependent variable as Pre vs. Post. Finally, the remaining `r with(dv_info, n_exp_conditions[within_measure == "post"])` experimental conditions compared the post-naming PTL score with a chance value of 50%. Here, the infants' pre-naming phase preferences are not considered and instead target fixations are evaluated based on the likelihood to fixate one of two pictures. We will refer to this dependent variable as Post. 
 
 [Christina] Did I ask the following already: Do we know whether subtrations were on the trial level? Pre vs post is a bit differnt because it loses the individual bias accommodation and the correlation between pre and post on the participant / item level. 
+[Katie] You did. I'll put here my answer from before:
+From working with Nivi, we did it participants x condition or participants x trial (but mostly the former). But, this is not something we reported in papers. I don't think I read it at all when putting together the dataset for this either.
 
-The Difference Score and Pre vs. Post can be considered similar to one another, in that they are calculated on the same type of data and consider pre-naming preferences. The Post dependent variable, in contrast, does not consider pre-naming preferences. 
-
-[Christina] Actually, in other domains (eeg, longitudinal studies, RCTs) people tlak a lot about whether or not to consider a baseline, so this is not strictly true. 
-
-To our knowledge, there is no theory or evidence to drive choice of dependent variable, which may explain the wide variation in dependent variable reported in the papers included in this meta-analysis. We next explored whether the type of dependent variable calculated influenced sensitivity to mispronunciations. Considering that the dependent variable Post differs in its consideration of pre-naming preferences, we directly compared mispronunciation sensitivity between Post as a reference condition and both Difference Score and Pre vs. Post dependent variables.
+The Difference Score and Pre vs. Post can be considered similar to one another, in that they are calculated on the same type of data and consider pre-naming preferences. The Post dependent variable, in contrast, does not consider pre-naming preferences. To our knowledge, there is no theory or evidence that explicitly drives choice of dependent variable in analysis of mispronunciation sensitivity, which may explain the wide variation in dependent variable reported in the papers included in this meta-analysis. We next explored whether the type of dependent variable calculated influenced sensitivity to mispronunciations. Considering that the dependent variable Post differs in its consideration of pre-naming preferences, we directly compared mispronunciation sensitivity between Post as a reference condition and both Difference Score and Pre vs. Post dependent variables.
 
 ```{r dependent_variable}
 
@@ -1274,9 +1378,10 @@ rma_within_effdiff <- coef(summary(rma_within))[3,]
  
 ```
 
-We first assessed whether the choice of dependent variable had an impact on the size of mispronunciation sensitivity. First, we calculated the meta-analytic effect for object identification in response to mispronounced target words/images, including dependent variable as a moderator. The moderator test was significant `r mod_test(rma_within)`. The estimates for both the Pre vs. Post ($\beta$`r full_estimate(rma_within_effprepost)`) and Difference Score ($\beta$`r full_estimate(rma_within_effdiff)`) dependent variables were significantly smaller than that of the Post dependent variable. This suggests that reported looks to the target upon hearing a mispronunciation were greatest when the dependent variable was Post. We next assessed whether he dependent variable was related to mispronunciation sensitivity. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as an additional moderator. The moderator test was significant, `r mod_test(rma_within_MS)`. The estimate for the interaction between Pre vs. Post and condition was significantly smaller than that of the Post dependent variable ($\beta$`r full_estimate(rma_within_MS_effprepost)`), but the difference between the Difference Score and Post in the interaction with condition was small and not significant ($\beta$`r full_estimate(rma_within_MS_effdiff)`). This relationship is plotted in Figure 4a. The results suggest that dependent variable calculated significantly impacted the size fo the mispronunciation sensitivity effect, such that Post. vs. Pre showed a smaller mispronunciation sensitivity effect than Post, but no difference between the Difference Score and Post.
+We first assessed whether the choice of dependent variable had an impact on the size of mispronunciation sensitivity. When we included both condition and dependent variable as moderators, the moderator test was significant `r mod_test(rma_within_MS)`. The estimate for the interaction between Pre vs. Post and condition was significantly smaller than that of the Post dependent variable ($\beta$`r full_estimate(rma_within_MS_effprepost)`), but the difference between the Difference Score and Post in the interaction with condition was small and not significant ($\beta$`r full_estimate(rma_within_MS_effdiff)`). This relationship is plotted in Figure 4a. The results suggest that dependent variable calculated significantly impacted the size fo the mispronunciation sensitivity effect, such that Post. vs. Pre showed a smaller mispronunciation sensitivity effect than Post, but no difference between the Difference Score and Post.
 
-We next examined whether the type of dependent variable calculated modulated the development of mispronunciation sensitivity. For object recognition in response to a mispronunciation, including age as a moderator resulted in a moderator test that was significant `r mod_test(rma_post_dur_AGE)`, but the estimates for the interaction between Pre vs. Post and age ($\beta$`r full_estimate(rma_within_AGE_effprepost)`) as well as Difference Score and age ($\beta$`r full_estimate(rma_within_AGE_effdiff)`) were not different from that of the Post dependent variable. This suggests that upon hearing a mispronunciation, infant measured looks to the target image were similar, regardless of infant age or type of dependent variable. We next assessed whether the relationship between dependent variable and mispronunciation sensitivity was modulated by age. We merged the two datasets and included condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant `r mod_test(rma_within_AGE_MS)`. The estimate for the interaction between Pre vs. Post, condition, and age was significantly smaller than that of the Post dependent variable ($\beta$`r full_estimate(rma_within_AGE_MS_effprepost)`), but the difference between the Difference Score and Post in the interaction with condition and age was small and not significant ($\beta$`r full_estimate(rma_within_AGE_MS_effdiff)`). This relationship is plotted in Figure 4b. When the dependent variable was Pre vs. Post, mispronunciation sensitivity decreased with infant age, while in comparison, when the dependent variable was Post, mispronunciation sensitivity increased with infant age. There was no difference in mispronunciation sensitivity change with infant development between the Post and Difference Score dependent variables.
+We next examined whether the type of dependent variable calculated modulated the development of mispronunciation sensitivity. When age was included as an additional moderator, the moderator test was significant `r mod_test(rma_within_AGE_MS)`. The estimate for the interaction between Pre vs. Post, condition, and age was significantly smaller than that of the Post dependent variable ($\beta$`r full_estimate(rma_within_AGE_MS_effprepost)`), but the difference between the Difference Score and Post in the interaction with condition and age was small and not significant ($\beta$`r full_estimate(rma_within_AGE_MS_effdiff)`). This relationship is plotted in Figure 4b. When the dependent variable was Pre vs. Post, mispronunciation sensitivity decreased with infant age, while in comparison, when the dependent variable was Post, mispronunciation sensitivity increased with infant age. There was no difference in mispronunciation sensitivity change with infant development between the Post and Difference Score dependent variables. 
+Similar to size of post-naming time window analyzed, all three possible developmental hypotheses might be supported depending on the dependent variable reported. In other words, choice of dependent variable may influence the conclusion drawn regarding how mispronunciation sensitivity may change with infant age.
 
 ## (Insert Figure 4 about here)
 
@@ -1304,7 +1409,7 @@ ms.agg <- ggplot(dat.cm, aes(dv_label, Misp_sensitivity, fill = dv_label)) +
   #facet_grid(.~dv_label)+
     geom_violin() + 
   geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
-  labs(caption="a")+
+  labs(title="a")+
   #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
   scale_fill_manual(values=cbPalette)+
   apatheme +
@@ -1323,7 +1428,7 @@ ms.agg <- ggplot(dat.cm, aes(dv_label, Misp_sensitivity, fill = dv_label)) +
 ms.age <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = dv_label)) + 
     #facet_grid(.~dv_label)+
   geom_point(aes(size = n_1),show.legend=FALSE) +
-  labs(caption="b")+
+  labs(title="b")+
   geom_line(y= 0, linetype="dotted") + 
   geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=n_1)) +
   scale_colour_manual(values=cbPalette)+
@@ -1455,7 +1560,7 @@ To Summarize:
 
 ** Data Analysis Choices **
 
-  + Post-naming phase size and dependent variable impact misp sensitivity development
+  + Post-naming time window size and dependent variable impact misp sensitivity development
   + Offset time does not impact misp sensitivity development
   + the first two do not have theoretical frameworks to guide researchers, whereas offset time does
   

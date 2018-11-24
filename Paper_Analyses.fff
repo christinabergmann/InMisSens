@@ -1,6 +1,6 @@
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
-[htbp]
+
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/FunnelCombo-1.pdf}
 \caption{}
@@ -9,7 +9,7 @@
  
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
-[htbp]
+
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/PlotMPEffect-1.pdf}
 \caption{}
@@ -18,7 +18,16 @@
  
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
-[htbp]
+
+\centering
+\includegraphics{Paper_Analyses_files/figure-latex/Vocab_describe1-1.pdf}
+\caption{}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/Plot_post_name_cond_age-1.pdf}
 \caption{}
@@ -27,7 +36,7 @@
  
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
-[htbp]
+
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/Plot_Within_cond_age_diff_score-1.pdf}
 \caption{}

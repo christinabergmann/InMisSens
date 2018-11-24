@@ -1,0 +1,49 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:SummaryTable}Summary of all studies.}
+\begin{tabular}{llll}
+\toprule
+Paper & Publication format & Age & Vocabulary\\
+\midrule
+Altvater-Mackensen (2010) & dissertation & 22, 25 & None\\
+Altvater-Mackensen et al. (2014) & paper & 18, 25 & None\\
+Bailey \& Plunkett (2002) & paper & 18, 24 & Comp\\
+Bergelson \& Swingley (2017) & paper & 7, 9, 12, 6 & None\\
+Bernier \& White 2017 & proceedings & 21 & None\\
+Delle Luche et al. (2015) & paper & 20, 19 & None\\
+Durrant et al. (2014) & paper & 19, 20 & None\\
+Hoehle et al. 2006 & paper & 18 & None\\
+Hojen et al. & gray paper & 20 & Comp/Prod\\
+Mani \& Plunkett 2007 & paper & 15, 18, 24, 14, 21 & Comp/Prod\\
+Mani \& Plunkett 2010 & paper & 12 & Comp\\
+Mani \& Plunkett 2011 & paper & 23, 17 & None\\
+Mani, Coleman, \& Plunkett (2008) & paper & 18 & Comp/Prod\\
+Ramon-Casas \& Bosch 2010 & paper & 24, 25 & None\\
+Ramon-Casas et al. 2009 & paper & 21, 20 & Prod\\
+Ren \& Morgan, in press & gray paper & 19 & None\\
+Skoruppa et al. 2013 & paper & 24 & None\\
+Swingley (2009) & paper & 17 & Comp/Prod\\
+Swingley (2016) & paper & 27, 28 & Prod\\
+Swingley \& Aslin (2000) & paper & 20 & Comp\\
+Swingley \& Aslin (2002) & paper & 15 & Comp/Prod\\
+Swingley 2003 & paper & 19 & Comp/Prod\\
+Tamasi (2016) & dissertation & 30 & None\\
+Tao \& Qinmei 2013 & paper & 12 & None\\
+Tao et al. 2012 & paper & 16 & Comp\\
+van der Feest \& Fikkert, 2015 & paper & 24, 20 & None\\
+van der Feest \& Johnson, 2016 & paper & 24 & None\\
+Wewalaarachchi et al. 2017 & paper & 24 & None\\
+White \& Aslin (2011) & paper & 18 & None\\
+White \& Morgan (2008) & paper & 18, 19 & None\\
+Zesiger \& Johr 2011 & paper & 14 & None\\
+Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod\\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{center}
+\end{table*}
+\efloatseparator
+ 
