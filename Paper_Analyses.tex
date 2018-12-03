@@ -103,6 +103,12 @@ Bergmann\textsuperscript{3,4}}
 \usepackage{lineno}
 
 \linenumbers
+\usepackage{setspace}
+\AtBeginEnvironment{tabular}{\singlespacing}
+\AtBeginEnvironment{lltable}{\singlespacing}
+\AtBeginEnvironment{tablenotes}{\doublespacing}
+\captionsetup[table]{font={stretch=1.5}}
+\captionsetup[figure]{font={stretch=1.5}}
 
 \authornote{
 
@@ -210,19 +216,6 @@ and Aslin (2000) concluded that already before the second birthday,
 children represent words with sufficient detail to be sensitive to
 mispronunciations.
 
-{[}Christina: changed concepts to mechanisms in the next paragraph,
-because I want to refer to what they represent, but I am not sure it's
-the right term{]}{[}Katie: Karen (Mulak) talks about these terms as
-concepts. Mechanisms to me means some sort of internalization, that they
-would have had this ability all along and just need to apply it. It
-could be that we fundamentally disagree on this, but to me these are
-things that infants discover. Later on we use principles. What about
-\enquote{principles that infants must discover}\ldots{} \enquote{in
-order to form adult-like word representations}? I took away
-\enquote{which are both present in the mature language processing
-system}.{]} {[}Christina: I like principles. This is then good for
-me.{]}
-
 The study of Swingley and Aslin (2000) as well as subsequent studies
 examining mispronunciation sensitivity address two complementary
 principles that infants must discover in early phonological development
@@ -247,7 +240,10 @@ the no-change theory, I've changed around the sentence below to
 explicitly say that only 2 of the 3 are predicted by theoretical
 accounts.{]}{[}Christina: Works for me. I am just thinking what the
 Vihman-style framework says. do you happen to know? I think the Renner
-thesis discusses it.{]}
+thesis discusses it.{]} {[}Katie: I wasn't really familiar with the
+Vihman framework, but looking at Renner's thesis and some of the
+original papers suggests that it really is about production, not
+perception.{]}
 
 In the current study, we focus on infants' developing ability to
 correctly apply the principles of phonological distinctiveness and
@@ -417,77 +413,67 @@ open our meta-analysis up for updates (Tsuji, Bergmann, \& Cristia,
 interactive platform MetaLab (metalab.stanford.edu; Bergmann et al.,
 2018). Since the present paper was written with embedded analysis
 scripts in R {[}@R, @RMarkdown, @papaja{]}, it is always possible to
-re-analyze an updated dataset. In addition, we follow the Preferred
+re-analyze an updated dataset. In addition, we followed the Preferred
 Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA)
 guidelines and make the corresponding information available as
 supplementary materials (Moher, Liberati, Tetzlaff, Altman \&
-PRISMAGroup, 2009). Figure X plots our PRISMA flowchart illustrating the
+PRISMAGroup, 2009). Figure 1 plots our PRISMA flowchart illustrating the
 paper selection procedure.
 
-{[}Figure X. PRISMA Flowchart.{]}
-(figures/PRISMA\_MA\_Mispronunciation.png)
+\subsection{(Insert Figure 2 about
+here)}\label{insert-figure-2-about-here}
+
+\begin{figure}
+\centering
+\includegraphics{figures/PRISMA_MA_Mispronunciation.png}
+\caption{}
+\end{figure}
 
 \subsection{Study Selection}\label{study-selection}
 
-\begin{table}[tbp]
-\begin{center}
-\begin{threeparttable}
-\caption{\label{tab:SummaryTable}Summary of all studies.}
-\begin{tabular}{llll}
+\begin{lltable}
+
+
+\begin{longtable}{lllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:SummaryTable}Summary of all studies.}\\
 \toprule
-Paper & Publication format & Age & Vocabulary\\
+Paper & Publication format & Age & Vocabulary & N Effect Sizes\\
 \midrule
-Altvater-Mackensen (2010) & dissertation & 22, 25 & None\\
-Altvater-Mackensen et al. (2014) & paper & 18, 25 & None\\
-Bailey \& Plunkett (2002) & paper & 18, 24 & Comp\\
-Ballem \& Plunkett (2005) & paper & 14 & None\\
-Bergelson \& Swingley (2017) & paper & 6, 7, 9, 12 & None\\
-Bernier \& White (2017) & proceedings & 21 & None\\
-Delle Luche et al. (2015) & paper & 20, 19 & None\\
-Durrant et al. (2014) & paper & 19, 20 & None\\
-HÃ¸jen et al. (n.d.) & gray paper & 19, 20 & Comp/Prod\\
-HÃ¶hle et al. (2006) & paper & 18 & None\\
-Mani \& Plunkett (2007) & paper & 15, 18, 24, 14, 20 & Comp/Prod\\
-Mani \& Plunkett (2010) & paper & 12 & Comp\\
-Mani \& Plunkett (2011) & paper & 23, 17 & None\\
-Mani, Coleman, \& Plunkett (2008) & paper & 18 & Comp/Prod\\
-Ramon-Casas \& Bosch (2010) & paper & 24, 25 & None\\
-Ramon-Casas et al. (2009) & paper & 21, 20, 43, 44 & Prod\\
-Ren \& Morgan (in press) & gray paper & 19 & None\\
-Renner (2017) & dissertation & 17, 24 & None\\
-Skoruppa et al. (2013) & paper & 23 & None\\
-Swingley \& Aslin (2000) & paper & 20 & Comp\\
-Swingley \& Aslin (2002) & paper & 15 & Comp/Prod\\
-Swingley (2003) & paper & 19 & Comp/Prod\\
-Swingley (2009) & paper & 17 & Comp/Prod\\
-Swingley (2016) & paper & 27, 28 & Prod\\
-Tamasi (2016) & dissertation & 30 & None\\
-Tao \& Qinmei (2013) & paper & 12 & None\\
-Tao et al. (2012) & paper & 16 & Comp\\
-van der Feest \& Fikkert, (2015) & paper & 24, 20 & None\\
-van der Feest \& Johnson (2016) & paper & 24 & None\\
-Wewalaarachchi et al. (2017) & paper & 24 & None\\
-White \& Aslin (2011) & paper & 18 & None\\
-White \& Morgan (2008) & paper & 18, 19 & None\\
-Zesiger \& JÃ¶hr (2011) & paper & 14 & None\\
-Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod\\
+Altvater-Mackensen (2010) & dissertation & 22, 25 & None & 13\\
+Altvater-Mackensen et al. (2014) & paper & 18, 25 & None & 16\\
+Bailey \& Plunkett (2002) & paper & 18, 24 & Comp & 12\\
+Bergelson \& Swingley (2017) & paper & 6, 7, 9, 12 & None & 9\\
+Bernier \& White (2017) & proceedings & 21 & None & 4\\
+Delle Luche et al. (2015) & paper & 20, 19 & None & 4\\
+Durrant et al. (2014) & paper & 19, 20 & None & 4\\
+Höhle et al. (2006) & paper & 18 & None & 4\\
+Højen et al. (n.d.) & gray paper & 19, 20 & Comp/Prod & 6\\
+Mani \& Plunkett (2007) & paper & 15, 18, 24, 14, 20 & Comp/Prod & 14\\
+Mani \& Plunkett (2010) & paper & 12 & Comp & 8\\
+Mani \& Plunkett (2011) & paper & 23, 17 & None & 15\\
+Mani, Coleman, \& Plunkett (2008) & paper & 18 & Comp/Prod & 4\\
+Ramon-Casas \& Bosch (2010) & paper & 24, 25 & None & 4\\
+Ramon-Casas et al. (2009) & paper & 21, 20, 43, 44 & Prod & 14\\
+Ren \& Morgan (in press) & gray paper & 19 & None & 8\\
+Skoruppa et al. (2013) & paper & 23 & None & 4\\
+Swingley (2003) & paper & 19 & Comp/Prod & 6\\
+Swingley (2009) & paper & 17 & Comp/Prod & 4\\
+Swingley (2016) & paper & 27, 28 & Prod & 9\\
+Swingley \& Aslin (2000) & paper & 20 & Comp & 2\\
+Swingley \& Aslin (2002) & paper & 15 & Comp/Prod & 4\\
+Tamasi (2016) & dissertation & 30 & None & 4\\
+Tao \& Qinmei (2013) & paper & 12 & None & 4\\
+Tao et al. (2012) & paper & 16 & Comp & 6\\
+van der Feest \& Fikkert, (2015) & paper & 24, 20 & None & 16\\
+van der Feest \& Johnson (2016) & paper & 24 & None & 24\\
+Wewalaarachchi et al. (2017) & paper & 24 & None & 8\\
+White \& Aslin (2011) & paper & 18 & None & 4\\
+White \& Morgan (2008) & paper & 18, 19 & None & 12\\
+Zesiger \& Jöhr (2011) & paper & 14 & None & 8\\
+Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod & 6\\
 \bottomrule
-\end{tabular}
-\end{threeparttable}
-\end{center}
-\end{table}
-
-{[}Christina{]} I've shortened the labels and wanted to try out
-apa\_table {[}Katie{]} I like the idea, but does it work for you? It
-doesn't work for me\ldots{} {[}Katie{]} We have it currently set at less
-than 31 months, not 36, so I've changed below.
-
-{[}Christina: OK to age. Apa table works for me, weird. It should come
-with papaja. Might be related to the issues you have wrt to citations?
-{]}{[}Christina: Suggestions re: table. Add N effect sizes? you cna do
-it with summarise(number\_ES = n()) I think{]} {[}Christina: Btw, I
-think I've corrected short\_cite in the online spreadsheet, so the table
-should be fine now.{]}
+\end{longtable}
+\end{lltable}
 
 We first generated a list of potentially relevant items to be included
 in our meta-analysis by creating an expert list. This process yielded
@@ -501,21 +487,24 @@ examined familiar word recognition and mispronunciations; (3) infants
 studied were under 31-months-of-age and typically developing; (4) the
 dependent variable was derived from proportion of looks to a target
 image versus a distractor in a eye movement experiment; (5) the stimuli
-were auditory speech. The final sample (n = \emph{34}) consisted of 28
-journal articles, 1 proceedings paper, 3 thesis, and 2 unpublished
+were auditory speech. The final sample (n = \emph{32}) consisted of 27
+journal articles, 1 proceedings paper, 2 thesis, and 2 unpublished
 reports. We will refer to these items collectively as papers. Table 1
-(Summary Table) provides an overview of all papers included in the
-present meta-analysis.
+provides an overview of all papers included in the present
+meta-analysis.
+
+\subsection{(Insert Table 1 about
+here)}\label{insert-table-1-about-here}
 
 \subsection{Data Entry}\label{data-entry}
 
-The 34 papers we identified as relevant were then coded with as much
+The 32 papers we identified as relevant were then coded with as much
 consistently reported detail as possible (Tsuji, Bergmann, \& Cristia,
 2014; Bergmann et al., 2018). For each experiment (note that a paper
 typically has multiple experiments), we entered variables describing the
 publication, population, experiment design and stimuli, and results. For
-the analyses presented in this section, we focus on the following
-characteristics:
+the planned analyses to evaluate the development of mispronunciation
+sensitivity, we focus on the following characteristics:
 
 1 Condition: Were words mispronounced or not;\\
 2 Mean age reported per group of infants, in days;\\
@@ -533,41 +522,37 @@ fact that the same infants contributed data to multiple rows (minimally
 those containing information on correct and mispronounced trials) leads
 to shared variance across effect sizes, which we account for in our
 analyses (see next section). We will call each row a record; in total
-there were 271 records in our data.
+there were 260 records in our data.
 
 \subsection{Data analysis}\label{data-analysis}
 
 {[}Christina: I needed to move this around because we first need to say
 that we could not compute some effect sizes and removed outlierts.{]}
 
-We report effect sizes for infants' looks to target pictures after
+Effect sizes are reported for infants' looks to target pictures after
 hearing a correctly pronounced or a mispronounced label (object
 identification) as well as the difference between effect sizes for
 correct and mispronounced trials (i.e.~mispronunciation sensitivity).
-The effect size we report in the present paper are based on comparison
-of means, standardized by their variance. The most well-known effect
-size from this group is Cohen's \emph{d} {[}@cohen{]}. To correct for
-the small sample sizes common in infant research, however, we use as a
+The effect size reported in the present paper is based on comparison of
+means, standardized by their variance. The most well-known effect size
+from this group is Cohen's \emph{d} {[}@cohen{]}. To correct for the
+small sample sizes common in infant research, however, we used as a
 dependent variable Hedges' \emph{g} instead of Cohen's \emph{d} (Hedges,
 1981; Morris, 2000).
 
-{[}Christina{]} These numbers seem wrong! Again, how about (xx effect
-sizes from yy papers)? {[}Katie{]} Well, they are kind of wrong :) Two
-papers report both for different experimental conditions. I've given the
-explanation now, not sure if that is good enough, but I'm really not
-sure how to say it a different way. {[}Katie{]} Do you want number of
-records and papers for the imputed correlations as well? You've put a
--1, assuming there was something wrong with one of the papers or
-something like that? How does that shake out for number of records?
-{[}Christina: No clue what the -1 was, sorry.{]}
+{[}Katie{]} Do you want number of records and papers for the imputed
+correlations as well? You've put a -1, assuming there was something
+wrong with one of the papers or something like that? How does that shake
+out for number of records? {[}Christina: No clue what the -1 was,
+sorry.{]}
 
-We calculate Hedges' \emph{g} using the raw means and standard
+We calculated Hedges' \emph{g} using the raw means and standard
 deviations reported in the paper (\emph{n} = 186 records from 26 papers)
 or using reported t-values (\emph{n} = 74 records from 9 papers). Two
 papers reported raw means and standard deviations for some experimental
 conditions and just t-values for the remaining experimental conditions
 (Swingley, 2016; Altvater-Mackensen et al., 2014). Raw means and
-standard deviations were extracted from figures for 4 papers. In a
+standard deviations were extracted from figures for 3 papers. In a
 within-participation design, when two means are compared (i.e.~looking
 during pre- and post-naming) it is necessary to obtain correlations
 between the two measurements at the participant level to calculate
@@ -596,7 +581,9 @@ effects can stem from the same infants.
 
 {[}Christina: In the above 2 paragraphs I got confused, should it be
 present or past. I think it switched in the las tparagraph so I started
-to adapt, but I think it would be best for you to decide. {]}
+to adapt, but I think it would be best for you to decide. {]}{[}Katie:
+Good catch. I've gone through the Methods section and changed everything
+to past, per APA guidelines.{]}
 
 Mispronunciation sensitivity studies typically examine infants'
 proportion of target looks (PTL) in comparison to some baseline
@@ -627,11 +614,11 @@ publish null results. As a result, significant results tend to be
 over-reported and thus might be over-represented in our meta-analyses
 (see Ferguson \& Heene, 2012). To examine whether this is also the case
 in the mispronunciation sensitivity literature, which would bias the
-data analyzed in this meta-analysis, we conduct two tests. We first
-examine whether effect sizes are distributed as expected based on
+data analyzed in this meta-analysis, we conducted two tests. We first
+examined whether effect sizes are distributed as expected based on
 sampling error using the rank correlation test of funnel plot asymmetry
 with the R {[}@R{]} package metafor {[}@metafor{]}. Effect sizes with
-low variance are expected to fall closer to the estimated mean, while
+low variance were expected to fall closer to the estimated mean, while
 effect sizes with high variance should show an increased,
 evenly-distributed spread around the estimated mean. Publication bias
 would lead to an uneven spread.
@@ -642,13 +629,13 @@ tests for evidential value by examining whether the p-values follow the
 expected distribution of a right skew in case the alternative hypothesis
 is true, versus a flat distribution that speaks for no effect being
 present in the population and all observed significant effects being
-spurious. Responses to correctly pronounced and mispronounced labels are
-predicted to show different patterns of looking behavior. In other
+spurious. Responses to correctly pronounced and mispronounced labels
+were predicted to show different patterns of looking behavior. In other
 words, there is an expectation that infants should look to the target
 when hearing a correct pronunciation, but studies vary in their report
 of significant looks to the target when hearing a mispronounced label
 (i.e.~there might be no effect present in the population, see e.g., );
-as a result, we conduct these two analyses to assess publication bias
+as a result, we conducted these two analyses to assess publication bias
 separately for both conditions.
 
 \subsection{Meta-analysis}\label{meta-analysis}
@@ -657,19 +644,17 @@ The models reported here are hierarchical random-effects models (infant
 groups nested within papers) of variance-weighted effect sizes, which we
 computed with the R {[}@R{]} package metafor {[}@metafor{]}. To
 investigate how development impacts mispronunciation sensitivity, our
-core theoretical question, we introduce age (centered; continuous and
+core theoretical question, we introduced age (centered; continuous and
 measured in days but transformed into months for ease of interpreting
 estimates by dividing by 30.44) as a moderator to our main model. For a
 subsequent exploratory investigations of experimental characteristics,
-we introduce each characteristic as a moderator (more detail below).
+we introduced each characteristic as a moderator (more detail below).
 
 \section{Results}\label{results}
 
 \subsection{Publication Bias}\label{publication-bias-1}
 
-{[}Chrisitna: If you add prisma, then this is figure 2{]}
-
-Figure 1 shows the funnel plots for both correct pronunciations and
+Figure 2 shows the funnel plots for both correct pronunciations and
 mispronunciations (code adapted from Sakaluk, 2016). Funnel plot
 assymmetry was significant for both correct pronunciations (Kendall's
 \(\tau\) = 0.53, \emph{p} \textless{} .001) and mispronunciations
@@ -691,17 +676,16 @@ even though as a population infants would reliably show the expected
 object identification effect.
 
 We should also point out that funnel plot asymmetry can be caused by
-multiple factors beside publication bias. The funnel plot asymmetry may
-also reflect heterogeneity in the data. There are various possible
-sources of heterogeneity, which our subsequent moderator analyses will
-begin to address. Nonetheless, we will remain cautious in our
-interpretation of our findings and hope that an open dataset that can be
-expanded by the community will attract previously unpublished null
-results so we can better understand infants' developing mispronunciation
-sensitivity.
+multiple factors beside publication bias, such as heterogeneity in the
+data. There are various possible sources of heterogeneity, which our
+subsequent moderator analyses will begin to address. Nonetheless, we
+will remain cautious in our interpretation of our findings and hope that
+an open dataset which can be expanded by the community will attract
+previously unpublished null results so we can better understand infants'
+developing mispronunciation sensitivity.
 
-\subsection{(Insert Figure 1 about
-here)}\label{insert-figure-1-about-here}
+\subsection{(Insert Figure 2 about
+here)}\label{insert-figure-2-about-here-1}
 
 \begin{verbatim}
 ## pdf 
@@ -762,10 +746,10 @@ results might not be published despite the fact that they should occur
 regularly even in well-powered studies. Although the effect size Hedges'
 \emph{g} may be overestimated for object identification in response to
 correctly pronounced words, the p-curve results and a CI lower bound of
-0.67 which is substantially above zero suggests that this result should
-be robust even when correcting for publication bias. In other words, we
-are confident that the true population mean lies above zero for object
-recognition of correctly pronounced words.
+0.67, which is substantially above zero, together suggest that this
+result is somewhat robust. In other words, we are confident that the
+true population mean lies above zero for object recognition of correctly
+pronounced words.
 
 We then calculated the meta-analytic effect for object identification in
 response to mispronounced words. In this case, the variance-weighted
@@ -782,11 +766,6 @@ indicated evidential value, we are confident in the overall patterns,
 namely that infants fixate the target even after hearing a mispronounced
 label.
 
-{[}Christina{]} I am not sure about the placement of this paragraph
-because the next section cannot explain this heterogeneity, so maybe we
-should move it down to the beginning of the age part? {[}Katie{]} I
-think that makes sense, moving it!
-
 \subsubsection{Mispronunciation Sensitivity Meta-analytic
 Effect}\label{mispronunciation-sensitivity-meta-analytic-effect}
 
@@ -795,7 +774,7 @@ correctly pronounced words separately. To evaluate mispronunciation
 sensitivity, we compared the effect size Hedges' \emph{g} for correct
 pronunciations with mispronunciations directly. To this end, we combined
 the two datasets. The moderator test was significant, QM(1) = 215.761,
-\emph{p}\textless{} .001. The estimate for mispronunciation sensitivity
+\emph{p} \textless{} .001. The estimate for mispronunciation sensitivity
 was 0.495 (SE = 0.034), and infants' looking times across conditions
 were significantly different (CI {[}0.429, 0.561{]}, \emph{p}
 \textless{} .001). This confirms that although infants fixate the
@@ -827,42 +806,37 @@ To evaluate the different predictions we laid out in the introduction
 for how mispronunciation sensitivity will change as infants develop, we
 next added the moderator age (centered; continuous and measured in days
 but transformed into months for ease of interpreting estimates by
-dividing by 30.44 for Figure 2). {[}Christina{]} What about the whole
-months thing? {[}Katie{]} We had an explanation in the methods section
-for this, I've now added it again here.
+dividing by 30.44 for Figure 3).
 
 In the first analyses, we investigate the impact of age separately on
 conditions where words were either pronounced correctly or not. Age did
 not significantly modulate object identification in response to
-correctly pronounced (QM(1) = 0.678, \emph{p}= 0.41) or mispronounced
-words (QM(1) = 1.715, \emph{p}= 0.19). The lack of a significant
+correctly pronounced (QM(1) = 0.678, \emph{p} = 0.41) or mispronounced
+words (QM(1) = 1.715, \emph{p} = 0.19). The lack of a significant
 modulation together with the small estimates (correct: \(\beta\) =
-0.015, SE = 0.018, 95\% CI{[}-0.02, 0.049{]}, \emph{p}= 0.41;
+0.015, SE = 0.018, 95\% CI{[}-0.02, 0.049{]}, \emph{p} = 0.41;
 mispronunciation: \(\beta\) = 0.015, SE = 0.011, 95\% CI{[}-0.007,
-0.037{]}, \emph{p}= 0.19) indicates that there was no relationship
+0.037{]}, \emph{p} = 0.19) indicates that there was no relationship
 between age and target looks in response to a correctly pronounced or
 mispronounced label. We plot both object recognition and
-mispronunciation sensitivity as a function of age in Figure 2.
-
-{[}Christina{]} OK there is a mismatch between what you write and the
-numbers, can you verify? {[}Katie{]} Good catch. For some reason, it was
-just copying over the moderator test from mispronunciation sensitivity,
-even though I was calling for the age moderator analysis. There is no
-significant moderator test, but it was just pasting the same one again
-and again. I've fixed my code, so it should be correct now!
+mispronunciation sensitivity as a function of age in Figure 3.
 
 We then examined the interaction between age and mispronunciation
 sensitivity (correct vs.~mispronounced words) in our whole dataset. The
-moderator test was significant (QM(3) = 218.621, \emph{p}\textless{}
+moderator test was significant (QM(3) = 218.621, \emph{p} \textless{}
 .001). The interaction between age and mispronunciation sensitivity,
 however, was not significant (\(\beta\) = 0.003, SE = 0.008, 95\%
-CI{[}-0.012, 0.018{]}, \emph{p}= 0.731), pointing to the moderator test
-being driven by the difference between conditions. The small estimate,
-as well as inspection of Figure 2 suggests that as infants age, their
+CI{[}-0.012, 0.018{]}, \emph{p} = 0.731); the moderator test was mainly
+driven by the difference between conditions. The small estimate, as well
+as inspection of Figure 2 suggests that as infants age, their
 mispronunciation sensitivity remains the same.
 
-\subsection{(Insert Figure 2 about
-here)}\label{insert-figure-2-about-here}
+\subsection{(Insert Figure 3 about
+here)}\label{insert-figure-3-about-here}
+
+{[}Christina{]} Can you try and align the axes for both plots?
+{[}Katie{]} I can, but then the dotted line doesn't extend the full way
+(which I think is quite ugly). Not sure how to fix that.
 
 \begin{verbatim}
 ## pdf 
@@ -885,40 +859,31 @@ correct pronunciations and mispronunciations (comprehension = 11 papers
 and 39 records; production = 3 papers and 20 records). There is reason
 to believe that production data are different from comprehension data
 (the former being easier to estimate for parents in the typical
-questionnaire-based assessment; Kidd citation), and we therefore planned
-to analyze these two types of vocabulary measurement separately.
-However, only 3 papers reported correlations with productive vocabulary
-scores, limiting the conclusions that can be drawn. In our vocabulary
-analysis, we therefore focus exclusively on the relationship between
-comprehension and mispronunciation sensitivity.
+questionnaire-based assessment; Tomasello \& Mervis, 1994), and we
+therefore planned to analyze these two types of vocabulary measurement
+separately. However, because only 3 papers reported correlations with
+productive vocabulary scores, only limited conclusions that can be
+drawn. In our vocabulary analysis, we therefore focus exclusively on the
+relationship between comprehension and mispronunciation sensitivity.
 
-{[}Christina{]} Removed the previous comment chaos. So can you not only
-list papers but also n conditions above? With just 1 paper for
-production, I wouldn't analyze it to be honest. it's just not enough
-data. I also liked your comments about the time line of this whole
-thing, can you extract the years of papers which report this? Might be
-extremely useful in the discussion and strengthens our case that there
-is no effect, bc people don't find the predicted relation with vocab.
-Also, cann you add a citation for comp vs prod? I think Evan Kidd had a
-paper on it, if you don't have one handy, I can look it up. {[}Katie{]}
-I couldn't find what you are referring to. Could you add the Evan Kidd
-paper? Also, I added a histogram figure below, but I'm not so very sure
-that it is good enough to add to the paper (its under the heading
-\enquote{Potential Vocabulary Figure}). Let me know what you think.
+{[}Katie: Tomasello reference -
+\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1540-5834.1994.tb00186.x}{]}
 
 We first considered the relationship between vocabulary and object
 recognition for correct pronunciations. Higher comprehension scores were
 associated with greater object recognition in response to correct
 pronunciations for 9 of 10 experimental conditions, with correlation
 values ranging from -0.16 to 0.48. The mean effect size Pearson's
-\emph{r} of 0.14 was small and did not differ significantly from zero
-(CI {[}0.03; 0.25{]} \emph{p} = 0.012). However, the lower bound of the
-CI is close to zero, and one might hypothesize that with more power the
-small relationship might become significant. At the same time, a larger
-sample might confirm our conclusion that there is no relationship. As a
-result, we can not draw firm conclusions about the relationship between
-comprehension scores and object recognition in response to correct
-pronunciations.
+\emph{r} of 0.14 was small but did differ significantly from zero (CI
+{[}0.03; 0.25{]} \emph{p} = 0.012). However, the lower bound of the CI
+is close to zero and considering the small sample size, one might
+hypothesize that with more power the small relationship might become
+even larger. As a result, we can draw a tentative conclusion that there
+is a positive relationship between comprehension scores and object
+recognition in response to correct pronunciations.
+
+{[}Christina{]} It's significant now! {[}Katie{]} Must be because you
+removed the outliers. I've changed around the wording :)
 
 We next considered the relationship between vocabulary and object
 recognition for mispronunciations. Higher comprehension scores were
@@ -926,16 +891,25 @@ associated with greater object recognition in response to correct
 pronunciations for 17 of 29 experimental conditions, with correlation
 values ranging from -0.35 to 0.57. The mean effect size Pearson's
 \emph{r} of 0.05 was small and did not differ significantly from zero
-(CI {[}-0.01; 0.12{]} \emph{p} = 0.119). Similar to the relationship
-between comprehension scores and correct pronunciation object
-identification, the small correlations and large variances suggest a
-lack of relationship between vocabulary and object recognition for
-mispronunciations. We again emphasize that we cannot draw firm
-conclusions due to the small number of studies we were able to include
-here.
+(CI {[}-0.01; 0.12{]} \emph{p} = 0.119). The small correlation and large
+variances suggest a lack of relationship between vocabulary and object
+recognition for mispronunciations. We again emphasize that we cannot
+draw a firm conclusion due to the small number of studies we were able
+to include here.
 
-\subsection{Potential Vocabulary
-Figure}\label{potential-vocabulary-figure}
+Figure 4 plots the year of publication for all the mispronunciation
+sensitivity studies included in this meta-analysis. This figure
+illustrates two things: the growing number of mispronunciation
+sensitivity studies and the waning number of studies measuring
+vocabulary. The lack of evidence for a relationship between
+mispronunciation sensitivity and vocabulary size in early studies may
+have contributed to increasingly fewer researchers including vocabulary
+measurements in their mispronunciation sensitivity experimental design.
+This may explain our underpowered analysis of the relationship between
+mispronunciation sensitivity and vocabulary size.
+
+\subsection{(Insert Figure 4 about
+here)}\label{insert-figure-4-about-here}
 
 \begin{figure}
 \centering
@@ -954,20 +928,22 @@ The main goal of this paper was to assess mispronunciation sensitivity
 and its maturation with age. The results seem clear: Although infants
 consider a mispronunciation as a better match with the target image than
 a distractor image, there was a consistent effect of mispronunciation
-sensitivity. This did not change with development. Of the 3 predictions
-and assumptions about the development of infants' sensitivity to
-mispronunciations discussed in the Introduction, the present results
-lend some support for the argument that mispronunciation sensitivity
-stays consistent as infants develop. This runs counter to existing
-theories of phono-lexical development, which predict either an increase
-(PRIMR ref) or decrease (Assim Model ref) in mispronunciation
-sensitivity. Furthermore, counter to the predictions for the PRIMR
-(PRIMR ref) and Assimilation(Assim ref) models, we found no relationship
-between vocabulary and target looking for correct pronunciations or
-mispronunciations, although our analyses may be underpowered. In sum, it
+sensitivity. This did not change with development nor with vocabulary
+size. Of the 3 predictions and assumptions about the development of
+infants' sensitivity to mispronunciations discussed in the Introduction,
+the present results lend some support for the argument that
+mispronunciation sensitivity stays consistent as infants develop. This
+runs counter to existing theories of phono-lexical development, which
+predict either an increase (PRIMR ref) or decrease (Assim Model ref) in
+mispronunciation sensitivity. Furthermore, although we found a
+relationship between vocabulary comprehension and target looking for
+correct pronunciations, we found no relationship between vocabulary and
+target looking for mispronunciations. This also runs counter to the
+predictions for the PRIMR (PRIMR ref) and Assimilation (Assim ref)
+models, but may be due to our analyses being underpowered. In sum, it
 seems that current theories of infants' phono-lexical development cannot
-fully capture our results and should be reconsidered with all the
-evidence in mind.
+fully capture our results, but that more investigation is needed to draw
+a firm conclusion.
 
 Alternatively, an effect of maturation might have been masked by other
 factors we have not yet captured in our analyses. A strong candidate
@@ -994,24 +970,6 @@ our understanding of mispronunciation sensitivity development.
 
 \subsection{Exploratory Analyses}\label{exploratory-analyses}
 
-{[}Christina{]} This section talked about several variables in 2
-categories, but in reality there are only 2 variables, right? I am not
-100\% sure about total trial length as being the first or being
-mentioned at all, might it be better to focus on time window analyzed
-and then say \enquote{Oh, btw, total trial length totally does nothing
-so we don't have to discuss it further} I am not sure, so feel free to
-re-rewrite this, but now it better lines up with everything before
-because trial length kinda comes out of nowhere. {[}Katie{]} That's
-fair! I think we don't need the full analysis for total time presented,
-but I'd like to still mention all of them because it really shows that
-its something about this post-naming time window choice that influences
-it, and not just fishing around for variability until we find something
-that works. In the end there are 2 interesting analyses, but offset
-could have been interesting (but wasn't). Therefore, I'd still like to
-refer to the timing variables as a type of category. Otherwise, we say
-we'll do size of time window analyzed, but then we have information
-about other timing stuff as well.
-
 We identified two sets of variables which had the potential to vary
 across papers to assess the influence of data analysis choices on
 resulting effect size: timing (size of time window analyzed; offset
@@ -1026,15 +984,6 @@ moderator.
 
 \subsubsection{Timing}\label{timing}
 
-{[}Christina{]} Is there a reason you choose mode and not median?
-{[}Katie{]} Hmm, I felt like mode would be interesting, because it gives
-the most popular choice (74 experimental conditions). But, the median is
-only 500 ms less, so we could use that too (9 experimental conditions).
-
-{[}Christina{]} Would it make sense to present dependent variable first?
-{[}Katie{]} I don't have a strong opinion on this. If you think it would
-be better, then I can change it.
-
 In a typical trial in a mispronunciation sensitivity study, the
 target-distractor image pairs are first presented in silence, followed
 by auditory presentation of a carrier phrase or isolated presentation of
@@ -1048,13 +997,14 @@ we must first consider overall length of time post-naming, because it
 limits the overall time window available to analyze and might thus
 predict which time window was analyzed. Across papers, actual
 post-naming phase length varied from 2000 to 9000 ms, with a median
-value of 3500 ms. There was an inverse relationship between infant age
-and actual post-naming phase length, such that younger infants were
-presented with longer a longer post-naming phase, although this
-correlation was not significant (\emph{r} = 0.01, \emph{p} = 0.882).
-Presumably, younger infants may be exposed to longer trials because
-their word recognition abilities are expected to be slower than older
-infants (Fernald et al., 1998).
+value of 3500 ms. We note that the most popular actual post-naming phase
+length was 4000 ms, used in \emph{n} = 74 experimental conditions. There
+was an inverse relationship between infant age and actual post-naming
+phase length, such that younger infants were presented with longer a
+longer post-naming phase, although this correlation was not significant
+(\emph{r} = 0.01, \emph{p} = 0.882). Presumably, younger infants may be
+exposed to longer trials because their word recognition abilities are
+expected to be slower than older infants (Fernald et al., 1998).
 
 Unlike the actual post-naming phase length, the size of the post-naming
 time window analyzed can be chosen after the experimental data is
@@ -1064,30 +1014,19 @@ in the actual experiment (124), while the other half were analyzed using
 a shorter length of post-naming phase, excluding later portions of the
 post-naming phase (127). Across papers, the length of the post-naming
 phase analyzed varied from 1510 to 4000 ms, with a median value of 2500
-ms. Similar to actual post-naming phase length, there was an inverse
-relationship between infant age and the size of the post-naming time
-window analyzed, such that younger infants' looking times were analyzed
-using a longer post-naming time window, here the relationship was
-significant (\emph{r} = -0.23, \emph{p} \textless{} .001). Again, the
-choice to analyze a shorter post-naming time window is likely related to
-evidence that speed of processing is slower in younger infants (Fernald
-et al., 1998). To summarize, we observe variation in time-related
-aspects related to infants' age. This variation is most pronounced, and
-even significant, for the time window that is being analyzed after the
-target label has been heard.
-
-{[}Christina{]} The canfield \& haith paper is for visual stimuli,
-right? So add that before \enquote{stimulus}. And then add to the next
-sentence that the longer latnecies are because ther eis addiitonal
-language processing required which EEg shows in adults to take X ms (400
-for N400?). {[}Katie{]} I agree with the reasoning, but I don't think
-referring to adult ERP literature is the way to go. I've rewritten these
-sentences to be more faithful to the misp sensitivity literature.
-
-{[}Christina{]} Can you add info how many papers did not report the
-analyzed variables? Across this whole section, I mean. {[}Katie{]} All
-papers reported the actual post-naming phase length and the size of the
-post-naming time window analyzed.
+ms. We note that the most popular actual post-naming phase length was
+2000 ms, used in \emph{n} = 97 experimental conditions. Similar to
+actual post-naming phase length, there was an inverse relationship
+between infant age and the size of the post-naming time window analyzed,
+such that younger infants' looking times were analyzed using a longer
+post-naming time window, here the relationship was significant (\emph{r}
+= -0.23, \emph{p} \textless{} .001). Again, the choice to analyze a
+shorter post-naming time window is likely related to evidence that speed
+of processing is slower in younger infants (Fernald et al., 1998). To
+summarize, we observe variation in time-related aspects related to
+infants' age. This variation is most pronounced, and even significant,
+for the time window that is being analyzed after the target label has
+been heard.
 
 Another potential source of variation in studies that analyze
 eye-movements is the amount of time it takes for an eye movement to be
@@ -1125,27 +1064,20 @@ mispronunciations.
 \paragraph{Size of post-naming time window
 analyzed}\label{size-of-post-naming-time-window-analyzed}
 
-{[}Christina{]} I think it's a bit inconsistent whether it's post naming
-phase or window, how about window? Phase sounds wrong to me. or analysis
-window? I also find phase size odd, and again prefer window (window
-size). Your call though. {[}Katie{]} I agree and I've updated it to
-refer to window size when talking about the analyzed portion and to
-phase when refering to it as the entire actual presentation time.
-
 We first assessed whether size of the post-naming time window analyzed
 had an impact on the overall size of the reported mispronunciation
 sensitivity. We considered data from both conditions in a joint analysis
 and included condition (correct pronunciation, mispronunciation) as an
 additional moderator. The moderator test was significant, QM(3) =
-236.958, \emph{p}\textless{} .001. The estimate for the interaction
+236.958, \emph{p} \textless{} .001. The estimate for the interaction
 between post-naming phase size and condition was small but significant
-\(\beta\) = -0.262, SE = 0.059, 95\% CI{[}-0.377, -0.148{]},
-\emph{p}\textless{} .001. This relationship is plotted in Figure 3a. The
-results suggest that the size of the post-naming phase analyzed
-significantly impacted mispronunciation sensitivity. Specifically, the
-difference between target fixations for correctly pronounced and
-mispronounced items (mispronunciation sensitivity) was significantly
-greater when the post-naming phase that was shorter in length.
+\(\beta\) = -0.262, SE = 0.059, 95\% CI{[}-0.377, -0.148{]}, \emph{p}
+\textless{} .001. This relationship is plotted in Figure 3a. The results
+suggest that the size of the post-naming phase analyzed significantly
+impacted mispronunciation sensitivity. Specifically, the difference
+between target fixations for correctly pronounced and mispronounced
+items (mispronunciation sensitivity) was significantly greater when the
+post-naming phase that was shorter in length.
 
 Considering that we also found a relationship between the length of the
 post-naming time window analyzed and infant age, such that younger ages
@@ -1154,10 +1086,10 @@ post-naming time window analyzed modulated the development of
 mispronunciation sensitivity. We merged the two datasets and included
 condition (correct pronunciation, mispronunciation) as well as age as
 additional moderators. The moderator test was significant QM(7) =
-247.322, \emph{p}\textless{} .001. The estimate for the
+247.322, \emph{p} \textless{} .001. The estimate for the
 three-way-interaction between condition, size of post-naming phase, and
 age was small, but significant (\(\beta\) = = -0.04, SE = 0.014, 95\%
-CI{[}-0.068, -0.012{]}, \emph{p}= 0.006. As can be seen in Figure 3b,
+CI{[}-0.068, -0.012{]}, \emph{p} = 0.006. As can be seen in Figure 3b,
 smaller post-naming time window size leads to greater increases in
 mispronunciation sensitivity with development. For example, when
 experimental conditions were analyzed with a post-naming time window of
@@ -1172,8 +1104,8 @@ changes with development. These results suggest that conclusions about
 the relationship between infant age and mispronunciation sensitivity may
 be mediated by the size of the post-naming time window analyzed.
 
-\subsection{(Insert Figure 3 about
-here)}\label{insert-figure-3-about-here}
+\subsection{(Insert Figure 5 about
+here)}\label{insert-figure-5-about-here}
 
 \begin{verbatim}
 ## pdf 
@@ -1189,31 +1121,24 @@ here)}\label{insert-figure-3-about-here}
 \paragraph{Offset time after target
 naming}\label{offset-time-after-target-naming}
 
-{[}Christina{]} Generally, it might be easier to kick out all object
-recognition analyses (what do they tell us?) and start out that we only
-analyze MP sensitivity, i.e.~consider the whole dataset and always
-include condition as moderator. {[}Katie{]} Agreed! I've gotten rid of
-all of the object recognition analyses and added an explanation at the
-beginning of the Exploratory Analysis section.
-
 We next assessed whether the time between the target was named and the
 start of the analysis, namely offset time, had an impact on the size of
 the reported mispronunciation sensitivity. When we included both
 condition and offset time as moderators, the moderator test was
-significant, QM(3) = 236.958, \emph{p}\textless{} .001, but the estimate
-for the interaction between offset time and condition was almost zero
-\(\beta\) = 0, SE = 0, 95\% CI{[}-0.001, 0{]}, \emph{p}= 0.505. Although
-we found no relationship between offset time and infant age, we also
-examined whether the size of offset time modulated the development of
-mispronunciation sensitivity. When both offset time and condition were
-included as moderators, the moderator test was significant QM(7) =
-200.867, \emph{p}\textless{} .001, but the three-way-interaction between
-condition, offset time, and age was very small and not significant
-(\(\beta\) = = 0, SE = 0, 95\% CI{[}0, 0{]}, \emph{p}= 0.605. Taken
-together, these results suggest that offset time does not modulate
-mispronunciation sensitivity. There is no relationship between offset
-time and age, and we find no influence of offset time on the development
-of mispronunciation sensitivity.
+significant, QM(3) = 236.958, \emph{p} \textless{} .001, but the
+estimate for the interaction between offset time and condition was
+almost zero \(\beta\) = 0, SE = 0, 95\% CI{[}-0.001, 0{]}, \emph{p} =
+0.505. Although we found no relationship between offset time and infant
+age, we also examined whether the size of offset time modulated the
+development of mispronunciation sensitivity. When both offset time and
+condition were included as moderators, the moderator test was
+significant QM(7) = 200.867, \emph{p} \textless{} .001, but the
+three-way-interaction between condition, offset time, and age was very
+small and not significant (\(\beta\) = = 0, SE = 0, 95\% CI{[}0, 0{]},
+\emph{p} = 0.605. Taken together, these results suggest that offset time
+does not modulate mispronunciation sensitivity. There is no relationship
+between offset time and age, and we find no influence of offset time on
+the development of mispronunciation sensitivity.
 
 \subsubsection{Dependent variable-related
 analyses}\label{dependent-variable-related-analyses}
@@ -1239,22 +1164,13 @@ Another dependent variable, which was used in 69 experimental
 conditions, directly compared the post- and pre-naming PTL scores with
 one another. This requires two values, one for the pre-naming phase and
 one for the post-naming phase. A greater post compared to pre-naming
-phase PTL indicates that increased their target looks after hearing the
-naming label. We will refer to this dependent variable as Pre vs.~Post.
-Finally, the remaining 53 experimental conditions compared the
-post-naming PTL score with a chance value of 50\%. Here, the infants'
-pre-naming phase preferences are not considered and instead target
-fixations are evaluated based on the likelihood to fixate one of two
-pictures. We will refer to this dependent variable as Post.
-
-{[}Christina{]} Did I ask the following already: Do we know whether
-subtrations were on the trial level? Pre vs post is a bit differnt
-because it loses the individual bias accommodation and the correlation
-between pre and post on the participant / item level. {[}Katie{]} You
-did. I'll put here my answer from before: From working with Nivi, we did
-it participants x condition or participants x trial (but mostly the
-former). But, this is not something we reported in papers. I don't think
-I read it at all when putting together the dataset for this either.
+phase PTL indicates that infants increased their target looks after
+hearing the naming label. We will refer to this dependent variable as
+Pre vs.~Post. Finally, the remaining 53 experimental conditions compared
+the post-naming PTL score with a chance value of 50\%. Here, the
+infants' pre-naming phase preferences are not considered and instead
+target fixations are evaluated based on the likelihood to fixate one of
+two pictures. We will refer to this dependent variable as Post.
 
 The Difference Score and Pre vs.~Post can be considered similar to one
 another, in that they are calculated on the same type of data and
@@ -1273,13 +1189,13 @@ both Difference Score and Pre vs.~Post dependent variables.
 We first assessed whether the choice of dependent variable had an impact
 on the size of mispronunciation sensitivity. When we included both
 condition and dependent variable as moderators, the moderator test was
-significant QM(5) = 259.817, \emph{p}\textless{} .001. The estimate for
+significant QM(5) = 259.817, \emph{p} \textless{} .001. The estimate for
 the interaction between Pre vs.~Post and condition was significantly
 smaller than that of the Post dependent variable (\(\beta\) = -0.392, SE
-= 0.101, 95\% CI{[}-0.59, -0.194{]}, \emph{p}\textless{} .001), but the
+= 0.101, 95\% CI{[}-0.59, -0.194{]}, \emph{p} \textless{} .001), but the
 difference between the Difference Score and Post in the interaction with
 condition was small and not significant (\(\beta\) = -0.01, SE = 0.098,
-95\% CI{[}-0.203, 0.183{]}, \emph{p}= 0.916). This relationship is
+95\% CI{[}-0.203, 0.183{]}, \emph{p} = 0.916). This relationship is
 plotted in Figure 4a. The results suggest that dependent variable
 calculated significantly impacted the size fo the mispronunciation
 sensitivity effect, such that Post. vs.~Pre showed a smaller
@@ -1289,27 +1205,27 @@ the Difference Score and Post.
 We next examined whether the type of dependent variable calculated
 modulated the development of mispronunciation sensitivity. When age was
 included as an additional moderator, the moderator test was significant
-QM(11) = 273.585, \emph{p}\textless{} .001. The estimate for the
+QM(11) = 273.585, \emph{p} \textless{} .001. The estimate for the
 interaction between Pre vs.~Post, condition, and age was significantly
 smaller than that of the Post dependent variable (\(\beta\) = -0.089, SE
-= 0.03, 95\% CI{[}-0.148, -0.03{]}, \emph{p}= 0.003), but the difference
-between the Difference Score and Post in the interaction with condition
-and age was small and not significant (\(\beta\) = -0.036, SE = 0.027,
-95\% CI{[}-0.088, 0.016{]}, \emph{p}= 0.174). This relationship is
-plotted in Figure 4b. When the dependent variable was Pre vs.~Post,
-mispronunciation sensitivity decreased with infant age, while in
-comparison, when the dependent variable was Post, mispronunciation
-sensitivity increased with infant age. There was no difference in
-mispronunciation sensitivity change with infant development between the
-Post and Difference Score dependent variables. Similar to size of
-post-naming time window analyzed, all three possible developmental
-hypotheses might be supported depending on the dependent variable
-reported. In other words, choice of dependent variable may influence the
-conclusion drawn regarding how mispronunciation sensitivity may change
-with infant age.
+= 0.03, 95\% CI{[}-0.148, -0.03{]}, \emph{p} = 0.003), but the
+difference between the Difference Score and Post in the interaction with
+condition and age was small and not significant (\(\beta\) = -0.036, SE
+= 0.027, 95\% CI{[}-0.088, 0.016{]}, \emph{p} = 0.174). This
+relationship is plotted in Figure 4b. When the dependent variable was
+Pre vs.~Post, mispronunciation sensitivity decreased with infant age,
+while in comparison, when the dependent variable was Post,
+mispronunciation sensitivity increased with infant age. There was no
+difference in mispronunciation sensitivity change with infant
+development between the Post and Difference Score dependent variables.
+Similar to size of post-naming time window analyzed, all three possible
+developmental hypotheses might be supported depending on the dependent
+variable reported. In other words, choice of dependent variable may
+influence the conclusion drawn regarding how mispronunciation
+sensitivity may change with infant age.
 
-\subsection{(Insert Figure 4 about
-here)}\label{insert-figure-4-about-here}
+\subsection{(Insert Figure 6 about
+here)}\label{insert-figure-6-about-here}
 
 \begin{verbatim}
 ## pdf 
@@ -1325,31 +1241,91 @@ here)}\label{insert-figure-4-about-here}
 \subsection{Controlling for analysis
 choices}\label{controlling-for-analysis-choices}
 
-\section{Discussion}\label{discussion}
+\section{General Discussion}\label{general-discussion}
 
-To Summarize:
+Overall, infants showed reliable correct object recognition when given
+both correctly pronounced and mispronounced labels. In other words, not
+only did infants correctly recognize object labels when they were
+correctly pronounced, they also were likely to accept mispronunciations
+as acceptable labels for targets. Mispronounced labels were considered a
+better match for target images than a distractor image, despite the
+differences in the phonological form of correctly pronounced and
+mispronounced words. Nonetheless, there was a considerable difference in
+target fixations in response to correctly pronounced and mispronounced
+labels, suggesting overall mispronunciation sensitivity in the current
+experimental literature.
 
-** Overall Meta-analytic Effect **
+We next evaluated the developmental trajectory of infants'
+mispronunciation sensitivity. Based on previous theoretical accounts and
+existing experimental evidence, we envisioned three possible
+developmental patterns: increasing sensitivity, decreasing sensitivity,
+and unchanging sensitivity. We observed no influence of age when it was
+considered as a moderator of mispronunciation sensitivity. Of the two
+mainstream theories identified in our literature review, neither the
+Perceptual Attunement account (Best 1994, 1995) nor PRIMIR (Curtin \&
+Werker, 2007; Werker \& Curtin, 2005) account for a lack of
+developmental change. The results of our meta-analysis are supported by
+a handful of studies directly comparing infants over a range of ages
+(Swingley \& Aslin, 2000; Bailey \& Plunkett, 2002; Zesiger et al.,
+2012), which also found no developmental change in mispronunciation
+sensitivity.
 
-\begin{itemize}
-\tightlist
-\item
-  Accept mispronunciations as labels for targets
-\item
-  Sensitive to mispronunciations
-\item
-  lack of change over development
-\end{itemize}
+Both the Perceptual Attunement (Best 1994, 1995) and PRIMIR (Curtin \&
+Werker, 2007; Werker \& Curtin, 2005) accounts link a change of
+mispronunciation sensitivity specifically with vocabulary growth, in
+comparison to development in general. Vocabulary growth leads to an
+increase (PRIMIR; Curtin \& Werker, 2007; Werker \& Curtin, 2005) or
+decrease (Perceptual Attunement; Best 1994, 1995) in mispronunciation
+sensitivity and vocabulary is expected to grow considerably in the age
+range considered in the current meta-analysis (see
+wordbank.stanford.edu; Frank et al., 2017). The lack of developmental
+effects found in the meta-analysis may therefore be due to using age,
+instead of vocabulary growth, as a facilitator for change in
+mispronunciation sensitivity. Yet, an analysis of correlations between
+vocabulary size and object recognition effect sizes does not support
+this argument. Although an increasing vocabulary size lead to increased
+object recognition for correctly pronounced words, this was not the case
+for mispronunciations. Some previous experimental evidence also supports
+a lack of a relationship between vocabulary size and mispronunciation
+sensitivity (e.g.~Mani \& Plunkett, 2007; Swingley \& Aslin, 2000; but
+see Mani \& Plunkett, 2010). This would suggest that object recognition
+for mispronunciations is not modulated by vocabulary size, contrary to
+the predictions of the Perceptual Attunement (Best 1994, 1995) and
+PRIMIR (Curtin \& Werker, 2007; Werker \& Curtin, 2005) accounts and
+further supporting the overall lack of an influence of age on
+mispronunciation sensitivity.
 
-** Vocabulary **
+What may these results mean for our understanding of phono-lexical
+development in infancy? Evidence that infants accept a mispronunciation
+(object identification) while simultaneously holding correctly
+pronounced and mispronounced labels as separate (mispronunciation
+sensitivity) may indcate an abstract understanding of words'
+phonological structure. It appears infants may understand that the
+mispronunciation and correct pronunciation's phonological form do not
+match, but that the mispronunciation is a better label for the target
+compared to the distractor image. The lack of age or vocabulary effects
+in our meta-analysis suggest that this understanding is present from an
+age when the earliest words are learned and is maintained throughout
+early lexical development. Already with the first words, infants have a
+sense of the importance of sounds in the words present in their lexicon.
+We recommend that future theoretical accounts should consider this lack
+of developmental change.
 
-\begin{itemize}
-\tightlist
-\item
-  no relationship?
-\item
-  talk about how few studies report it
-\end{itemize}
+Although the lack of an relationship between mispronunciation
+sensitivity and vocabulary size may reflect a true effect, we note that
+this may also be the result of an underpowered analysis. Despite the
+theoretical implications, less than half of the papers included in this
+meta-analysis measured vocabulary (\emph{n} = 13; out of 32 papers
+total). We suggest that this may be the result of publication bias,
+specifically a desire to not publish null results. Although the number
+of mispronunciation sensitivity studies has experience growth, this has
+not translated to an increasing number of mispronunciation sensitivity
+studies also measuring vocabulary scores.
+
+{[}Katie{]} The above section is a bit clunky and I don't like it. Any
+suggestions for improvement?
+
+Then talk about the experimental decisions
 
 ** Data Analysis Choices **
 
@@ -1364,6 +1340,18 @@ To Summarize:
   the first two do not have theoretical frameworks to guide researchers,
   whereas offset time does
 \end{itemize}
+
+{[}Christina{]} Did I ask the following already: Do we know whether
+subtrations were on the trial level? Pre vs post is a bit differnt
+because it loses the individual bias accommodation and the correlation
+between pre and post on the participant / item level. {[}Katie{]} You
+did. I'll put here my answer from before: From working with Nivi, we did
+it participants x condition or participants x trial (but mostly the
+former). But, this is not something we reported in papers. I don't think
+I read it at all when putting together the dataset for this either.
+{[}Christina{]} Mention in the discussion that we don't know this and it
+might be important to establish standard analysis pipelines for MP
+studies and that we need open data and code? ;)
 
 When it comes to designing studies, best practices and current standards
 might not always overlap. Indeed, across a set of previous meta-analyses
