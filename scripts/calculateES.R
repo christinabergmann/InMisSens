@@ -88,7 +88,7 @@ for(line in 1:length(db_ET$n_1)){
 
 #### Remove missing values ####
 
-db_ET = db_ET[!is.na(db_ET$d_calc),]
+
 
 
 #### Compute Hedge's g based on Cohen's d ####
@@ -105,13 +105,4 @@ db_ET$weights_g <-  1/(db_ET$g_var_calc)^2
 db_ET$weights_d <-  1/(db_ET$d_var_calc)^2
 
 
-#### Outlier removal ####
 
-
-# Following InWordD/standard practice, we will remove effect sizes more than 3 SD away from the median effect (in both positive and negative directions)
-
-db_ET$nooutlier = ifelse(db_ET$g_calc > mean(db_ET$g_calc, na.rm = TRUE) + 3*sd(db_ET$g_calc, na.rm = TRUE) 
-                         | db_ET$g_calc < mean(db_ET$g_calc, na.rm = TRUE) - 3*sd(db_ET$g_calc, na.rm = TRUE),FALSE, TRUE)
-
-#db_ET = db_ET[db_ET$nooutlier,]
-#02.02. 3 outlier, not removed because it might be that it's correct vs MP
