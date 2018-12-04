@@ -2134,3 +2134,92 @@ But, there was no significant interaction between language family, age, and cond
 Hedges' g for `rownames(sum_eff)`  was `toString(type_feat$estimate)` (SE = `toString(type_feat$se`)
 (95% CI [`toString(type_feat$ci.lb)`, `toString(type_feat$ci.ub)`], p = `toString(type_feat$pval)`)
 
+
+
+## Controlling for analysis choices
+
+```{r reanalysis_misp_sens_dv_label}
+
+dat$dv_label <- ifelse(dat$within_measure=="post", "Post",
+                       ifelse(dat$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+dat$dv_label <- factor(dat$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+db_ET_MP$dv_label <- ifelse(db_ET_MP$within_measure=="post", "Post",
+                       ifelse(db_ET_MP$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+db_ET_MP$dv_label <- factor(db_ET_MP$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+db_ET_correct$dv_label <- ifelse(db_ET_correct$within_measure=="post", "Post",
+                       ifelse(db_ET_correct$within_measure == "pre_post", "Post vs. Pre",
+                              "Difference Score"))
+
+db_ET_correct$dv_label <- factor(db_ET_correct$dv_label, levels = c("Post", "Post vs. Pre", "Difference Score"))
+
+
+rma_correct_DV = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = list(~ same_infant_calc | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_correct_DV, rma_correct)
+
+rma_MP_DV = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = list(~ same_infant_calc | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_MP_DV, rma_MP)
+
+
+rma_MPeffect_DV <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_MPeffect_DV, rma_MPeffect)
+
+
+rma_correct_age_DV = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_correct, random = list(~ same_infant_calc | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_correct_age_DV, rma_correct_age)
+
+
+rma_MP_age_DV = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_MP, random = list(~ same_infant_calc | short_cite, ~ dv_label | short_cite))
+
+#anova(rma_MP_age_DV, rma_MP_age)
+
+
+rma_MPeffect_age_DV <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ dv_label | short_cite))
+  
+#anova(rma_MPeffect_age_DV, rma_MPeffect_age)
+
+
+```
+
+```{r reanalysis_misp_sens_post_dur}
+
+
+rma_correct_post_dur = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = list(~ same_infant_calc | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+
+#anova(rma_correct_post_dur, rma_correct)
+
+rma_MP_post_dur = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = list(~ same_infant_calc | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+
+#anova(rma_MP_post_dur, rma_MP)
+
+
+rma_MPeffect_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+
+#anova(rma_MPeffect_post_dur, rma_MPeffect)
+
+
+rma_correct_age_post_dur = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_correct, random = list(~ same_infant_calc | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+
+#anova(rma_correct_age_post_dur, rma_correct_age)
+
+
+rma_MP_age_post_dur = rma.mv(g_calc, g_var_calc, mods = ~age.C, data = db_ET_MP, random = list(~ same_infant_calc | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+
+#anova(rma_MP_age_post_dur, rma_MP_age)
+
+
+rma_MPeffect_age_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~age.C*condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ as.factor(post_nam_dur) | short_cite))
+  
+#anova(rma_MPeffect_age_post_dur, rma_MPeffect_age)
+
+
+```
