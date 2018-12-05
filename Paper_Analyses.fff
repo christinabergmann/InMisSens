@@ -2,7 +2,7 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
-\includegraphics{figures/PRISMA_MA_Mispronunciation.png}
+\includegraphics{figures/Figure_1_PRISMA_MA_Mispronunciation.png}
 \caption{}
 \end{figure*}
 \efloatseparator
