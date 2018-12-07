@@ -3,7 +3,9 @@
 
 \centering
 \includegraphics{figures/Figure_1_PRISMA_MA_Mispronunciation.png}
-\caption{}
+\caption{(\#fig:PRISMA\_image)A PRISMA flowchart illustrating the
+selection procedure used to include studies in the current
+meta-analysis.}
 \end{figure*}
 \efloatseparator
  
@@ -12,7 +14,10 @@
 
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/FunnelCombo-1.pdf}
-\caption{}
+\caption{\label{fig:FunnelCombo}Funnel plots for object identification,
+plotting the standard error of the effect size in relation to the effect
+size. The black line marks zero, the dashed grey line marks the effect
+estimate, and the grey line marks funnel plot assymetry.}
 \end{figure*}
 \efloatseparator
  
@@ -21,7 +26,11 @@
 
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/PlotMPEffect-1.pdf}
-\caption{}
+\caption{\label{fig:PlotMPEffect}Panel a: Effect sizes for correct
+pronunciations (orange) and mispronunciations (blue) by participant age.
+Panel b: Effect sizes for mispronunciation sensitivyt (correct -
+mispronunciations) by participant age. For both panels, point size
+depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
 \efloatseparator
  
@@ -30,7 +39,12 @@
 
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/Vocab_describe1-1.pdf}
-\caption{}
+\caption{(\#fig:Vocab\_describe1)Counts of studies included in the
+meta-analysis as a function of publication year, representing whether
+the study did not measure vocabulary (orange), did measure vocabulary
+and was reported to predict mispronunciation sensitivity (blue), or did
+measure vocabulary and was reported to not predict mispronunciation
+sensitivity (green).}
 \end{figure*}
 \efloatseparator
  
@@ -39,7 +53,15 @@
 
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/Plot_post_name_cond_age-1.pdf}
-\caption{}
+\caption{(\#fig:Plot\_post\_name\_cond\_age)Effect sizes for the
+different lengths of post-naming phase time windows analyzed: 2000 ms or
+less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green).
+Although length of post-naming phase time window analyzed was included
+as a continuous variable in the meta-analytic model, it is divided into
+categories for ease of viewing. Panel a plots mispronunciation
+sensitivity aggregated over age, while panel b plots mispronunciation
+sensitivity as a function of age. The lines plot the linear regression
+and the gray shaded area indicates the standard error.}
 \end{figure*}
 \efloatseparator
  
@@ -48,7 +70,13 @@
 
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/Plot_Within_cond_age_diff_score-1.pdf}
-\caption{}
+\caption{(\#fig:Plot\_Within\_cond\_age\_diff\_score)Effect sizes for
+the different types of dependent variables calculated: Post (orange),
+Post vs.~Pre (blue), and Difference Score (green). Panel a plots
+mispronunciation sensitivity aggregated over age, while panel b plots
+mispronunciation sensitivity as a function of age. The lines plot the
+linear regression and the gray shaded area indicates the standard
+error.}
 \end{figure*}
 \efloatseparator
  

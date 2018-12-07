@@ -22,21 +22,9 @@ affiliation:
     institution   : "LSCP, Departement d'Etudes Cognitives, ENS, EHESS, CNRS, PSL Research University"
 
 abstract: |
-  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  As they develop into mature speakers of their native language, infants must not only learn words but also the sounds that make up those words. To do so, they must strike a balance between accepting some variation (e.g. mood, voice, accent), but appropriately rejecting variation when it changes a word's meaning (e.g. cat vs. hat). We focus on studies investigating infants' ability to detect mispronunciations in familiar words, which we refer to as mispronunciation sensitivity. The goal of this meta-analysis was to evaluate the development of mispronunciation sensitivity in infancy, allowing for a test of competing mainstream theoretical frameworks. The results show that although infants are sensitive to mispronunciations, they still accept these altered forms as labels for target objects. Interestingly, this ability is not modulated by age or vocabulary size, challenging existing theories and suggesting that a mature understanding of native language phonology is present in infants from an early age. Despite this finding, we discuss potential data analysis choices that may influence different conclusions about mispronunciation sensitivity development as well as offer recommendations to improve best practices in the study of mispronunciation sensitivity.
   
-  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
-  
-  One sentence clearly stating the **general problem** being addressed by  this particular study.
-  
-  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
-  
-  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
-  
-  One or two sentences to put the results into a more **general context**.
-  
-  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
-  
-keywords          : "keywords"
+keywords          : "language acquisition; mispronunciation sensitivity; word recognition; meta-analysis; lexicon"
 wordcount         : "X"
 
 
@@ -52,7 +40,7 @@ citeproc          : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 
 header-includes:
   - \usepackage{setspace}
@@ -233,9 +221,8 @@ apatheme=theme_bw()+
   theme(panel.grid.major=element_blank(),
     panel.grid.minor=element_blank(),
     panel.border=element_blank(),
-    axis.line=element_line()#,
-    #text=element_text(family='Times', size=25)
-    )
+    axis.line=element_line(),
+    text=element_text(family='Times', size=25))
 
 # Color Blind palette:
 cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
@@ -280,7 +267,7 @@ The present meta-analysis was conducted with maximal transparency and reproducib
 
 ## (Insert Figure 1 about here)
 
-```{r PRISMA_image, echo= FALSE}
+```{r PRISMA_image, echo= FALSE, fig.cap="A PRISMA flowchart illustrating the selection procedure used to include studies in the current meta-analysis."}
 
 knitr::include_graphics("figures/Figure_1_PRISMA_MA_Mispronunciation.png")
 
@@ -649,7 +636,7 @@ dat_mp = db_ET_MP %>%
 
 ## (Insert Figure 2 about here)
 
-```{r FunnelCombo, echo = FALSE}
+```{r FunnelCombo, echo = FALSE, fig.cap="Funnel plots for object identification, plotting the standard error of the effect size in relation to the effect size. The black line marks zero, the dashed grey line marks the effect estimate, and the grey line marks funnel plot assymetry."}
 
 
   jpeg(filename = "figures/Figure_2_Funnel_Plots_Object_Identification.jpg", 
@@ -820,7 +807,7 @@ We then examined the interaction between age and mispronunciation sensitivity (c
 
 ## (Insert Figure 3 about here)
 
-```{r PlotMPEffect, echo = FALSE, fig.width=10,fig.height=11}
+```{r PlotMPEffect, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for correct pronunciations (orange) and mispronunciations (blue) by participant age. Panel b: Effect sizes for mispronunciation sensitivyt (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance)."}
 
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
@@ -992,7 +979,7 @@ Figure 4 plots the year of publication for all the mispronunciation sensitivity 
 
 ## (Insert Figure 4 about here)
 
-```{r Vocab_describe1}
+```{r Vocab_describe1, fig.cap="Counts of studies included in the meta-analysis as a function of publication year, representing whether the study did not measure vocabulary (orange), did measure vocabulary and was reported to predict mispronunciation sensitivity (blue), or did measure vocabulary and was reported to not predict mispronunciation sensitivity (green)."}
 #how did vocabulary collection change over time?
 
 dv <- read.csv("data/vocab_collection.csv", header = T)
@@ -1231,7 +1218,7 @@ Considering that we found a significant relationship between the length of the p
 
 ## (Insert Figure 5 about here)
 
-```{r Plot_post_name_cond_age, echo = FALSE, fig.width=10,fig.height=11}
+```{r Plot_post_name_cond_age, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Effect sizes for the different lengths of post-naming phase time windows analyzed: 2000 ms or less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green). Although length of post-naming phase time window analyzed was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error."}
 
 dat$condition_label <- ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
@@ -1401,7 +1388,7 @@ Similar to size of post-naming time window analyzed, all three possible developm
 
 ## (Insert Figure 6 about here)
 
-```{r Plot_Within_cond_age_diff_score, echo = FALSE, fig.width=10,fig.height=11}
+```{r Plot_Within_cond_age_diff_score, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs. Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error."}
 
 dat.cm <- dat[,c("short_cite", "is_correct", "is_mp", "within_measure", "condition", "g_calc", "weights_g", "mean_age_1", "n_1")]
 
@@ -1470,12 +1457,14 @@ grid.draw(ger.plot.age)
 
 ```
 
-## Controlling for analysis choices
 
-[Christina: Do you want to add this section?]
-[Katie: From what I came up with, it makes no difference to the conclusions we make in the regular models. But, I am not sure I did it right. I don't really feel like they have to be included, but if you think it would be good, then we can work on it.]
 
 ```{r reanalysis_misp_sens_dv_label}
+
+## Controlling for analysis choices
+
+#[Christina: Do you want to add this section?]
+#[Katie: From what I came up with, it makes no difference to the conclusions we make in the regular models. But, I am not sure I did it right. I don't really feel like they have to be included, but if you think it would be good, then we can work on it.]
 
 dat$dv_label <- ifelse(dat$within_measure=="post", "Post",
                        ifelse(dat$within_measure == "pre_post", "Post vs. Pre",
@@ -1613,7 +1602,7 @@ For example, the Difference Score dependent variable substracts the pre-naming p
 
 The current meta-analysis aggregated studies designed to investigate mispronunciation sensitivity, but we note that these studies varied in their approach to study mispronunciation sensitivity. For example, some studies investigated specific questions which required additional manipulations, such as the impact of the number of phonological features changed in the mispronunciations on mispronunciation sensitivity (e.g. White & Morgan, 2008; Mani & Plunkett, 2011) or sensitivity to consonant and vowel mispronunciations (Mani & Plunkett, 2007; 2010 keps and tups; Hojen et al., unpublished; Swingley, 2016). These studies varied in their experimental design, such as whether infants were familiar with the distractor image (e.g. White and Morgan (2008; see also Mani & Plunkett, 2011; Skoruppa et al., 2013; Swingley, 2016) or whether the labels for the target and distractor images contained phonological overlap (Fernald, Swingley, & Pinto, 2001). Futhermore, the infants included in this meta-analysis had a variety of native languages (English, Spanish, French, Dutch, German, Catalan, Danish, and Mandarin Chinese) and language backgrounds (monolingual, bilingual, monodialectal, multidialectal). Taken together, these variables have the potential to modulate infant mispronunciation sensitivity, but an investigation of these variables is out of the scope of the current meta-analysis. However, our dataset coded for and included these variables. We hope that future research will be able to better understand the role that these variables play in infants' senstivity to mispronunciations.
 
-Furthermore, the investigation of mispronunciation sensitivity does not singularly capture infant phono-lexical development. For example, studies investigating word form recognition, typically using the Headturn Preference Procedure (Mandel et al., 1995), allow for an investigation of the specificity of infants' word form representations without requiring word-object associations, which is required in the Intermodal Preferential Looking Paradigm (Golinkoff et al., 1987; 2013). As a result, this approach can be used with infants of a much younger age than typically examined. These studies compare infants' preference to listen to word lists that a correct compared to word lists that contain a mispronunciation (e.g. Bouchon et al., 2014; Swingley, 2005; Halle & de Boysson-Bardies, 1996; Vihman et al., 2004; Vihman & Majorano 2016; 2017; Poltrock & Nazzi, 2015; Delle Luche et al., 2016). In contrast, studies investigating recognition of accented words use stimuli that are naturally occuring as opposed to artificially manipulated, to achieve an altered phonological form (e.g. van Heughten et al., 2018; 2015; Buckler et al., 2017; van Heughten & Johnson, 2014; 2016; Best et al., 2009; Mulak et al., 2013; Schmale et al., 2010; 2012; Schmale & Seidel, 2009; Floccia et al., 2012; Durrant et al., 2014). This allows for an evaluation of phono-lexical development in response to a type of language that infants may encounter in everyday life. These investigations offer complementary approaches to infant phono-lexical development. 
+Furthermore, the investigation of mispronunciation sensitivity does not singularly capture infant phono-lexical development. For example, studies investigating word form recognition, typically using the Headturn Preference Procedure (Mandel et al., 1995), allow for an investigation of the specificity of infants' word form representations without requiring word-object associations, which is required in the Intermodal Preferential Looking Paradigm (Golinkoff et al., 1987; 2013). As a result, this approach can be used with infants of a much younger age than typically examined. These studies compare infants' preference to listen to word lists that a correct compared to word lists that contain a mispronunciation (e.g. Bouchon et al., 2014; Swingley, 2005; Halle & de Boysson-Bardies, 1996; Vihman et al., 2004; Vihman & Majorano 2016; 2017; Poltrock & Nazzi, 2015; Delle Luche et al., 2016). In contrast, studies investigating recognition of accented words use stimuli that are naturally occuring as opposed to artificially manipulated, to achieve an altered phonological form (e.g. van Heughten et al., 2018; 2015; Buckler et al., 2017; van Heughten & Johnson, 2014; 2016; Best et al., 2009; Mulak et al., 2013; Schmale et al., 2010; 2012; Schmale & Seidel, 2009; Floccia et al., 2012; Durrant et al., 2014; White & Aslin, 2011). This allows for an evaluation of phono-lexical development in response to a type of language that infants may encounter in everyday life. These investigations offer complementary approaches to infant phono-lexical development. 
 
 
 ## Conclusion
