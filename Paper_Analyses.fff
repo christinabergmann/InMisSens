@@ -17,7 +17,7 @@ meta-analysis.}
 \caption{\label{fig:FunnelCombo}Funnel plots for object identification,
 plotting the standard error of the effect size in relation to the effect
 size. The black line marks zero, the dashed grey line marks the effect
-estimate, and the grey line marks funnel plot assymetry.}
+estimate, and the grey line marks funnel plot asymmetry.}
 \end{figure*}
 \efloatseparator
  
@@ -28,7 +28,7 @@ estimate, and the grey line marks funnel plot assymetry.}
 \includegraphics{Paper_Analyses_files/figure-latex/PlotMPEffect-1.pdf}
 \caption{\label{fig:PlotMPEffect}Panel a: Effect sizes for correct
 pronunciations (orange) and mispronunciations (blue) by participant age.
-Panel b: Effect sizes for mispronunciation sensitivyt (correct -
+Panel b: Effect sizes for mispronunciation sensitivity (correct -
 mispronunciations) by participant age. For both panels, point size
 depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
@@ -54,10 +54,10 @@ sensitivity (green).}
 \centering
 \includegraphics{Paper_Analyses_files/figure-latex/Plot_post_name_cond_age-1.pdf}
 \caption{(\#fig:Plot\_post\_name\_cond\_age)Effect sizes for the
-different lengths of post-naming phase time windows analyzed: 2000 ms or
-less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green).
-Although length of post-naming phase time window analyzed was included
-as a continuous variable in the meta-analytic model, it is divided into
+different lengths of the post-naming analysis window: 2000 ms or less
+(orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green).
+Although length of the post-naming analysis window was included as a
+continuous variable in the meta-analytic model, it is divided into
 categories for ease of viewing. Panel a plots mispronunciation
 sensitivity aggregated over age, while panel b plots mispronunciation
 sensitivity as a function of age. The lines plot the linear regression
