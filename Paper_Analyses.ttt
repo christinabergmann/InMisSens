@@ -2,7 +2,7 @@
 
 
 \begin{longtable}{lllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:SummaryTable}Summary of all studies.}\\
+\caption{\label{tab:SummaryTable}Summary of all studies. Age is calculated by truncating the mean age reported in the paper. The abbreviations Comp and Prod refer to comprehension and production, respectively.}\\
 \toprule
 Paper & Publication format & Age & Vocabulary & N Effect Sizes\\
 \midrule
