@@ -1,0 +1,49 @@
+\begin{lltable}
+
+
+\scriptsize{
+\begin{longtable}{llllllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:SummaryTable}Summary of all studies. Age: truncation of mean age reported in the paper. Vocabulary: Comp = comprehension, Prod = production. Distractor Familiarity: Fam = Familiar Distractor, Unfam = Unfamiliar Distractor. Distractor Target Overlap: position of overlap between target and distractor; O = onset, M = medial, C = coda. Mispronunciation Size: number of features changed; commas indicate when sizes were compared separately (e.g. 1, 2, 3), dashes indicate the range of sizes were aggregated (e.g. 1-3). Mispronunciation Position: O = onset, M = medial, C = coda. Mispronunciation Type: C = consonant, V = vowel, T = tone. For both Mispronunciation Position and Type, a slash separator indicates that is was tested but a distinction was not made in the stimuli. For all categories, unspec. indicates that the value was unspecified in the paper}\\
+\toprule
+ &  &  &  & \multicolumn{1}{c}{Distractor} & & \multicolumn{3}{c}{Mispronunciation}  &\\
+\cmidrule(r){5-5} \cmidrule(r){7-9}
+Paper & Format & Age & Vocabulary & Familiarity & Target Overlap & Size & Position & Type & N Effect Sizes\\
+\midrule
+Altvater-Mackensen (2010) & dissertation & 22, 25 & None & fam, unfam & O, novel & 1 & O, O/M & C & 13\\
+Altvater-Mackensen et al. (2014) & paper & 18, 25 & None & fam & O & 1 & O & C & 16\\
+Bailey \& Plunkett (2002) & paper & 18, 24 & Comp & fam & none & 1, 2 & O & C & 12\\
+Bergelson \& Swingley (2017) & paper & 7, 9, 12, 6 & None & fam & none & unspec & O/M & V & 9\\
+Bernier \& White (2017) & proceedings & 21 & None & unfam & novel & 1, 2, 3 & O & C & 4\\
+Delle Luche et al. (2015) & paper & 20, 19 & None & fam & O & 1 & O & C/V & 4\\
+Durrant et al. (2014) & paper & 19, 20 & None & fam & O & 1 & O & C/V & 4\\
+H\IeC {\"o}hle et al. (2006) & paper & 18 & None & fam & none & 1 & O & C & 4\\
+H\IeC {\o }jen et al. (n.d.) & gray paper & 19, 20 & Comp/Prod & fam & C, O & 2-3 & O/M, C/M & C/V, V, C & 6\\
+Mani \& Plunkett (2007) & paper & 15, 18, 24, 14, 20 & Comp/Prod & fam & O & 1-2, 1 & O & V, C/V, C & 14\\
+Mani \& Plunkett (2010) & paper & 12 & Comp & fam & O & 1 & M, O & V, C & 8\\
+Mani \& Plunkett (2011) & paper & 23, 17 & None & unfam & novel & 1-3, 1, 2, 3 & M & V & 15\\
+Mani, Coleman, \& Plunkett (2008) & paper & 18 & Comp/Prod & fam & O & 1 & M & V & 4\\
+Ramon-Casas \& Bosch (2010) & paper & 24, 25 & None & fam & none & unspec & M & V & 4\\
+Ramon-Casas et al. (2009) & paper & 21, 20 & Prod & fam & none & unspec & M & V & 10\\
+Ren \& Morgan (in press) & gray paper & 19 & None & unfam & none & 1 & O, C & C & 8\\
+Skoruppa et al. (2013) & paper & 23 & None & unfam & O/M & 1 & C & C & 4\\
+Swingley (2003) & paper & 19 & Comp/Prod & fam & O & 1 & O, M & C & 6\\
+Swingley (2009) & paper & 17 & Comp/Prod & fam & none & 1 & O, C & C & 4\\
+Swingley (2016) & paper & 27, 28 & Prod & unfam & novel & 1 & O/M & C/V, C, V & 9\\
+Swingley \& Aslin (2000) & paper & 20 & Comp & fam & none & 1 & O & C/V & 2\\
+Swingley \& Aslin (2002) & paper & 15 & Comp/Prod & fam & none & 1, 2 & O/M & C/V & 4\\
+Tamasi (2016) & dissertation & 30 & None & unfam & novel & 1, 2, 3 & O & C & 4\\
+Tao \& Qinmei (2013) & paper & 12 & None & fam & none & unspec & unspec & T & 4\\
+Tao et al. (2012) & paper & 16 & Comp & fam & none & unspec & unspec & T & 6\\
+van der Feest \& Fikkert, (2015) & paper & 24, 20 & None & fam & O & 1 & O & C & 16\\
+van der Feest \& Johnson (2016) & paper & 24 & None & fam & O & 1 & O & C & 20\\
+Wewalaarachchi et al. (2017) & paper & 24 & None & unfam & novel & 1 & O/M/C & C/V/T, V, C, T & 8\\
+White \& Aslin (2011) & paper & 18 & None & unfam & novel & 1 & M & V & 4\\
+White \& Morgan (2008) & paper & 18, 19 & None & unfam & novel & 1, 2, 3 & O & C & 12\\
+Zesiger \& J\IeC {\"o}hr (2011) & paper & 14 & None & fam & none & 1 & O, M & C, V & 7\\
+Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod & fam & none & 1, 2 & O & C & 6\\
+\bottomrule
+\end{longtable}
+}
+\end{lltable}
+\efloatseparator
+ 
