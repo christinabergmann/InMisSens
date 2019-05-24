@@ -179,7 +179,24 @@ db_ET_correct = db_ET_correct[db_ET_correct$nooutlier,]
 db_ET_correct$condition <- 1
 db_ET_MP$condition <- 0
 
+
+db_ET_correct$short_cite.same_infant_calc <- paste0(db_ET_correct$short_cite, ".", db_ET_correct$same_infant_calc)
+db_ET_MP$short_cite.same_infant_calc <- paste0(db_ET_MP$short_cite, ".", db_ET_MP$same_infant_calc)
+
+db_ET_correct$unique_row <- factor(seq(from = 1, to = nrow(db_ET_correct), by = 1))
+db_ET_MP$unique_row <- factor(seq(from = 1, to = nrow(db_ET_MP), by = 1))
+
+
 dat <- bind_rows(db_ET_correct, db_ET_MP)
+
+dat$unique_row <- factor(seq(from = 1, to = nrow(dat), by = 1))
+
+
+#dat$short_cite.same_infant_calc <- paste0(dat$short_cite, ".", dat$same_infant_calc)
+#random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc)  
+
+
+
 
 descriptive_dat <- dat
 
@@ -760,7 +777,15 @@ Taken together, the results suggest a tendency in the literature towards publica
 
 ```{r MAcorrect}
 
-rma_correct = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = ~ same_infant_calc | short_cite)
+# rma_correct = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = ~ same_infant_calc | short_cite)
+
+
+
+# new random effects structure
+rma_correct = rma.mv(g_calc, g_var_calc, data = db_ET_correct, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
+
+
+
 
 #summary(rma_correct)
 #kable(round(coef(summary(rma_correct)), 2))
@@ -774,7 +799,11 @@ We first calculated the meta-analytic effect for infants' ability to identify ob
 
 ```{r MAMP}
 
-rma_MP = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = ~ same_infant_calc | short_cite)
+#rma_MP = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = ~ same_infant_calc | short_cite)
+
+#
+rma_MP = rma.mv(g_calc, g_var_calc, data = db_ET_MP, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
+
 
 #summary(rma_MP)
 
@@ -789,7 +818,7 @@ We then calculated the meta-analytic effect for object identification in respons
 
 ```{r MPEffect}
 
-rma_MPeffect <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = ~ same_infant_calc | short_cite)
+rma_MPeffect <- rma.mv(g_calc, g_var_calc, mods = ~condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
   
 #summary(rma_MPeffect)  
 
