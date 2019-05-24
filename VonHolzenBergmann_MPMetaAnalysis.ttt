@@ -5,8 +5,8 @@
 \begin{longtable}{llllllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
 \caption{\label{tab:SummaryTable}Summary of all studies. Age: truncation of mean age reported in the paper. Vocabulary: Comp = comprehension, Prod = production. Distractor Familiarity: Fam = Familiar Distractor, Unfam = Unfamiliar Distractor. Distractor Target Overlap: position of overlap between target and distractor; O = onset, M = medial, C = coda. Mispronunciation Size: number of features changed; commas indicate when sizes were compared separately (e.g. 1, 2, 3), dashes indicate the range of sizes were aggregated (e.g. 1-3). Mispronunciation Position: O = onset, M = medial, C = coda. Mispronunciation Type: C = consonant, V = vowel, T = tone. For both Mispronunciation Position and Type, a slash separator indicates that is was tested but a distinction was not made in the stimuli. For all categories, unspec. indicates that the value was unspecified in the paper}\\
 \toprule
- &  &  &  & \multicolumn{1}{c}{Distractor} & & \multicolumn{3}{c}{Mispronunciation}  &\\
-\cmidrule(r){5-5} \cmidrule(r){7-9}
+ &  &  &  & \multicolumn{2}{c}{Distractor} & \multicolumn{3}{c}{Mispronunciation}  &\\
+\cmidrule(r){5-6} \cmidrule(r){7-9}
 Paper & Format & Age & Vocabulary & Familiarity & Target Overlap & Size & Position & Type & N Effect Sizes\\
 \midrule
 Altvater-Mackensen (2010) & dissertation & 22, 25 & None & fam, unfam & O, novel & 1 & O, O/M & C & 13\\

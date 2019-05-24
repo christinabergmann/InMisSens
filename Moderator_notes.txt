@@ -1,0 +1,7 @@
+** Size of Mispronunciation **
+
+  + graded sensitivity to number of features changed in a mispronunciation
+  + importance for controlling in experimental design
+  + Perhaps a call for more studies to include multiple number of features changed, so that this can be assessed? There was a narrow age where this was actually manipulated.
+
+
