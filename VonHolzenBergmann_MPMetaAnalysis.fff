@@ -61,6 +61,42 @@ sensitivity (green).}
 \ifnextchar[{\eatarg}{}
 
 \centering
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotDistOverlap-1.pdf}
+\caption{}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispPosit-1.pdf}
+\caption{}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispType-1.pdf}
+\caption{}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotCVEffect_Lang-1.pdf}
+\caption{}
+\end{figure*}
+\efloatseparator
+ 
+\begin{figure*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+\centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/Plot-post-name-cond-age-1.pdf}
 \caption{\label{fig:Plot-post-name-cond-age}Effect sizes for the different
 lengths of the post-naming analysis window: 2000 ms or less (orange),
