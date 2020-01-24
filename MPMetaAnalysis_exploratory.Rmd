@@ -1,0 +1,416 @@
+---
+title             : "The development of infants' responses to mispronunciations: A Meta-Analysis"
+shorttitle        : "Mispronunciation Meta-Analysis"
+
+author: 
+  - name          : "Katie Von Holzen"
+    affiliation   : "1,2,3"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Emil-Figge-Straße 50, 44221 Dortmund, Germany"
+    email         : "katie.m.vonholzen@gmail.com"
+  - name          : "Christina Bergmann"
+    affiliation   : "4,5"
+
+affiliation:
+  - id            : "1"
+    institution   : "Lehrstuhl Linguistik des Deutschen, Schwerpunkt Deutsch als Fremdsprache/Deutsch als Zweitsprache, Technische Universität Dortmund"
+  - id            : "2"
+    institution   : "Department of Hearing and Speech Sciences, University of Maryland, USA"
+  - id            : "3"
+    institution   : "Laboratoire Psychologie de la Perception, Université Paris Descartes"
+  - id            : "4"
+    institution   : "Max Planck Institute for Psycholinguistics, Nijmegen, the Netherlands"
+  - id            : "5"
+    institution   : "LSCP, Departement d'Etudes Cognitives, ENS, EHESS, CNRS, PSL Research University"
+
+authornote: |
+  The authors each declare that they have no conflict of interest.
+
+abstract: |
+  As they develop into mature speakers of their native language, infants must not only learn words but also the sounds that make up those words. To do so, they must strike a balance between accepting the speaker's variation (e.g. mood, voice, accent), but appropriately rejecting variation when it changes a word's meaning (e.g. cat vs. hat). We focus on studies investigating infants' ability to detect mispronunciations in familiar words, which we refer to as mispronunciation sensitivity. The goal of this meta-analysis was to evaluate the development of mispronunciation sensitivity in infancy, allowing for a test of competing mainstream theoretical frameworks. The results show that although infants are sensitive to mispronunciations, they still accept these altered forms as labels for target objects. Interestingly, this ability is not modulated by age or vocabulary size, challenging existing theories and suggesting that a mature understanding of native language phonology is present in infants from an early age, possibly before the vocabulary explosion.Further examining our findings, we shed light on the impact of data analysis choices that may lead to different conclusions regarding the development of infants' mispronunciation sensitivity. Our paper concludes with recommendations for improved practice in testing infants' word and sentence processing on-line.
+  
+  
+keywords          : "language acquisition; mispronunciation sensitivity; word recognition; meta-analysis; lexicon; infancy"
+
+bibliography      : ["MISP_MA_BIB.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+
+header-includes:
+  - \usepackage{setspace}
+  - \AtBeginEnvironment{tabular}{\singlespacing}
+  - \AtBeginEnvironment{lltable}{\singlespacing}
+  - \AtBeginEnvironment{tablenotes}{\doublespacing}
+  - \captionsetup[table]{font={stretch=1.5}}
+  - \captionsetup[figure]{font={stretch=1.5}}
+---
+
+```{r Setup, echo = FALSE, warning=FALSE, error = FALSE, message = FALSE, tidy = TRUE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, tidy = TRUE, message = FALSE, error = FALSE)
+
+# wordcount()
+# doesn't work...
+# https://github.com/benmarwick/wordcountaddin
+
+
+### Load libraries
+library(papaja)
+library(metafor)
+library(meta)
+library(pwr)
+library(knitr)
+library(ggplot2)
+library(wesanderson)
+library(grid)
+library(gridExtra)
+library(xtable)
+library(schoRsch)
+library(multcomp)
+library(poibin)
+library(tidyverse)
+library(gtools)
+
+# can't call reshape here, because it will interfere with other libraries
+#library(reshape)
+
+r2 <- function(x){ round(x, 3)}
+
+psig <- function(x){
+  ifelse(x < .001, "< .001",
+         #ifelse(x < .001, "< .001",
+                #ifelse(x < .01, "< .01",
+                       ifelse(x > .001 & x < .05, paste("=", r2(x), sep = " "), paste("=", r2(x), sep = " ")))#))
+}
+
+# function for creating 1 line paired t.test results
+t.xtable <- function(x) as.data.frame(xtable(
+  t_out(toutput=x, n.equal = TRUE, welch.df.exact = TRUE, welch.n = NA,
+        d.corr = TRUE, print = TRUE)
+))
+
+
+g_SE <- function(x) paste0(r2(x$estimate), " (SE = ", r2(x$se), ")")
+
+CI_p <- function(x) paste0("(CI [", r2(x$ci.lb), ", ", r2(x$ci.ub), "], *p* ", psig(x$pval), ")")
+
+full_estimate <- function(x) paste0(" = ", r2(x$estimate), ", SE = ", r2(x$se), ", 95% CI[",  r2(x$ci.lb), ", ", r2(x$ci.ub),"], *p* ", psig(x$pval))
+
+
+# moderator test
+mod_test <- function(x) paste0("QM(", r2(x$m), ") = ", r2(x$QM), ", *p* ", psig(x$QMp))
+
+
+# Create the function for mode.
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+```
+
+
+```{r ReadIn}
+
+#Get the effect size data
+source("scripts/calculateES.R")
+
+```
+
+```{r Preprocess}
+
+
+noES <- db_ET %>%
+  filter(is.na(d_calc)) %>%
+  group_by(short_cite) %>%
+  summarise(n_records = n())
+
+db_ET$same_infant_calc <- paste(db_ET$study_ID, db_ET$expt_num, db_ET$same_infant, sep = "_")
+
+# assign language families
+
+db_ET$lang_family = ifelse(db_ET$native_lang=="American English" | db_ET$native_lang=="British English" | db_ET$native_lang=="Dutch" |
+db_ET$native_lang=="Danish" | db_ET$native_lang=="Swedish" |
+db_ET$native_lang=="English" | db_ET$native_lang=="German", "Germanic", ifelse(db_ET$native_lang == "French" | db_ET$native_lang == "Catalan" | db_ET$native_lang == "Spanish" | db_ET$native_lang == "Catalan-Spanish" | db_ET$native_lang == "Swiss French", 
+                                "Romance", "Sino-Tibetian"))
+
+db_ET <- db_ET %>%
+  filter(!is.na(d_calc))
+
+
+db_ET <- db_ET %>%
+  mutate(age.C = (mean_age_1-mean(mean_age_1, na.rm=TRUE))/30.44) %>%
+  filter(mean_age_months < 31)
+
+#Split into correct and MP database
+
+db_ET_correct <- db_ET[db_ET$is_correct=="1",]
+db_ET_MP <- db_ET[db_ET$is_mp=="1",]
+
+
+#remove outliers
+db_ET_MP$nooutlier = ifelse(db_ET_MP$g_calc > mean(db_ET_MP$g_calc, na.rm = TRUE) + 3*sd(db_ET_MP$g_calc, na.rm = TRUE) 
+                         | db_ET_MP$g_calc < mean(db_ET_MP$g_calc, na.rm = TRUE) - 3*sd(db_ET_MP$g_calc, na.rm = TRUE),FALSE, TRUE)
+
+n_outlier_MP = sum(db_ET_MP$nooutlier==FALSE)
+
+db_ET_MP = db_ET_MP[db_ET_MP$nooutlier,]
+
+# 3 outliers
+
+db_ET_correct$nooutlier = ifelse(db_ET_correct$g_calc > mean(db_ET_correct$g_calc, na.rm = TRUE) + 3*sd(db_ET_correct$g_calc, na.rm = TRUE) 
+                         | db_ET_correct$g_calc < mean(db_ET_correct$g_calc, na.rm = TRUE) - 3*sd(db_ET_correct$g_calc, na.rm = TRUE),FALSE, TRUE)
+
+n_outlier_correct = sum(db_ET_correct$nooutlier==FALSE)
+  
+db_ET_correct = db_ET_correct[db_ET_correct$nooutlier,]
+  
+
+# 2 outliers
+
+
+# make sure that both correct and mispronounced conditions are considered in descriptives
+
+db_ET_correct$condition <- 1
+db_ET_MP$condition <- 0
+
+
+db_ET_correct$short_cite.same_infant_calc <- paste0(db_ET_correct$short_cite, ".", db_ET_correct$same_infant_calc)
+db_ET_MP$short_cite.same_infant_calc <- paste0(db_ET_MP$short_cite, ".", db_ET_MP$same_infant_calc)
+
+db_ET_correct$unique_row <- factor(seq(from = 1, to = nrow(db_ET_correct), by = 1))
+db_ET_MP$unique_row <- factor(seq(from = 1, to = nrow(db_ET_MP), by = 1))
+
+
+dat <- bind_rows(db_ET_correct, db_ET_MP)
+
+dat$unique_row <- factor(seq(from = 1, to = nrow(dat), by = 1))
+
+
+#dat$short_cite.same_infant_calc <- paste0(dat$short_cite, ".", dat$same_infant_calc)
+#random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc)  
+
+
+
+
+descriptive_dat <- dat
+
+# need data set of unique short cite by expt_num
+# in order to calculate total number of infants
+
+# need data set of unique short cite by condition
+
+sum_dat <- dat[!duplicated(dat[c("short_cite", "same_infant")]),]
+time_wind_dat <- dat[!duplicated(dat[c("short_cite", "offset", "post_nam_dur")]),]
+distract_dat <- dat[!duplicated(dat[c("short_cite", "object_pair")]),]
+mix_co_mp <- dat[!duplicated(dat[c("short_cite", "word_correct_and_MP")]),]
+
+
+```
+
+
+
+```{r PlotAPATheme}
+# Plotting defaults
+
+#Themes and plot
+apatheme=theme_bw()+
+  theme(panel.grid.major=element_blank(),
+    panel.grid.minor=element_blank(),
+    panel.border=element_blank(),
+    axis.line=element_line(),
+    text=element_text(family='Times', size=25))
+
+# Color Blind palette:
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+```
+
+
+## Moderator Analyses
+
+### Number of mispronounced trials
+
+
+```{r MispTrials_Demo, results = "hide"}
+
+misptrials_info <- dat %>%
+  group_by(percent_MP) %>%
+  summarize(n_exp_conditions =  n())
+
+# majority of experimental conditions had 50% mispronunciation trials
+
+```
+
+
+```{r MispTrials, results= "asis"}
+
+rma_misptrials <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(percent_MP)*condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
+
+#no impact of the percentage of mispronunciation trials
+
+
+```
+
+
+```{r MispTrials_age, results= "asis"}
+
+
+# age moderator
+rma_misptrials_age <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(percent_MP)*condition*age.C, data = dat, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
+
+
+ sum_eff_age <- coef(summary(rma_misptrials_age))[8,]
+
+
+ # divide into age groups
+ 
+ dat$age_group <- ntile(dat$mean_age_1, 4)
+  dat$mt_group <- ntile(dat$percent_MP, 4)
+
+misp_trials_ages <- dat %>%
+  group_by(age_group, mt_group) %>%
+  summarize(n =  n())
+
+ #nfeature_ages <- subset(nfeature_ages, n_feature != 0)
+ 
+ misp_trials_ages <- misp_trials_ages %>% spread(mt_group, n)
+
+ #chisq <- chisq.test(nfeature_ages, simulate.p.value = TRUE)
+#fish.test <- fisher.test(misp_trials_ages,workspace=2e9)
+
+```
+
+```{r PlotMispTrial_age, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
+
+db_misptrial <- dat 
+
+db_misptrial$percent_MP <- as.numeric(db_misptrial$percent_MP)
+
+db_misptrial$condition_label <- ifelse(db_misptrial$condition==1, "Correct", "Mispronunciation")
+
+db_misptrial <- db_misptrial[,c("short_cite", "is_correct", "is_mp", "percent_MP", "condition_label", "g_calc", "weights_g", "mean_age_1", "n_1")]
+
+dat.c <- subset(db_misptrial, is_correct == 1)
+dat.m <- subset(db_misptrial, is_mp == 1)
+
+dat.cm <- merge(dat.c, dat.m, by = c("short_cite", "percent_MP", "mean_age_1", "n_1"))
+
+dat.cm$Misp_sensitivity <- dat.cm$g_calc.x - dat.cm$g_calc.y
+dat.cm$weight <- (dat.cm$weights_g.x + dat.cm$weights_g.y)/2
+
+
+ms.agg <- ggplot(dat.cm, aes(percent_MP, Misp_sensitivity, fill = percent_MP)) + 
+  #facet_grid(.~lang_family)+
+  geom_point(aes(size = weight),show.legend=FALSE, alpha = .5) + 
+    geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weight)) +
+  #geom_jitter(height = 0, width = 0.1, alpha = 0.5)+
+  labs(title="a")+
+  #geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=weights_g)) + 
+  #scale_fill_continuous(values=cbPalette)+
+  apatheme +
+  theme(text = element_text(size=25),
+        legend.title = element_blank(),
+        legend.position = "none") +
+        #axis.title.x = element_blank(),
+        #axis.text.x = element_blank(),
+        #axis.ticks.x = element_blank()) + 
+  #xlab("Number of Features Changed") + 
+  geom_hline(yintercept = 0, linetype="dotted") + 
+  ylab("Hedges' g")
+
+
+  dat.cm$Prcnt_MP <- quantcut(dat.cm$percent_MP, q=3, na.rm=TRUE)
+
+  
+  
+  
+  
+
+ms.age <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = Prcnt_MP)) + 
+  geom_point(aes(size = n_1),show.legend=FALSE) +
+  labs(title="b")+
+  geom_line(y= 0, linetype="dotted") + 
+  geom_smooth(method = "lm", formula = y ~ log(x), aes(weight=n_1)) +
+  #gradient_colour_continuous(values=cbPalette)+
+  apatheme +
+  theme(legend.position = "bottom") + 
+  xlab("Age in months") + 
+  ylab("Hedges' g")
+
+
+lay <- rbind(c(1), c(2))
+#lay <- rbind(c(1,2))
+
+  jpeg(filename = "figures/Explore_mp_percent.jpg",
+       width = 500, height = 900, units = "px")
+
+ger.plot.age <- grid.arrange(ms.agg, ms.age,
+                             layout_matrix = lay)
+
+ dev.off()
+
+grid.draw(ger.plot.age)
+
+  
+  
+```
+
+### Same words correct and mispronounced
+
+
+```{r SameWords_Demo, results = "hide"}
+
+samewords_info <- dat %>%
+  group_by(word_correct_and_MP) %>%
+  summarize(n_exp_conditions =  n())
+
+```
+
+
+```{r SameWords, results= "asis"}
+
+rma_SameWords <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(word_correct_and_MP)*condition, data = dat, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
+
+# no effects of samewords
+
+```
+
+
+```{r SameWords_age, results= "asis"}
+
+
+# age moderator
+rma_SameWords_age <- rma.mv(g_calc, g_var_calc, mods = ~as.factor(word_correct_and_MP)*condition*age.C, data = dat, random = list(~ same_infant_calc | short_cite, ~ unique_row |  short_cite.same_infant_calc))
+
+
+```
+
+
+
+\newpage
+
+*Acknowledgements*: The authors would like to thank Emelyne Gaudichau for valuable assistance in entering data. Author 1 was supported by the Agence Nationale de la Recherche (ANR-13-BSH2-0004) and by training grant DC-00046 from the National Institute of Deafness and Communicative Disorders of the National Institutes of Health. Author 2 was supported by the European Horizon 2020 programme (Marie Skłodowska-Curie grant No 660911), the Agence Nationale de la Recherche (ANR-10-IDEX-0001-02 PSL*, ANR-10-LABX-0087 IEC) and the Fondation de France. 
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "MISP_MA_BIB.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup

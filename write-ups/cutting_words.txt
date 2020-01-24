@@ -1,0 +1,45 @@
+# description of developmental variation in studies
+
+Several studies  have found evidence for *greater* mispronunciation sensitivity as children develop. More precisely, the difference in target looking for correct and mispronounced trials is reported to be smaller in younger infants and grows as infants develop. @Mani2007 tested 15-, 18-, and 24-month-olds learning British English; although all three groups were sensitive to mispronunciations, 15-month-olds showed a less robust sensitivity. An increase in sensitivity to mispronunciations has also been found from 20 to 24 months [@vanderFeest2015] and 15 to 18 months [@Altvater2014] in Dutch infants, as well as German infants from 22 to 25 months [@Altvater2010].
+
+Other studies have found no difference in mispronunciation sensitivity at different ages. For example, @Swingley2000 tested infants over a wide age range of 5 months (18 to 23 months).  They found that age correlated with target fixations for both correct and mispronounced labels, whereas the difference between the two (mispronunciation sensitivity) did not. This suggests that as children develop, they are more likely to look at the target in the presence of a correct or mispronounced label, but that the difference between looks elicited by the two conditions does not change. A similar response pattern has been found for British English learning infants aged between 18 and 24 months [@Bailey2002] as well as younger French-learning infants at 12 and 17 months [@Zesiger2012]. 
+
+  One study has found evidence for infants to become *less* sensitive to mispronunciations as they develop. @Mani2011 presented 18- and 24-month-olds with mispronunciations varying in the number of phonological features changed (e.g., changing an p into a b, a 1-feature change, versus changing a p into a g, a 2-feature change). 18-month-olds were sensitive to mispronunciations, regardless of the number of features changed. 24-month-olds, in contrast, fixated the target image equally for both correct and 1-feature mispronounced trials, although they were sensitive to larger mispronunciations. In other words, for 1-feature mispronunciations at least, sensitivity decreased from 18 to 24 months.
+
+# exploratory analysis for tone mispronunciations
+
+
+```{r MPtype_cvt}
+
+# C vs. V vs. T with condition 
+
+db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel"| type_feature == "tone")
+
+db_type$type_feature <- factor(db_type$type_feature, levels = c("tone", "consonant", "vowel"))
+
+rma_TypeFeaturesMP_ConditionT <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition, data = db_type, random = ~same_infant_calc | short_cite)
+
+sum_eff2c <- coef(summary(rma_TypeFeaturesMP_ConditionT))[5,]
+sum_eff2v <- coef(summary(rma_TypeFeaturesMP_ConditionT))[6,]
+
+
+```
+
+
+```{r MPtype_cvt_age}
+
+# with condition
+db_type <- subset(dat, type_feature == "consonant" | type_feature == "vowel" | type_feature == "tone")
+
+db_type$type_feature <- factor(db_type$type_feature, levels = c("tone", "consonant", "vowel"))
+
+rma_TypeFeaturesMP_Condition_age <- rma.mv(g_calc, g_var_calc, mods = ~type_feature*condition*age.C, data = db_type, random = ~same_infant_calc | short_cite)
+
+sum_eff_tc <- coef(summary(rma_TypeFeaturesMP_Condition_age))[11,]
+sum_eff2_tv <- coef(summary(rma_TypeFeaturesMP_Condition_age))[12,]
+
+```
+
+Although we had no predictions regarding mispronunciation sensitivity to tone mispronunciations, we included an exploratory analysis to examine whether responses to tone mispronunciations were different from that of consonants or vowels. When mispronunciation type (tone, consonant, vowel) and condition (correct, mispronunciation) were included as moderators, the moderator test was significant, `r mod_test(rma_TypeFeaturesMP_ConditionT)`. The interactions between condition and consonant mispronunciations ($\beta$ = `r full_estimate(sum_eff2c)`) as well as vowel mispronunciations ($\beta$ = `r full_estimate(sum_eff2v)`), were not significant, suggesting that there was no difference in looks to the target in response to tone mispronunciations compared with consonant or vowel mispronunciations. 
+
+We further included an exploratory analysis of the relationship between infant age and the impact of tone mispronunciations in comparison to consonant and vowel mispronunciations. We included mispronunciation type, condition (correct pronunciation, mispronunciation) as well as age as additional moderators. The moderator test was significant, `r mod_test(rma_TypeFeaturesMP_ConditionT)`, but the interactions between condition, age, and both consonant ($\beta$ = `r full_estimate(sum_eff_tc)`) and vowel ($\beta$ = `r full_estimate(sum_eff2_tv)`) mispronunciations were not significant. Infants' sensitivity to tone mispronunciations compared to consonant or vowel mispronunciations did not differ with age.
