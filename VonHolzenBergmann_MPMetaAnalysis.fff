@@ -1,7 +1,7 @@
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
-\includegraphics[width=1.6in]{figures/Figure_1_PRISMA_MA_Mispronunciation} \caption{A PRISMA flowchart illustrating the selection procedure used to include studies in the current meta-analysis.}\label{fig:PRISMA-image}
+\includegraphics[width=1\linewidth]{figures/Figure_1_PRISMA_MA_Mispronunciation} \caption{A PRISMA flowchart illustrating the selection procedure used to include studies in the current meta-analysis.}\label{fig:PRISMA-image}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
