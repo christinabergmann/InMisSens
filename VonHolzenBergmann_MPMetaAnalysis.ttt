@@ -3,7 +3,7 @@
 
 \scriptsize{
 \begin{longtable}{llllllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:SummaryTable}Summary of all studies. Age: mean age(s) reported in the paper (in months). Vocabulary: Comp = comprehension, Prod = production. Distractor Familiarity: Fam = Familiar Distractor, Unfam = Unfamiliar Distractor. Target Overlap: position of overlap between target and distractor; O = onset, M = medial, C = coda. Mispronunciation Size: number of features changed; commas indicate when sizes were compared separately (e.g. 1, 2, 3), dashes indicate the range of sizes were aggregated (e.g. 1-3). Mispronunciation Position: O = onset, M = medial, C = coda. Mispronunciation Type: C = consonant, V = vowel, T = tone. For both Mispronunciation Position and Type, a slash separator indicates that is was tested but a distinction was not made in the stimuli. For all categories, unspec. indicates that the value was unspecified in the paper}\\
+\caption{\label{tab:SummaryTable}Summary of all papers. Age: mean age (in months). Vocabulary: Comp = comprehension, Prod = production. Distractor Familiarity: Fam = Familiar, Unfam = Unfamiliar  Target Overlap: O = onset, M = medial, C = coda. Mispronunciation Size: number of features changed; commas indicate separate comparison, dashes indicate an aggregated range. Mispronunciation Position: O = onset, M = medial, C = coda. Mispronunciation Type: C = consonant, V = vowel, T = tone. A slash separator indicates no distinction was made in the stimuli and unspec. indicates that the value was unspecified in the paper}\\
 \toprule
  &  &  &  & \multicolumn{2}{c}{Distractor} & \multicolumn{3}{c}{Mispronunciation}  &\\
 \cmidrule(r){5-6} \cmidrule(r){7-9}
@@ -41,6 +41,33 @@ White \& Aslin (2011) & paper & 18 & None & unfam & unfam & 1 & M & V & 4\\
 White \& Morgan (2008) & paper & 18, 19 & None & unfam & unfam & 1, 2, 3 & O & C & 12\\
 Zesiger \& JÃ¶hr (2011) & paper & 14 & None & fam & none & 1 & O, M & C, V & 7\\
 Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod & fam & none & 1, 2 & O & C & 6\\
+\bottomrule
+\end{longtable}
+}
+\end{lltable}
+\efloatseparator
+ 
+\begin{lltable}
+
+
+\scriptsize{
+\begin{longtable}{lllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
+\caption{\label{tab:mod_table_finalize}Summary of moderator tests and effect estimates.}\\
+\toprule
+Moderator & Moderator Test & Interaction Terms & Hedges' *g* & SE & 95 CI & *p*-value\\
+\midrule
+Misp. size & QM(1) = 61.081, *p* < .001 &  & -0.406 & 0.052 & [-0.507, -0.304] & < .001\\
+Misp. size & QM(3) = 143.617, *p* < .001 & Age & 0.009 & 0.006 & [-0.002, 0.02] & = 0.099\\
+Misp. position & QM(3) = 172.345, *p* < .001 & Condition & -0.126 & 0.064 & [-0.252, 0] & = 0.049\\
+Misp. position & QM(7) = 175.856, *p* < .001 & Condition * Age & 0.022 & 0.018 & [-0.013, 0.057] & = 0.223\\
+Misp. type & QM(3) = 145.138, *p* < .001 & Condition & 0.056 & 0.079 & [-0.099, 0.211] & = 0.479\\
+Misp. type & QM(7) = 153.795, *p* < .001 & Condition * Age & 0.044 & 0.018 & [0.008, 0.08] & = 0.016\\
+Misp. type & QM(7) = 158.889, *p* < .001 & Condition * Language Family & -0.872 & 0.28 & [-1.421, -0.323] & = 0.002\\
+Misp. type & QM(15) = 185.148, *p* < .001 & Condition * Language Family * Age & 0.331 & 0.078 & [0.178, 0.484] & < .001\\
+Distractor Overlap & QM(3) = 48.101, *p* < .001 & Condition & 0.195 & 0.213 & [-0.223, 0.612] & = 0.36\\
+Distractor Overlap & QM(7) = 67.82, *p* < .001 & Condition * Age & 0.091 & 0.038 & [0.017, 0.166] & = 0.016\\
+Distractor Familiarity & QM(3) = 104.058, *p* < .001 & Condition & 0.067 & 0.137 & [-0.203, 0.336] & = 0.628\\
+Distractor Familiarity & QM(7) = 107.683, *p* < .001 & Condition * Age & -0.021 & 0.035 & [-0.09, 0.048] & = 0.547\\
 \bottomrule
 \end{longtable}
 }
