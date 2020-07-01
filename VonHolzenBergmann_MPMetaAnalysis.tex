@@ -1,34 +1,47 @@
-\documentclass[man, noextraspace]{apa6}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  man, noextraspace]{apa6}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\usepackage{hyperref}
-\hypersetup{unicode=true,
-            pdftitle={The development of infants' responses to mispronunciations: A Meta-Analysis},
-            pdfauthor={Katie Von Holzen~\& Christina Bergmann},
-            pdfkeywords={language acquisition; mispronunciation sensitivity; word recognition; meta-analysis; lexicon; infancy},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={The development of infants' responses to mispronunciations: A Meta-Analysis},
+  pdfauthor={Katie Von Holzen~\& Christina Bergmann},
+  pdfkeywords={language acquisition; mispronunciation sensitivity; word recognition; meta-analysis; lexicon; infancy},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -38,35 +51,14 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
-
-
-  \title{The development of infants' responses to mispronunciations: A Meta-Analysis}
-    \author{Katie Von Holzen\textsuperscript{1,2,3}~\& Christina Bergmann\textsuperscript{4,5}}
-    \date{}
-  
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 \shorttitle{Mispronunciation Meta-Analysis}
 \affiliation{
 \vspace{0.5cm}
@@ -111,6 +103,10 @@
 \captionsetup[figure]{font={stretch=1.5}}
 \captionsetup[table]{font=scriptsize}
 
+\title{The development of infants' responses to mispronunciations: A Meta-Analysis}
+\author{Katie Von Holzen\textsuperscript{1,2,3}~\& Christina Bergmann\textsuperscript{4,5}}
+\date{}
+
 \authornote{The authors each declare that they have no conflict of interest.
 
 Correspondence concerning this article should be addressed to Katie Von Holzen, Emil-Figge-Straße 50, 44221 Dortmund, Germany. E-mail: \href{mailto:katie.m.vonholzen@gmail.com}{\nolinkurl{katie.m.vonholzen@gmail.com}}}
@@ -124,25 +120,25 @@ As they develop into mature speakers of their native language, infants must not 
 \begin{document}
 \maketitle
 
-In a mature phono-lexical system, word recognition must balance flexibility to slight variation (e.g., speaker identity, accented speech) while distinguishing between phonological contrasts that differentiate words in a given language (e.g.~cat-hat). This meta-analysis examines on the latter, focusing how infants apply the relevant phonological categories of their native language, aggregating twenty years' worth of studies using the mispronunciation sensitivity paradigm. The original study of Swingley and Aslin (2000) presented American-English learning 18- to 23-month-olds with pairs of images of words they were very likely to know (e.g.~a baby and a dog) and their eye movements to each image were recorded. Infants either heard the correct label (e.g.~\enquote{baby}) or a mispronounced label (e.g.~\enquote{vaby}) for one of the images. Although infants looked at the correct target image in response to both types of labels, correct labels elicited more looks to the target image than mispronounced labels. Swingley and Aslin (2000) concluded that already before the second birthday, children's representations for familiar words are phonologically well specified. As we will review below, there are opposing theories and resulting predictions, supported by empirical data, as to how this knowledge is acquired and applied to lexical representations. The time is thus ripe to aggregate all publicly available evidence using a meta-analysis. In doing so, we can examine developmental trends making use of data from a much larger and diverse sample of infants than is possible in most single studies (see ManyBabiesConsortium (2020) for a notable exception).
+In a mature phono-lexical system, word recognition must balance flexibility to slight variation (e.g., speaker identity, accented speech) while distinguishing between phonological contrasts that differentiate words in a given language (e.g.~cat-hat). This meta-analysis examines the latter, focusing how infants apply the relevant phonological categories of their native language, aggregating twenty years' worth of studies using the mispronunciation sensitivity paradigm. The original study of Swingley \& Aslin (2000) presented American-English learning 18- to 23-month-olds with pairs of images of words they were very likely to know (e.g.~a baby and a dog) and their eye movements to each image were recorded. Infants either heard the correct label (e.g.~\enquote{baby}) or a mispronounced label (e.g.~\enquote{vaby}) for one of the images. Although infants looked at the correct target image in response to both types of labels, correct labels elicited more looking to the target image than mispronounced labels. Swingley \& Aslin (2000) concluded that already before the second birthday, children's representations for familiar words are phonologically well specified. As we will review below, there are opposing theories and resulting predictions, supported by empirical data, as to how this knowledge is acquired and applied to lexical representations. The time is thus ripe to aggregate all publicly available evidence using a meta-analysis. In doing so, we can examine developmental trends making use of data from a much larger and diverse sample of infants than is possible in most single studies.
 
-An \emph{increase} in mispronunciation sensitivity with age is predicted by a maturation from holistic to more detailed phono-lexical representations and has been supported by several studies (Altvater-Mackensen, 2010; Altvater-Mackensen, Feest, \& Fikkert, 2014; Feest \& Fikkert, 2015; Mani \& Plunkett, 2007). The first words that infants learn are often not similar sounding (e.g.~mama, ball, kitty; Charles-Luce \& Luce, 1995) and encoding representations for these words using fine phonological detail may not be necessary. According to PRIMIR (Curtin \& Werker, 2007; Werker \& Curtin, 2005) infants's initially episodic representations give way to more abstract phonological word forms, as the infant learns more words, the detail of which can be accessed more or less easily depending on factors such as the infant's age or the demands of the task. This argument is supported by the results of Mani and Plunkett (2010), who found that 12-month-old infants with a larger vocabulary showed a greater sensitivity to vowel mispronunciations than infants with a smaller vocabulary.
+An \emph{increase} in mispronunciation sensitivity with age is predicted by a maturation from holistic to more detailed phono-lexical representations and has been supported by several studies (Altvater-Mackensen, 2010; Altvater-Mackensen, Feest, \& Fikkert, 2014; Feest \& Fikkert, 2015; Mani \& Plunkett, 2007). The first words that infants learn are often not similar sounding (e.g.~mama, ball, kitty; Charles-Luce \& Luce, 1995) and encoding representations for these words using fine phonological detail may not be necessary. According to PRIMIR (Curtin \& Werker, 2007; Werker \& Curtin, 2005) infants' initially episodic representations give way to more abstract phonological word forms, as the infant learns more words, the detail of which can be accessed more or less easily depending on factors such as the infant's age or the demands of the task. This argument is supported by the results of Mani \& Plunkett (2010), who found that 12-month-old infants with a larger vocabulary showed a greater sensitivity to vowel mispronunciations than infants with a smaller vocabulary.
 
 Yet, the majority of studies examining a potential association between mispronunciation sensitivity and vocabulary size have concluded that there is no relationship (Bailey \& Plunkett, 2002; Ballem \& Plunkett, 2005; Mani, Coleman, \& Plunkett, 2008; Mani \& Plunkett, 2007; Swingley, 2009; Swingley \& Aslin, 2000, 2002; Zesiger, Lozeron, Levy, \& Frauenfelder, 2012). Furthermore, other studies testing more than one age have found \emph{no difference} in mispronunciation sensitivity (Bailey \& Plunkett, 2002; Swingley \& Aslin, 2000; Zesiger et al., 2012). Such evidence supports an early specificity hypothesis, which suggests continuity in how infants represent familiar words. According to this account, infants represent words with phonological detail already at the onset of lexical acquisition and that this persists throughout development.
 
-There are no theoretical accounts that would predict \emph{decreased} mispronunciation sensitivity, but at least one study has found a decrease in sensitivity to small mispronunciations. Here, 18- but not 24-month-old infants showed sensitivity to more subtle mispronunciations that differed from the correct pronunciation by 1 phonological feature (Mani \& Plunkett, 2011). When faced with large and salient mispronunciations, sensitivity to small 1-feature mispronunciations may be obscured, especially if infants show graded sensitivity to different degrees of mispronunciations (see below), as Mani and Plunkett (2011) found with 24- but not 18-month-olds in their study.
+There are no theoretical accounts that would predict \emph{decreased} mispronunciation sensitivity, but at least one study has found a decrease in sensitivity to small mispronunciations. Here, 18- but not 24-month-old infants showed sensitivity to more subtle mispronunciations that differed from the correct pronunciation by 1 phonological feature (Mani \& Plunkett, 2011). Mani \& Plunkett (2011) argue that when faced with large and salient mispronunciations, infants' sensitivity to small 1-feature mispronunciations may be obscured. This would especially be the case if infants show graded sensitivity to different degrees of mispronunciations (see below), as Mani \& Plunkett (2011) found with 24- but not 18-month-olds in their study.
 
-To disentangle the predictions that phono-lexical representations are progressively becoming more specified or are specified early, we investigate the relationship between mispronunciation sensitivity and age as well as vocabulary size. But, this may not account for all variability found in the literature. Many studies pose more nuanced questions, such as examining the impact of number of phonological features changed (mispronunciation size) or the location of the mispronunciation. Some studies may differ in their experimental design, presenting a distractor image that is either familiar or completely novel. We thus include an analysis of the features of the task to shed further light on early phono-lexical representations and their maturation.
+To disentangle the predictions that phono-lexical representations are progressively becoming more specified or are specified early, we investigate the relationship between mispronunciation sensitivity and age as well as vocabulary size. But, this may not account for all variability found in the literature. Indeed, different laboratories may vary in their approach to creating a mispronunciation sensitivity experiment, using different types of stimuli and methodologies. Many studies pose more nuanced questions, such as examining the impact of number of phonological features changed (mispronunciation size) or the location of the mispronunciation. Some studies may differ in their experimental design, presenting a distractor image that is either familiar or completely novel. In our meta-analysis we code for features of the experiment that are often reported but vary across studies and include an analysis of these features to shed further light on early phono-lexical representations and their maturation.
 
-These research questions and experimental manipulations have the potential to create experimental tasks that are more or less difficult for the infant to successfully complete. The PRIMIR Framework (Processing Rich Information from Multidimensional Interactive Representations; Curtin \& Werker, 2007; Werker \& Curtin, 2005) describes how infants acquire and organize the incoming speech signal into phonetic and indexical detail. The ability to access and use this detail, however, is governed by the task or developmental demands probed in a particular experiment. In a particularly demanding task, such as when the target and distractor image share the same onset (e.g.~doggie and doll), infants' ability to access the phonological detail of familiar words may be restricted (Swingley, Pinto, \& Fernald, 1999). If older infants are more likely to be tested using a more demanding mispronunciation sensitivity task, this may attenuate developmental effects across studies. Note, however, that those studies reporting change (Altvater-Mackensen, 2010; Altvater-Mackensen et al., 2014; Feest \& Fikkert, 2015; Mani \& Plunkett, 2007) or no change (Bailey \& Plunkett, 2002; Swingley \& Aslin, 2000; Zesiger et al., 2012) all presented the same task across ages.
+These research questions and experimental manipulations have the potential to create experimental tasks that are more or less difficult for the infant to successfully complete. The PRIMIR Framework (Processing Rich Information from Multidimensional Interactive Representations; Curtin \& Werker, 2007; Werker \& Curtin, 2005) describes how infants acquire and organize the incoming speech signal into phonetic and indexical detail. The ability to access and use this detail, however, is governed by the task or developmental demands probed in a particular experiment. For example, if infants are tested on a more subtle mispronunciation that changes only one phonological feature, they may be less likely to identify the change in comparison to a mispronunciation that changes two or three phonological features (White \& Morgan, 2008). If older infants are more likely to be tested using a more demanding mispronunciation sensitivity task, this may attenuate developmental effects across studies. Note, however, that those studies reporting change (Altvater-Mackensen, 2010; Altvater-Mackensen et al., 2014; Feest \& Fikkert, 2015; Mani \& Plunkett, 2007) or no change (Bailey \& Plunkett, 2002; Swingley \& Aslin, 2000; Zesiger et al., 2012) all presented the same task across ages.
 
-The first set of questions concern how infants' sensitivity is modulated by different kinds of mispronunciations. Some experiments examine infants' sensitivity to factors that change the identity of a word on a measurable level, or \emph{mispronunciation size} (i.e.~1-feature, 2-features, 3-features, etc.), finding graded sensitivity to both consonant (Bernier \& White, 2017; Tamasi, 2016; White \& Morgan, 2008) and vowel (Mani \& Plunkett, 2011) feature changes. This also has consequences for understanding the developmental trajectory of mispronunciation sensitivity, as adults show similar graded sensitivity (Bailey \& Hahn, 2005)
+The first set of questions concern how infants' sensitivity is modulated by different kinds of mispronunciations. Following on the above example, some experiments examine infants' sensitivity to factors that change the identity of a word on a measurable level, or \emph{mispronunciation size} (i.e.~1-feature, 2-features, 3-features), finding that infants are more sensitive to larger mispronunciations (3-feature-changes) than smaller mispronunciations (1-feature changes) for both consonant (Bernier \& White, 2017; Tamasi, 2016; White \& Morgan, 2008) and vowel (Mani \& Plunkett, 2011) mispronunciations, known as graded sensitivity. This also has consequences for understanding the developmental trajectory of mispronunciation sensitivity, as adults show similar graded sensitivity (Bailey \& Hahn, 2005).
 
-The COHORT model (Marslen-Wilson \& Zwitserlood, 1989) describes lexical access in one direction, with the importance of each phoneme decreasing as its position comes later in the word. In contrast, the TRACE model (McClelland \& Elman, 1986) describes lexical access as constantly updating and reevaluating the incoming speech input in the search for the correct lexical entry, and therefore can recover from word onset and to a lesser extent medial mispronunciations. To evaluate these competing theories, studies often manipulate the \emph{mispronunciation position}, whether onset, medial, or coda, in the word.
+The position of mispronunciation in the word may differentially interrupt the infant's word recognition process, but the degree to which position impacts word recognition is a matter of debate. The COHORT model (Marslen-Wilson \& Zwitserlood, 1989) describes lexical access in a linear direction, with the importance of each phoneme decreasing as its position comes later in the word. In contrast, the TRACE model (McClelland \& Elman, 1986) describes lexical access as constantly updating and reevaluating the incoming speech input in the search for the correct lexical entry, and therefore can recover from word onset and to a lesser extent medial mispronunciations. To evaluate these competing theories, studies often manipulate the \emph{mispronunciation position}, whether onset, medial, or coda, in the word.
 
 Consonantal changes may be more disruptive to lexical processing than vowel changes, known as the consonant bias, and a learned account predicts that this bias emerges over development and is impacted by the language family of the infants' native language (for a review see Nazzi, Poltrock, \& Von Holzen, 2016). Yet, the handful of studies directly comparing sensitivity to consonant and vowel mispronunciations mostly find symmetry as opposed to an asymmetry between consonants and vowels for English- (Mani \& Plunkett, 2007, 2010; but see Swingley, 2016) and Danish-learning infants (Højen et al., n.d.) and do not compare infants learning different native languages (for cross-linguistic evidence from word-learning see Nazzi, Floccia, Moquet, \& Butler, 2009). In the current meta-analysis, we examine infants' sensitivity to the \emph{type of mispronunciation}, whether consonant or vowel, across different ages and native language families to assess the predictions of the learned account of the consonant bias.
 
-A second set of questions is whether the context modulates infants' responses to mispronunciations. In order to study the influence of mispronunciation position, many studies control the \emph{phonological overlap between target and distractor labels}. For example, when examining sensitivity to a vowel mispronunciation of the target word \enquote{doggie}, the image of a dog would be paired with a distractor image that shares onset overlap, such as \enquote{doll}. This ensures that infants can not use the onset of the word to differentiate between the target and distractor images (Swingley et al., 1999). Instead, infants must pay attention to the mispronounced phoneme in order to successfully detect the change.
+A second set of questions is whether the experimental context modulates infants' responses to mispronunciations. In order to study the influence of mispronunciation position, many studies control the \emph{phonological overlap between target and distractor labels}. For example, when examining sensitivity to a vowel mispronunciation of the target word \enquote{ball}, the image of a ball would be paired with a distractor image that shares onset overlap, such as \enquote{bed}. This ensures that infants cannot use the onset of the word to differentiate between the target and distractor images (Mani \& Plunkett, 2007). Instead, infants must pay attention to the mispronounced phoneme in order to successfully detect the change.
 
 Mispronunciation sensitivity may also be modulated by \emph{distractor familiarity}: whether the distractor used is familiar or unfamiliar. This is a particularly fruitful question to investigate within the context of a meta-analysis, as mispronunciation sensitivity in the presence of a familiar compared to unfamiliar distractor has not been directly compared. Most studies present infants with pictures of two known objects, thereby ruling out the unlabeled competitor, or distractor, as possible target. It is thus not surprising that infants tend to look towards the target more, even when its label is mispronounced. In contrast, other studies present infants with pairs of familiar (labeled target) and unfamiliar (unlabeled distractor) objects (Mani \& Plunkett, 2011; Skoruppa, Mani, Plunkett, Cabrol, \& Peperkamp, 2013; Swingley, 2016; White \& Morgan, 2008). By using an unfamiliar object as a distractor, the infant is presented with a viable option onto which the mispronounced label can be applied (Halberda, 2003; Markman, Wasow, \& Hansen, 2003).
 
@@ -151,7 +147,7 @@ In sum, the studies we have reviewed begin to paint a picture of the development
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-The present meta-analysis was conducted with maximal transparency and reproducibility in mind. To this end, we provide all data and analysis scripts on the supplementary website (\url{https://osf.io/rvbjs/}) and open our meta-analysis up for updates (Tsuji, Bergmann, \& Cristia, 2014). The most recent version is available via the website and the interactive platform MetaLab (\url{https://metalab.stanford.edu}; Bergmann et al., 2018). Since the present paper was written with embedded analysis scripts in R (R Core Team, 2018) using the papaja package (Aust \& Barth, 2018) in R Markdown (Allaire et al., 2018), it is always possible to re-analyze an updated dataset. In addition, we followed the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines and make the corresponding information available as supplementary materials (Moher, Liberati, Tetzlaff, Altman, \& Group, 2009). Figure \ref{fig:PRISMA-image} plots our PRISMA flowchart illustrating the paper selection procedure.
+The present meta-analysis was conducted with maximal transparency and reproducibility in mind. To this end, we provide all data and analysis scripts on the supplementary website (\url{https://osf.io/rvbjs/}) and open our meta-analysis up for updates (Tsuji, Bergmann, \& Cristia, 2014). The most recent version is available via the website and the interactive platform MetaLab (\url{https://metalab.stanford.edu}; Bergmann et al., 2018). Since the present paper was written with embedded analysis scripts in R (R Core Team, 2018) using the papaja package (Aust \& Barth, 2018) in R Markdown (Allaire et al., 2018), it is always possible to re-analyze an updated dataset. In addition, we followed the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines and make the corresponding information available as supplementary materials (Moher, Liberati, Tetzlaff, Altman, \& PRISMA Group", 2009). Figure \ref{fig:PRISMA-image} plots our PRISMA flowchart illustrating the paper selection procedure.
 
 (Insert Figure \ref{fig:PRISMA-image} about here)
 
@@ -210,7 +206,7 @@ Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod & fam & none & 1, 2 & O & C &
 \hypertarget{study-selection}{%
 \subsection{Study Selection}\label{study-selection}}
 
-We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list. This process yielded 110 items. We then used the Google Scholar search engine to search for papers citing the original Swingley and Aslin (2000) publication. This search was conducted on 22 September, 2017 and yielded 288 results. We removed 99 duplicate items and screened the remaining 299 items for their title and abstract to determine whether each met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition and mispronunciations; (3) infants studied were under 31-months-of-age and typically developing; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; (5) the stimuli were auditory speech. The final sample (\emph{n} = 32) consisted of 27 journal articles, 1 proceedings paper, 2 theses, and 2 unpublished reports. We will refer to these items collectively as papers. Table \ref{tab:SummaryTable} provides an overview of all papers included in the present meta-analysis.
+We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list. This process yielded 110 items. We then used the Google Scholar search engine to search for papers citing the original Swingley \& Aslin (2000) publication. This search was conducted on 22 September, 2017 and yielded 288 results. We removed 99 duplicate items and screened the remaining 299 items for their title and abstract to determine whether each met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition and mispronunciations; (3) infants studied were under 31-months-of-age and typically developing; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; (5) the stimuli were auditory speech. The final sample (\emph{n} = 32) consisted of 27 journal articles, 1 proceedings paper, 2 theses, and 2 unpublished reports. We will refer to these items collectively as papers. Table \ref{tab:SummaryTable} provides an overview of all papers included in the present meta-analysis.
 
 (Insert Table 1 about here)
 
@@ -228,7 +224,7 @@ We calculated Hedges' \emph{g} using the raw means and standard deviations repor
 
 To consider the fact that the same infants contributed to multiple datapoints, we analyze our results in a multilevel approach using the R (R Core Team, 2018) package metafor (Viechtbauer, 2010). We use a multilevel random effects model which estimates the mean and variance of effect sizes sampled from an assumed distribution of effect sizes. In the random effect structure we take into account the shared variance of effect sizes drawn from the same paper, and nested therein that the same infants might contribute to multiple effect sizes.
 
-Mispronunciation sensitivity studies typically examine infants' proportion of target looks (PTL) in comparison to some baseline measurement. PTL is calculated by dividing the percentage of looks to the target by the total percentage of looks to both the target and distractor images. Across papers the baseline comparison varied; since other options were not available to us, we used the baseline reported by the authors of each paper. Over half of the records (\emph{n} = 129) subtracted the PTL score for a pre-naming phase from the PTL score for a post-naming phase, resulting in a Difference Score. The Difference Score is one value, which is then compared with a chance value of 0. In contrast, Pre vs.~Post (\emph{n} = 69 records), directly compare the post- and pre-naming PTL scores with one another using a statistical test (e.g.~t-test, ANOVA). This requires two values, one for the pre-naming phase and one for the post-naming phase. The remaining records used a Post dependent variable (\emph{n} = 53 records), which compares the post-naming PTL score with a chance value of 50\%. Here, the infants' pre-naming phase baseline preferences are not considered and instead target fixations are evaluated based on the likelihood to fixate one of two pictures (50\%). Standardized effect sizes based on mean differences, as calculated here, preserve the sign. Consequently, positive effect sizes reflect more looks to the target picture after naming, and larger positive effect sizes indicate comparatively more looks to the target.
+Mispronunciation sensitivity studies are typically examine infants' proportion of target looks (PTL) in comparison to some baseline measurement. PTL is calculated by dividing the percentage of looks to the target by the total percentage of looks to both the target and distractor images. Across papers the baseline comparison varied; since other options were not available to us, we used the baseline reported by the authors of each paper. Over half of the records (\emph{n} = 129) subtracted the PTL score for a pre-naming phase from the PTL score for a post-naming phase, resulting in a Difference Score. The Difference Score is one value, which is then compared with a chance value of 0. Pre vs.~Post (\emph{n} = 69 records) accomplishes the same analysis, directly compare the post- and pre-naming PTL scores with one another using a statistical test (e.g.~t-test, ANOVA). This requires two values, one for the pre-naming phase and one for the post-naming phase. The remaining records used a Post dependent variable (\emph{n} = 53 records), which compares the post-naming PTL score with a chance value of 50\%. Here, the infants' pre-naming phase baseline preferences are not considered and instead target fixations are evaluated based on the likelihood to fixate one of two pictures (50\%). Standardized effect sizes based on mean differences, as calculated here, preserve the sign. Consequently, positive effect sizes reflect more looks to the target picture after naming, and larger positive effect sizes indicate comparatively more looks to the target.
 
 Finally, we assess the statistical power of studies included in our meta-analysis, as well as calculate the sample size required to achieve a 80\% power considering our estimate of the population effect and its variance. Failing to take effect sizes into account can lead to either underpowered research or testing too many participants. Underpowered studies will lead to false negatives more frequently than expected, which in turn results in an unpublished body of literature (Bergmann et al., 2018). At the same time, underpowered studies with significant outcomes are likely to overestimate the effect, leading to wrong estimations of the population effect when paired with publication bias (Jennions, Mù, Pierre, Curie, \& Cedex, 2002). Overpowered studies mean that participants were tested unnecessarily, which has ethical implications particularly when working with infants and other difficult to recruit and test populations.
 
@@ -292,7 +288,7 @@ Heterogeneity was significant for both correctly pronounced (Q(103) = 625.63, \e
 
 To evaluate the different predictions we laid out in the introduction for how mispronunciation sensitivity will change as infants develop, we next added the moderator age (centered; continuous and measured in days but transformed into months for ease of interpreting estimates by dividing by 30.44 for Figure \ref{fig:PlotMPEffect}).
 
-In the first analyses, we investigate the impact of age separately on conditions where words were either pronounced correctly or not. Age did not significantly modulate object identification in response to correctly pronounced (QM(1) = 0.558, \emph{p} = 0.455) or mispronounced words (QM(1) = 1.64, \emph{p} = 0.2). The lack of a significant modulation together with the small estimates for age (correct: \(\beta\) = 0.014, SE = 0.019, 95\% CI{[}-0.022, 0.05{]}, \emph{p} = 0.455; mispronunciation: \(\beta\) = 0.015, SE = 0.011, 95\% CI{[}-0.008, 0.037{]}, \emph{p} = 0.2) indicates that there might be no relationship between age and target looks in response to a correctly pronounced or mispronounced label.
+In the first analyses, we investigate the impact of age separately on conditions where words were either pronounced correctly or not. Age did not significantly modulate object identification in response to correctly pronounced (QM(1) = 0.558, \emph{p} = 0.455) or mispronounced words (QM(1) = 1.64, \emph{p} = 0.2). The lack of a significant modulation together with the small estimates for age (correct: \(\beta\) = 0.014, SE = 0.019, 95\% CI{[}-0.022, 0.05{]}, \emph{p} = 0.455; mispronunciation: \(\beta\) = 0.015, SE = 0.011, 95\% CI{[}-0.008, 0.037{]}, \emph{p} = 0.2) indicates that there was no relationship between age and target looks in response to a correctly pronounced or mispronounced label. However, previous experimental studies ((e.g.~Fernald, Pinto, Swingley, Weinberg, \& McRoberts, 1998)) and a recent meta-analysis (Frank, Lewis, \& Macdonald, 2016) have found that children's speed and accuracy in recognition of correctly pronounced words increases with age. Perhaps older children are more likely to be tested on less-frequent, later learned words than younger children, which could lead to a lack of a relationship between age and target looks in response to correct pronunciations in the current meta-analysis.
 
 We then examined the interaction between age and mispronunciation sensitivity (correct vs.~mispronounced words) in our whole dataset. The moderator test was significant (QM(3) = 106.158, \emph{p} \textless{} .001). The interaction between age and mispronunciation sensitivity, however, was not significant (\(\beta\) = 0.012, SE = 0.013, 95\% CI{[}-0.014, 0.039{]}, \emph{p} = 0.349). The small estimate, as well as inspection of Figure \ref{fig:PlotMPEffect}, suggests that as infants age, their mispronunciation sensitivity neither increases or decreases.
 
@@ -301,7 +297,7 @@ We then examined the interaction between age and mispronunciation sensitivity (c
 \begin{figure}
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMPEffect-1.pdf}
-\caption{\label{fig:PlotMPEffect}Panel a: Effect sizes for correct pronunciations (orange) and mispronunciations (blue) by participant age. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMPEffect}Panel a: Effect sizes for correct pronunciations (orange) and mispronunciations (blue) by participant age. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure}
 
 \hypertarget{vocabulary-correlations}{%
@@ -335,14 +331,14 @@ The studies examined in this meta-analysis examined mispronunciation sensitivity
 \hypertarget{moderator-analyses}{%
 \subsection{Moderator Analyses}\label{moderator-analyses}}
 
-If infants' word recognition skills are generally thought to improve with age and vocabulary size, research questions that tap more complex processes may be more likely to be investigated in older infants. In this section, we consider each moderator individually and investigate its influence on mispronunciation sensitivity. For most moderators (except mispronunciation size), we combine the correct and mispronounced datasets and include the moderator of condition, to study mispronunciation sensitivity as opposed to object recognition. To better understand the impact of these moderators on developmental change, we include age as subsequent moderator. Results of the moderator tests as well as the individual effects for each moderator interaction are reported in Table 2. All moderator tests were significant and subsequent significant interactions of critical terms are interpreted. Finally, we analyze the relationship between infant age and the moderator condition they were tested in using Fisher's exact test, which is more appropriate for small sample sizes (Fisher, 1922). This evaluates the independence of infants' age group (divided into quartiles unless otherwise specified) and assignment to each type of condition in a particular moderator.
+If infants' word recognition skills are generally thought to improve with age and vocabulary size, research questions that tap more complex processes may be more likely to be investigated in older infants. In this section, we consider each moderator individually and investigate its influence on mispronunciation sensitivity. For most moderators (except mispronunciation size), we combine the correct and mispronounced datasets and include the moderator of condition, to study mispronunciation sensitivity as opposed to object recognition. To better understand the impact of these moderators on developmental change, we include age as subsequent moderator. Results of the 5 main moderator tests (mispronunciation size, mispronunciation position, mispronunciation type, distractor overlap, distractor familiarity) as well as the individual effects for each moderator interaction are reported in Table 2. The statistic that tests whether a specific moderator explains a significant proportion of variance in the data, QM, was significant for all moderators and subsequent significant interactions of critical terms are interpreted. Finally, we analyze the relationship between infant age and the moderator condition they were tested in using Fisher's exact test, which is more appropriate for small sample sizes (Fisher, 1922). This evaluates the independence of infants' age group (divided into quartiles unless otherwise specified) and assignment to each type of condition in a particular moderator.
 
 (Insert Table 2 about here)
 
 \hypertarget{size-of-mispronunciation}{%
 \subsubsection{Size of mispronunciation}\label{size-of-mispronunciation}}
 
-To assess whether the size of the mispronunciation tested, as measured by the number of features changed, modulates mispronunciation sensitivity, we calculated the meta-analytic effect for object identification on a subset of the overall dataset, with 90 records for correct pronunciations, 99 for 1-feature mispronunciations, 16 for 2-feature mispronunciations, and 6 for 3-feature mispronunciations. Each feature change (from 0 to 3; 0 representing correct pronunciations) was considered to have an graded impact on mispronunciation sensitivity (Mani \& Plunkett, 2011; White \& Morgan, 2008) and this moderator was coded as a continuous variable. We did not include records for which the numer of features changed was not specified or consistent within a record (e.g., both 1- and 2-feature changes within one mispronunciation record).
+To assess whether the size of the mispronunciation tested, as measured by the number of features changed, modulates mispronunciation sensitivity, we calculated the meta-analytic effect for object identification on a subset of the overall dataset, with 90 records for correct pronunciations, 99 for 1-feature mispronunciations, 16 for 2-feature mispronunciations, and 6 for 3-feature mispronunciations. Each feature change (from 0 to 3; 0 representing correct pronunciations) was considered to have an graded impact on mispronunciation sensitivity (Mani \& Plunkett, 2011; White \& Morgan, 2008) and this moderator was coded as a continuous variable. We did not include records for which the number of features changed was not specified or consistent within a record (e.g., both 1- and 2-feature changes within one mispronunciation record).
 
 \begin{figure}
 \centering
@@ -362,7 +358,7 @@ We next calculated the meta-analytic effect of mispronunciation sensitivity (mod
 \begin{figure}
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispPosit-1.pdf}
-\caption{\label{fig:PlotMispPosit}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMispPosit}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure}
 
 The model results revealed that mispronunciation sensitivity decreased linearly as the position of the mispronunciation moved later in the word, with sensitivity greatest for onset mispronunciations and smallest for coda mispronunciations (Table 2). We plot this relationship in Figure \ref{fig:PlotMispPosit}. When age was added as a moderator, however, the interaction between age, condition, and mispronunciation position was small and not significant. Due to the small sample size of coda mispronunciations, we only included 3 age groups in Fisher's exact test. The results were significant, \emph{p} = 0.02. Older infants were more likely to be tested on onset mispronunciations, while younger infants were more likely to be tested on medial mispronunciations.
@@ -377,7 +373,7 @@ We next calculated the meta-analytic effect of mispronunciation sensitivity (mod
 \begin{figure}
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispType-1.pdf}
-\caption{\label{fig:PlotMispType}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMispType}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure}
 
 The model results revealed that mispronunciation sensitivity did not differ between consonant and vowel mispronunciations (Table 2). We plot this relationship in Figure \ref{fig:PlotMispType}a. When age was added as a moderator, however, the model revealed that as infants age, mispronunciation sensitivity grows larger for vowel mispronunciations but stays steady for consonant mispronunciations (Figure \ref{fig:PlotMispType}b). The results of Fisher's exact test were significant, \emph{p} \textless{} .001. Older infants were more likely to be tested on consonant mispronunciations, while younger infants were more likely to be tested on vowel mispronunciations. Whether consonant or vowel mispronunciations are more \enquote{difficult} is a matter of theoretical debate, but some evidence suggest that it may be influenced by infants' native language (Nazzi et al., 2016). We next examined whether this was the case.
@@ -387,7 +383,7 @@ The model results revealed that mispronunciation sensitivity did not differ betw
 \begin{figure}
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotCVEffectLang-1.pdf}
-\caption{\label{fig:PlotCVEffectLang}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotCVEffectLang}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure}
 
 The model results revealed that mispronunciation sensitivity for consonants was similar for Germanic and Romance languages. Mispronunciation sensitivity for vowels, however, was greater for Germanic compared to Romance languages (Table 2). We plot this relationship in Figure \ref{fig:PlotCVEffectLang}a. Adding age as a moderator revealed a small but significant estimate for the four-way interaction between mispronunciation type, condition, language family, and age. As can also be seen in Figure \ref{fig:PlotCVEffectLang}b, for infants learning Germanic languages, sensitivity to consonant and vowel mispronunciations did not change with age. In contrast, infants learning Romance languages show a decrease in sensitivity to consonant mispronunciations, but an increase in sensitivity to vowel mispronunciations with age. Due to the small sample size of infants learning Romance languages, we were unable to use Fisher's exact test.
@@ -402,7 +398,7 @@ We next examined the meta-analytic effect of mispronunciation sensitivity (moder
 \begin{figure}
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotDistOverlap-1.pdf}
-\caption{\label{fig:PlotDistOverlap}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotDistOverlap}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure}
 
 The model results revealed that mispronunciation sensitivity was greater when target-distractor pairs shared the same onset phoneme compared to when they shared no phonological overlap (Table 2). We plot this relationship in Figure \ref{fig:PlotDistOverlap}a. Adding age as a moderator revealed a small but significant estimate for the three-way interaction between age, condition, and distractor overlap (Figure \ref{fig:PlotCVEffectLang}b). Mispronunciation sensitivity increased with age for target-distractor pairs containing onset overlap, but decreased with age for target-distractor pairs containing no overlap. The results of Fisher's exact test were significant, \emph{p} \textless{} .001. Older infants were more likely to be tested in experimental conditions where target and distractor images overlapped on their onset phoneme, while younger infants were more likely to be tested in experimental conditions that did not control for overlap.
@@ -419,22 +415,22 @@ We next calculated the meta-analytic effect of mispronunciation sensitivity (mod
 
 \scriptsize{
 \begin{longtable}{lllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:mod_table_finalize}Summary of moderator tests and effect estimates.}\\
+\caption{\label{tab:mod_table_finalize}Summary of the 5 moderator tests, including effect estimates for effects and critical interactions.}\\
 \toprule
 Moderator & Moderator Test & Interaction Terms & Hedges' *g* & SE & 95 CI & *p*-value\\
 \midrule
 Misp. size & QM(1) = 61.081, *p* < .001 &  & -0.406 & 0.052 & [-0.507, -0.304] & < .001\\
-Misp. size & QM(3) = 143.617, *p* < .001 & Age & 0.009 & 0.006 & [-0.002, 0.02] & = 0.099\\
+ & QM(3) = 143.617, *p* < .001 & Age & 0.009 & 0.006 & [-0.002, 0.02] & = 0.099\\ \midrule
 Misp. position & QM(3) = 172.345, *p* < .001 & Condition & -0.126 & 0.064 & [-0.252, 0] & = 0.049\\
-Misp. position & QM(7) = 175.856, *p* < .001 & Condition * Age & 0.022 & 0.018 & [-0.013, 0.057] & = 0.223\\
+ & QM(7) = 175.856, *p* < .001 & Condition * Age & 0.022 & 0.018 & [-0.013, 0.057] & = 0.223\\ \midrule
 Misp. type & QM(3) = 145.138, *p* < .001 & Condition & 0.056 & 0.079 & [-0.099, 0.211] & = 0.479\\
-Misp. type & QM(7) = 153.795, *p* < .001 & Condition * Age & 0.044 & 0.018 & [0.008, 0.08] & = 0.016\\
-Misp. type & QM(7) = 158.889, *p* < .001 & Condition * Language Family & -0.872 & 0.28 & [-1.421, -0.323] & = 0.002\\
-Misp. type & QM(15) = 185.148, *p* < .001 & Condition * Language Family * Age & 0.331 & 0.078 & [0.178, 0.484] & < .001\\
-Distractor Overlap & QM(3) = 48.101, *p* < .001 & Condition & 0.195 & 0.213 & [-0.223, 0.612] & = 0.36\\
-Distractor Overlap & QM(7) = 67.82, *p* < .001 & Condition * Age & 0.091 & 0.038 & [0.017, 0.166] & = 0.016\\
-Distractor Familiarity & QM(3) = 104.058, *p* < .001 & Condition & 0.067 & 0.137 & [-0.203, 0.336] & = 0.628\\
-Distractor Familiarity & QM(7) = 107.683, *p* < .001 & Condition * Age & -0.021 & 0.035 & [-0.09, 0.048] & = 0.547\\
+ & QM(7) = 153.795, *p* < .001 & Condition * Age & 0.044 & 0.018 & [0.008, 0.08] & = 0.016\\
+ & QM(7) = 158.889, *p* < .001 & Condition * Language Family & -0.872 & 0.28 & [-1.421, -0.323] & = 0.002\\
+ & QM(15) = 185.148, *p* < .001 & Condition * Language Family * Age & 0.331 & 0.078 & [0.178, 0.484] & < .001\\ \midrule
+Distractor overlap & QM(3) = 48.101, *p* < .001 & Condition & 0.195 & 0.213 & [-0.223, 0.612] & = 0.36\\
+ & QM(7) = 67.82, *p* < .001 & Condition * Age & 0.091 & 0.038 & [0.017, 0.166] & = 0.016\\ \midrule
+Distractor familiarity & QM(3) = 104.058, *p* < .001 & Condition & 0.067 & 0.137 & [-0.203, 0.336] & = 0.628\\
+ & QM(7) = 107.683, *p* < .001 & Condition * Age & -0.021 & 0.035 & [-0.09, 0.048] & = 0.547\\
 \bottomrule
 \end{longtable}
 }
@@ -450,14 +446,14 @@ Mispronunciation sensitivity was modulated overall by the size of the mispronunc
 \hypertarget{exploratory-analyses}{%
 \subsection{Exploratory Analyses}\label{exploratory-analyses}}
 
-We next considered whether an effect of maturation might have been masked by other factors we have not yet captured in our analyses. A strong candidate that emerged during the construction of the present dataset and careful reading of the original papers was the analysis approach. We observed, as mentioned in the Methods section, variation in the dependent variable reported, and additionally noted that the size of the chosen post-naming analysis window varied substantially across papers. Researchers' analysis strategy may be adapted to infants' age or influenced by having observed the data. For example, consider the possibility that there is a true increase in mispronunciation sensitivity over development. In this scenario, younger infants should show no or only little sensitivity to mispronunciations while older infants would show a large sensitivity to mispronunciations. This lack of or small mispronunciation sensitivity in younger infants is likely to lead to non-significant results, especially given the prevalent small sample sizes, which would be more difficult to publish (Ferguson \& Heene, 2012). In order to have publishable results, adjustments to the analysis approach could be made until a significant effect of mispronunciation sensitivity is found. This would lead to an increase in significant results and alter the observed developmental trajectory of mispronunciation sensitivity in the current meta-analysis. Such a scenario is in line with the publication bias we observe (Simmons, Nelson, \& Simonsohn, 2011).
+We next considered whether an effect of maturation might have been masked by other factors we have not yet captured in our analyses. A strong candidate that emerged during the construction of the present dataset and careful reading of the original papers was the analysis approach. We observed, as mentioned in the Methods section, variation in the dependent variable reported, and additionally noted that the size of the chosen post-naming analysis window varied substantially across papers. Researchers' analysis strategy may be adapted to infants' age or influenced by having observed the data. For example, consider the possibility that a particular study does not find that infants looked to the target object upon hearing a correct pronunciation. With this pattern of behavior, interpreting an effect of mispronunciation sensitivity becomes difficult; how can infants notice a phoneme change when they do not even show recognition of the correct pronunciation? A lack of recognition or a small effect for correct pronunciations would be more difficult to publish (Ferguson \& Heene, 2012). In order to have publishable results, adjustments to the analysis approach could be made until a significant effect of recognition for correct pronunciations is found. But, these adjustments would also need to be made for the analysis of mispronunciations, which may impact the size of the mispronunciation sensitivity effect. Such a scenario could explain the publication bias suggested by the asymmetry for correct pronunciations in the funnel plot shown in Figure \ref{fig:FunnelCombo} (Simmons, Nelson, \& Simonsohn, 2011). This could lead to an increase in significant results and even alter the developmental trajectory of mispronunciation sensitivity.
 
 We examine whether variation in the approach to data analysis may be have an influence on our conclusions regarding infants' developing mispronunciation sensitivity. To do so, we analyzed analysis choices related to timing (post-naming analysis window; offset time) and type of dependent variable in our coding of the dataset because they are consistently reported. Further, since we observe variation in both aspects of data analysis, summarizing typical choices and their impact might be useful for experiment design in the future and might help establish field standards. In the following, we discuss the possible theoretical motivation for these data analysis choices, the variation present in the current meta-analysis dataset, and the influence these analysis choices may have on reported mispronunciation sensitivity and its development. We focus specifically on the size of the mispronunciation sensitivity effect, considering the whole dataset and including condition (correct pronunciation, mispronunciation) as a moderator.
 
 \hypertarget{timing}{%
 \subsubsection{Timing}\label{timing}}
 
-When designing mispronunciation sensitivity studies, experimenters can choose the length of time each trial is presented. This includes both the length of time before the target object is named (pre-naming phase) as well as after (post-naming phase) and is determined prior to data collection. Evidence suggests that the speed of word recognition processing is slower in young infants (Fernald, Pinto, Swingley, Weinberg, \& McRoberts, 1998), which may lead researchers to include longer post-naming phases in their experiments with younger infants. If this is the case, we expect a negative correlation between post-naming phase length and infant age. The post-naming analysis window, in contrast, represents how much of this phase was included in the statistical analysis and can be chosen after the experimental data is collected and perhaps observed. If this is the case, we expect a negative correlation between post-naming analysis window and infant age.
+When designing mispronunciation sensitivity studies, experimenters can choose the length of time each trial is presented. This includes both the length of time before the target object is named (pre-naming phase) as well as after (post-naming phase) and is determined prior to data collection. Evidence suggests that the speed of word recognition processing is slower in young infants (Fernald et al., 1998), which may lead researchers to include longer post-naming phases in their experiments with younger infants. The post-naming analysis window, in contrast, represents how much of this phase was included in the statistical analysis and can be chosen after the experimental data is collected and perhaps observed. If infant age is influencing the length of these windows, we should expect a negative correlation.
 
 Across papers, there was wide variation in the length of the post-naming phase (\emph{Median} = 3500 ms, range = 2000 - 9000) and the post-naming analysis window (\emph{Median} = 2500 ms, range = 1510 - 4000). The most popular post-naming phase length was 4000 ms (\emph{n} = 74 records) and 2000 ms (\emph{n} = 97 records) was the most popular for the post-naming analysis window. About half of the records were analyzed using the whole post-naming phase presented to the infant (\emph{n} = 124), while the other half were analyzed using a shorter portion of the post-naming time window, usually excluding later portions (\emph{n} = 127).
 
@@ -466,7 +462,7 @@ There was no apparent relation between infant age and post-naming phase length (
 \begin{figure}
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotPostNameCondAge-1.pdf}
-\caption{\label{fig:PlotPostNameCondAge}Effect sizes for the different lengths of the post-naming analysis window: 2000 ms or less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green). Although length of the post-naming analysis window was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
+\caption{\label{fig:PlotPostNameCondAge}Effect sizes for the different lengths of the post-naming analysis window: 2000 ms or less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green). Although length of the post-naming analysis window was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
 \end{figure}
 
 When post-naming analysis window length and condition (correct pronunciation, mispronunciation) were included as moderators, the moderator test was significant (QM(3) = 236.958, \emph{p} \textless{} .001). The estimate for the interaction between post-naming analysis window and condition was small but significant (\(\beta\) = -0.262, SE = 0.059, 95\% CI{[}-0.377, -0.148{]}, \emph{p} \textless{} .001), showing that as the length of the post-naming analysis window increased, the difference between target fixations for correctly pronounced and mispronounced items (mispronunciation sensitivity) decreased. This relationship is plotted in Figure \ref{fig:PlotPostNameCondAge}a. When age was added as a moderator, the moderator test was significant (QM(7) = 247.322, \emph{p} \textless{} .001). The estimate for the three-way-interaction between condition, post-naming analysis window, and age was small, but significant (\(\beta\) = -0.04, SE = 0.014, 95\% CI{[}-0.068, -0.012{]}, \emph{p} = 0.006). As can be seen in Figure \ref{fig:PlotPostNameCondAge}b, when records were analyzed with a post-naming analysis window of 2000 ms or less (a limit we imposed for visualization purposes), mispronunciation sensitivity seems to increase with infant age. If the post-naming analysis window is greater than 2000 ms, however, there is no or a negative relation between mispronunciation sensitivity and age.
@@ -476,20 +472,16 @@ When post-naming analysis window length and condition (correct pronunciation, mi
 \hypertarget{dependent-variable}{%
 \subsection{Dependent variable}\label{dependent-variable}}
 
-As described in the Methods section, there was considerable variation across papers in whether the pre-naming phase was used as a baseline measurement and subtracted from the PTL score from the post-naming phase and compared with a chance value of 0 (Difference Score) or directly compared with the post-naming phase (Pre- vs.~Post) or whether the post-naming PTL was compared with a chance value of 50\% (Post). A positive Difference Score or a greater Pre- vs.~Post-naming phase PTL indicates that infants increased their target looks after hearing the naming label. A Post PTL greater than 50\% assumes recognition of the target image. As most papers do not specify whether any of these calculations are made before or after aggregating across trials and/or participants, we make no assumptions about how any aggregate scores or differences were computed.
+As described in the Methods section, there was considerable variation across papers in whether the pre-naming phase was used as a baseline measurement (Difference Score or Pre- vs.~Post) or whether the post-naming PTL was compared with a chance value of 50\% (Post). Considering analyses of the dependent variables Difference Score or Pre- vs.~Post produce the same result, we combined these two dependent variables into one, which we call Baseline Corrected. To our knowledge, there is no theory or evidence that explicitly drives choice of dependent variable in preferential looking studies, which may explain the wide variation in dependent variable reported in the papers included in this meta-analysis. We next explored whether the type of dependent variable calculated was related to the estimated size of sensitivity to mispronunciations.
 
-To our knowledge, there is no theory or evidence that explicitly drives choice of dependent variable in preferential looking studies, which may explain the wide variation in dependent variable reported in the papers included in this meta-analysis. We next explored whether the type of dependent variable calculated influenced the estimated size of sensitivity to mispronunciations. Considering that the dependent variable Post differs in its consideration of pre-naming baseline preferences, we coded this as a reference condition.
+When we included both condition and dependent variable as moderators, the moderator test was significant (QM(3) = 232.117, \emph{p} \textless{} .001). The estimate for the interaction between the type of dependent variable and condition was was significant (\(\beta\) = -0.184, SE = 0.093, 95\% CI{[}-0.365, -0.002{]}, \emph{p} = 0.047). As can be seen in @ref(fig:PlotWithinCondDV\_baseline), mispronunciation sensitivity was higher when the dependent variable reported was Post compared to when it was Baseline Corrected. When age was included as an additional moderator, the moderator test was significant (QM(7) = 238.595, \emph{p} \textless{} .001). However, the estimate for the interaction between dependent variable, condition, and age was not significant (\(\beta\) = -0.048, SE = 0.026, 95\% CI{[}-0.1, 0.003{]}, \emph{p} = 0.064).
 
-When we included both condition and dependent variable as moderators, the moderator test was significant (QM(5) = 259.817, \emph{p} \textless{} .001). The estimate for the interaction between Pre vs.~Post and condition was significantly smaller than that of the Post dependent variable (\(\beta\) = -0.392, SE = 0.101, 95\% CI{[}-0.59, -0.194{]}, \emph{p} \textless{} .001), but the difference between the Difference Score and Post in the interaction with condition was small and not significant (\(\beta\) = -0.01, SE = 0.098, 95\% CI{[}-0.203, 0.183{]}, \emph{p} = 0.916). This relationship is plotted in Figure \ref{fig:PlotWithinCondAgeDiffScore}a.
-
-When age was included as an additional moderator, the moderator test was significant (QM(11) = 273.585, \emph{p} \textless{} .001). The estimate for the interaction between Pre vs.~Post, condition, and age was significantly smaller than that of the Post dependent variable (\(\beta\) = -0.089, SE = 0.03, 95\% CI{[}-0.148, -0.03{]}, \emph{p} = 0.003), but the difference between the Difference Score and Post in the interaction with condition and age was small and not significant (\(\beta\) = -0.036, SE = 0.027, 95\% CI{[}-0.088, 0.016{]}, \emph{p} = 0.174). When the dependent variable reported was Pre vs.~Post, mispronunciation sensitivity was found to decrease with infant age, while in comparison, when the dependent variable was Post, mispronunciation sensitivity was found to increase with infant age (see This relationship is plotted in Figure \ref{fig:PlotWithinCondAgeDiffScore}b.)
-
-(Insert Figure \ref{fig:PlotWithinCondAgeDiffScore} about here)
+(Insert Figure @ref(fig:PlotWithinCondDV\_baseline) about here)
 
 \begin{figure}
 \centering
-\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondAgeDiffScore-1.pdf}
-\caption{\label{fig:PlotWithinCondAgeDiffScore}Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs.~Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondAgeDiffScore_old-1.pdf}
+\caption{(\#fig:PlotWithinCondAgeDiffScore\_old)Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs.~Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
 \end{figure}
 
 \hypertarget{general-discussion}{%
@@ -497,7 +489,7 @@ When age was included as an additional moderator, the moderator test was signifi
 
 In this meta-analysis, we set out to quantify and assess the phonological specificity of infants' representations for familiar words and how this is modulated with development, as measured by infant age and vocabulary size. Infants not only recognize object labels when they were correctly pronounced, but are also likely to accept mispronunciations as labels for targets. Nonetheless, there was a considerable difference in target fixations in response to correctly pronounced and mispronounced labels, suggesting that infants show sensitivity to what constitutes unacceptable, possibly meaning-altering variation in word forms, thereby displaying knowledge of the role of phonemic changes throughout the ages assessed here (6 to 30 months). At the same time, infants, like adults, can recover from mispronunciations, a key skill in language processing.
 
-Considering the variation in findings of developmental change in mispronunciation sensitivity (see Introduction), we next evaluated the developmental trajectory of infants' mispronunciation sensitivity. Our analysis of this relationship revealed a pattern of unchanging sensitivity over infant age and vocabulary size, which has been reported by a handful of studies directly comparing infants over a small range of ages, such as 18-24 months (Bailey \& Plunkett, 2002; Swingley \& Aslin, 2000) or 12-17 months (Zesiger et al., 2012). The lack of age or vocabulary effects in our meta-analysis (carefully) suggest that this understanding is present from an early age and is maintained throughout early lexical development. We note, however, that despite an increasing publication record of mispronunciation sensitivity studies, fewer than half of the papers included in this meta-analysis measured vocabulary (\emph{n} = 13; out of 32 papers total; see also Figure \ref{fig:Vocabdescribe1}). We suggest that this may be the result of publication bias favoring significant effects or an overall hesitation to invest in data collection that is not expected to yield significant outcomes. Considering the theoretical implications, more experimental work investigating and reporting the relationship between mispronunciation sensitivity and vocabulary size is needed if this link is to be evaluated. Nonetheless, if we are to take our results as robust, it becomes thus a pressing open question that theories have to answer which other factors might prompt acquiring and using language-specific phonological contrasts at such an early age.
+Considering the variation in findings of developmental change in mispronunciation sensitivity (see Introduction), we next evaluated the developmental trajectory of infants' mispronunciation sensitivity. Our analysis of this relationship revealed a pattern of unchanging sensitivity over infant age and vocabulary size, which has been reported by a handful of studies directly comparing infants over a small range of ages, such as 18-24 months (Bailey \& Plunkett, 2002; Swingley \& Aslin, 2000) or 12-17 months (Zesiger et al., 2012). The lack of age or vocabulary effects in our meta-analysis suggest that this understanding is present from an early age and is maintained throughout early lexical development. We note, however, that despite an increasing publication record of mispronunciation sensitivity studies, fewer than half of the papers included in this meta-analysis measured vocabulary (\emph{n} = 13; out of 32 papers total; see also Figure \ref{fig:Vocabdescribe1}). This may reflect a decreasing interest in the relationship between mispronunciation sensitivity and vocabulary size and/or to invest in data collection that is not expected to yield significant outcomes. Considering the theoretical implications, however, more experimental work investigating and reporting the relationship between mispronunciation sensitivity and vocabulary size is needed if this link is to be evaluated. Nonetheless, if we are to take our results as robust, it becomes thus a pressing open question that theories have to answer which other factors might prompt acquiring and using language-specific phonological contrasts at such an early age.
 
 \hypertarget{moderator-analyses-1}{%
 \subsection{Moderator Analyses}\label{moderator-analyses-1}}
@@ -510,21 +502,21 @@ Our meta-analysis showed that infants are more sensitive to changes in the sound
 
 For several moderators, we found no evidence of modulation of mispronunciation sensitivity. Studies that include an unfamiliar, as opposed to familiar distractor image, often argue that the unfamiliar image provides a better referent candidate for mispronunciation than a familiar distractor image, where the name is already known. Yet, no studies have directly examined this assertion and our meta-analysis found that distractor familiarity did not modulate mispronunciation sensitivity.
 
-Despite the proposal that infants should be more sensitive to consonant compared to vowel mispronunciations (Nazzi et al., 2016), we found no difference in sensitivity to consonant and vowel mispronunciations. But, a more nuanced picture was revealed when further moderators were introduced. Age and native language did not modulate sensitivity to consonant mispronunciations, but sensitivity to vowel mispronunciations increased with age and was greater overall for infants learning Germanic languages (although this increased with age for infants learning Romance languages). This pattern of results supports a learned account of the consonant bias, showing that sensitivity to consonants and vowels have a different developmental trajectory, which depends on whether the infant is learning a Romance (French, Italian) or Germanic (British English, Danish) native language (Nazzi et al., 2016). TRACE simulations conducted by Mayor and Plunkett (2014) reveal a relationship between vocabulary size and sensitivity to vowel-medial mispronunciations, although here the authors give more weight to the role of mispronunciation position, a distinction we are unable to make in our analyses.
+Despite the proposal that infants should be more sensitive to consonant compared to vowel mispronunciations (Nazzi et al., 2016), we found no difference in sensitivity to consonant and vowel mispronunciations. But, a more nuanced picture was revealed when further moderators were introduced. Age and native language did not modulate sensitivity to consonant mispronunciations, but sensitivity to vowel mispronunciations increased with age and was greater overall for infants learning Germanic languages (although this increased with age for infants learning Romance languages). This pattern of results supports a learned account of the consonant bias, showing that sensitivity to consonants and vowels have different developmental trajectories, which depend on whether the infant is learning a Romance (French, Italian) or Germanic (British English, Danish) native language (Nazzi et al., 2016). TRACE simulations conducted by Mayor \& Plunkett (2014) reveal a relationship between vocabulary size and sensitivity to vowel-medial mispronunciations, although here the authors give more weight to the role of mispronunciation position, a distinction we are unable to make in our analyses.
 
-Contrary to predictions made from the literature, our meta-analysis revealed that studies which include target and distractor images that overlap in their onset elicit greater mispronunciation sensitivity than studies who do not control for this factor. Perhaps including overlap leads infants to pay more attention to mispronunciations, increasing mispronunciation sensitivity. Yet, older children were more likely to recieve the arguably more difficult manipulation where target-distractor pairs overlapped in their onset phoneme, added task demands which may reduce their ability to access the phonetic detail of familiar words as argued by the PRIMIR Framework (Curtin \& Werker, 2007; Werker \& Curtin, 2005). This imbalance has the potential to dampen developmental differences, which would be hidden by task differences in the experiments that older and younger infants participated in. Further support comes from evidence that sensitivity to mispronunciations when the target-distractor pair overlapped on the onset phoneme increased with age. This pattern of results suggests that when infants are given an equally difficult task, developmental effects may be revealed. This explanation can be confirmed by testing more young infants on overlapping target-distractor pairs.
+Contrary to predictions made from the literature, our meta-analysis revealed that studies which include target and distractor images that overlap in their onset elicit greater mispronunciation sensitivity than studies who do not control for this factor. Perhaps including overlap leads infants to pay more attention to mispronunciations, increasing mispronunciation sensitivity. Yet, older children were more likely to receive the arguably more difficult manipulation where target-distractor pairs overlapped in their onset phoneme, added task demands which may reduce their ability to access the phonetic detail of familiar words as argued by the PRIMIR Framework (Curtin \& Werker, 2007; Werker \& Curtin, 2005). This imbalance has the potential to dampen developmental differences, which would be hidden by task differences in the experiments that older and younger infants participated in. Further support comes from evidence that sensitivity to mispronunciations when the target-distractor pair overlapped on the onset phoneme increased with age. This pattern of results suggests that when infants are given an equally difficult task, developmental effects may be revealed. This explanation can be confirmed by testing more young infants on overlapping target-distractor pairs.
 
 \hypertarget{data-analysis-choices}{%
 \subsection{Data Analysis Choices}\label{data-analysis-choices}}
 
-During the coding of our meta-analysis database, we noted variation in variables relating to timing and the calculation of the dependent variable reported. As infants mature, they recognize words more quickly (Fernald et al., 1998), which may lead experimenters to adjust and lower offset times in their analysis as well as shorten the length of the analysis window. A majority of studies used an offset time between 360 and 370 ms (\emph{n} = 151), which follows the \enquote{best guess} of Swingley and Aslin (2000) for the amount of time needed for infants to initiate eye movements in response to a spoken target word; in contrast, we found wide variation in the post-naming analysis window which correlated negatively with infant age and influenced the estimate of mispronunciation sensitivity. TRACE predicts that looks to the target in response to mispronunciations may be slower than that of correct pronunciations (Mayor \& Plunkett, 2014), and those studies with longer post-naming analysis windows capture this effect, thereby reducing the measured sensitivity to mispronunciations. Although we have no direct evidence, an analysis window can be potentially set after collecting data. At worst, this adjustment could be the result of a desire to confirm a hypothesis, increasing the rate of false-positives (Gelman \& Loken, 2013): a \enquote{significant effect} of mispronunciation sensitivity is found with an analysis window of 2000 but not 3000 ms, therefore 2000 ms is chosen. At best, this variation introduces noise into the study of mispronunciation sensitivity, blurring the true developmental trajectory of mispronunciation sensitivity.
+During the coding of our meta-analysis database, we noted variation in variables relating to timing and the calculation of the dependent variable reported. As infants mature, they recognize words more quickly (Fernald et al., 1998), which may lead experimenters to adjust and lower offset times in their analysis as well as shorten the length of the analysis window. A majority of studies used an offset time between 360 and 370 ms (\emph{n} = 151), which follows the \enquote{best guess} of Swingley \& Aslin (2000) for the amount of time needed for infants to initiate eye movements in response to a spoken target word; in contrast, we found wide variation in the post-naming analysis window which correlated negatively with infant age and influenced the estimate of mispronunciation sensitivity. Looks to the target in response to mispronunciations may be slower than that of correct pronunciations in infants (as predicted by TRACE, Mayor \& Plunkett, 2014), and those studies with longer post-naming analysis windows capture this effect, thereby reducing the measured sensitivity to mispronunciations. Although we have no direct evidence, an analysis window can be potentially set after collecting data. At worst, this adjustment could be the result of a desire to confirm a hypothesis, increasing the rate of false-positives (Gelman \& Loken, 2013): a \enquote{significant effect} of mispronunciation sensitivity is found with an analysis window of 2000 but not 3000 ms, therefore 2000 ms is chosen. At best, this variation introduces noise into the study of mispronunciation sensitivity, blurring the true developmental trajectory of mispronunciation sensitivity.
 
-The type of depedent variable calculated also moderated mispronunciation sensitivity and conclusions about its developmental trajectory. Unlike the exploratory analyses related to timing, there is no clear reason for one dependent variable to be chosen over another; the prevalence of each dependent variable appears distributed across ages and some authors always calculate the same dependent variable while others use them interchangeably in different publications. One clear difference is that both the Difference Score (reporting looks to the target image after hearing the label minus looks in silence) and Pre vs.~Post (reporting both variables separately) dependent variables consider each infants' actual preference in the pre-naming baseline phase, while the Post dependent variable (reporting looks to target after labelling only) does not. Without access to the raw data, it is difficult to conclusively determine why different dependent variable calculations influence mispronunciation sensitivity.
+The type of depedent variable calculated also moderated mispronunciation sensitivity, albeit not conclusions about its developmental trajectory. Unlike the exploratory analyses related to timing, there is no clear reason for one dependent variable to be chosen over another; the prevalence of each dependent variable appears distributed across ages and some authors always calculate the same dependent variable while others use them interchangeably in different publications. One clear difference is that both the Difference Score (reporting looks to the target image after hearing the label minus looks in silence) and Pre vs.~Post (reporting both variables separately) dependent variables consider each infants' actual preference in the pre-naming baseline phase, while the Post dependent variable (reporting looks to target after labelling only) does not. Without access to the raw data, it is difficult to conclusively determine why different dependent variable calculations influence mispronunciation sensitivity.
 
 \hypertarget{recommendations-to-establish-analysis-standards}{%
 \subsection{Recommendations to Establish Analysis Standards}\label{recommendations-to-establish-analysis-standards}}
 
-A lack of a field standard can have serious consequences, as our analyses show, limiting our ability to draw conclusions. We take this opportunity to make several recommendations to address the issue of varying, potentially post hoc analysis decisions. First, preregistration can serve as proof of a priori decisions regarding data analysis, which can also contain a data-dependent description of how data analysis decisions will be made once data is collected (see Havron, Bergmann, \& Tsuji, 2020 for a primer). The peer-reviewed form of preregistration, Registered Reports, has already been adopted by a large number of developmental journals, and general journals that publish developmental works, showing the field's increasing acceptance of such practices for hypothesis-testing studies. Second, sharing data (Open Data) can allow others to re-analyze existing datasets to both examine the impact of analysis decisions and cumulatively analyze different datasets in the same way. Considering the specific issue of analysis time window, experimenters can opt to analyze the time course as a whole, instead of aggregating the proportion of target looking behavior. This allows for a more detailed assessment of infants' fixations over time and removes the need to reduce the post-naming analysis window. Both Growth Curve Analysis (Mirman, Dixon, \& Magnuson, 2008) and Permutation Clusters Analysis (Maris \& Oostenveld, 2007; Von Holzen \& Mani, 2012) offer potential solutions to analyze the full time course. Third, it may be useful to establish standard analysis pipelines for mispronunciation studies. This would allow for a more uniform analysis of this phenomenon, as well as aid experimenters in future research planning (see ManyBabiesConsortium, 2020 for a parallel effort). We hope the above suggestions take us one step closer to this important goal that clarifies the link between internal abilities and behavior in a laboratory study.
+A lack of a field standards can have serious consequences, as our analyses show, limiting our ability to draw conclusions. We take this opportunity to make several recommendations to address the issue of varying, potentially post hoc analysis decisions. First, preregistration can serve as proof of a priori decisions regarding data analysis, which can also contain a data-dependent description of how data analysis decisions will be made once data is collected (see Havron, Bergmann, \& Tsuji, 2020 for a primer). The peer-reviewed form of preregistration, Registered Reports, has already been adopted by a large number of developmental journals, and general journals that publish developmental works, showing the field's increasing acceptance of such practices for hypothesis-testing studies. Second, sharing data (Open Data) can allow others to re-analyze existing datasets to both examine the impact of analysis decisions and cumulatively analyze different datasets in the same way. Considering the specific issue of analysis time window, experimenters can opt to analyze the time course as a whole, instead of aggregating the proportion of target looking behavior. This allows for a more detailed assessment of infants' fixations over time and removes the need to reduce the post-naming analysis window. Both Growth Curve Analysis (Mirman, Dixon, \& Magnuson, 2008) and Permutation Clusters Analysis (Maris \& Oostenveld, 2007; Von Holzen \& Mani, 2012) offer potential solutions to analyze the full time course. Third, it may be useful to establish standard analysis pipelines for mispronunciation studies. This would allow for a more uniform analysis of this phenomenon, as well as aid experimenters in future research planning (see ManyBabiesConsortium, 2020 for a parallel effort). We hope the above suggestions take us one step closer to this important goal that clarifies the link between internal abilities and behavior in a laboratory study.
 
 \hypertarget{conclusion}{%
 \subsection{Conclusion}\label{conclusion}}
@@ -600,6 +592,9 @@ Fisher, R. A. (1922). On the Interpretation of \(\chi\) 2 from Contingency Table
 \leavevmode\hypertarget{ref-Fleiss1986}{}%
 Fleiss, J. L. (1986). \emph{The Design and Analysis of Clinical Experiments}. New York: Wiley; Sons.
 
+\leavevmode\hypertarget{ref-Frank2016}{}%
+Frank, M. C., Lewis, M. L., \& Macdonald, K. (2016). A performance model for early word learning. \emph{Proceedings of the Cognitive Science Society}, 2609--2614. Retrieved from \url{https://mindmodeling.org/cogsci2016/papers/0450/paper0450.pdf}
+
 \leavevmode\hypertarget{ref-Gelman2013}{}%
 Gelman, A., \& Loken, E. (2013). \emph{The garden of forking paths: Why multiple comparisons can be a problem, even when there is no ``fishing expedition'' or ``p-hacking'' and the research hypothesis was posited ahead of time.} Department of Statistics, Columbia University. doi:\href{https://doi.org/10.1037/a0037714}{10.1037/a0037714}
 
@@ -655,7 +650,7 @@ McClelland, J. L., \& Elman, J. L. (1986). The TRACE model of speech perception.
 Mirman, D., Dixon, J. A., \& Magnuson, J. S. (2008). Statistical and computational models of the visual world paradigm: Growth curves and individual differences. \emph{Journal of Memory \& Language}, \emph{59}(4), 475--494. doi:\href{https://doi.org/10.1016/j.jml.2007.11.006}{10.1016/j.jml.2007.11.006}
 
 \leavevmode\hypertarget{ref-Moher2009}{}%
-Moher, D., Liberati, A., Tetzlaff, J., Altman, D. G., \& Group, T. P. (2009). Preferred Reporting Items for Systematic Reviews and Meta-Analyses: The PRISMA Statement. \emph{PLoS Medicine}, \emph{6}(7), e1000097. doi:\href{https://doi.org/10.1371/journal.pmed.1000097}{10.1371/journal.pmed.1000097}
+Moher, D., Liberati, A., Tetzlaff, J., Altman, D. G., \& PRISMA Group". (2009). Preferred Reporting Items for Systematic Reviews and Meta-Analyses: The PRISMA Statement. \emph{PLoS Medicine}, \emph{6}(7), e1000097. doi:\href{https://doi.org/10.1371/journal.pmed.1000097}{10.1371/journal.pmed.1000097}
 
 \leavevmode\hypertarget{ref-morris2002combining}{}%
 Morris, S. B., \& DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \emph{7}(1), 105--125. doi:\href{https://doi.org/10.1037/1082-989X.7.1.105}{10.1037/1082-989X.7.1.105}
@@ -708,8 +703,194 @@ Swingley, D., \& Aslin, R. N. (2000). Spoken word recognition and lexical repres
 \leavevmode\hypertarget{ref-Swingley2002}{}%
 Swingley, D., \& Aslin, R. N. (2002). Lexical Neighborhoods and the Word-Form representations of 14-Month-Olds. \emph{Psychological Science}, \emph{13}(5), 480--484. doi:\href{https://doi.org/10.1111/1467-9280.00485}{10.1111/1467-9280.00485}
 
-\leavevmode\hypertarget{ref-Swingley1999}{}%
-Swingley, D., Pinto, J. P., \& Fernald, A. (1999). Continuous processing in word recognition at 24 months. \emph{Cognition}, \emph{71}(2), 73--108. doi:\href{https://doi.org/10.1016/S0010-0277(99)00021-9}{10.1016/S0010-0277(99)00021-9}
+\leavevmode\hypertarget{ref-Tamasi2016}{}%
+Tamasi, K. (2016). \emph{Measuring children ' s sensitivity to phonological detail using eye tracking and pupillometry} (PhD thesis). University of Potsdam.
+
+\leavevmode\hypertarget{ref-Tsuji2014}{}%
+Tsuji, S., Bergmann, C., \& Cristia, A. (2014). Community-Augmented Meta-Analyses: Toward Cumulative Data Assessment. \emph{Psychological Science}, \emph{9}(6), 661--665. doi:\href{https://doi.org/10.1177/1745691614552498}{10.1177/1745691614552498}
+
+\leavevmode\hypertarget{ref-metafor}{}%
+Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \emph{36}(3), 1--48. doi:\href{https://doi.org/10.18637/jss.v036.i03}{10.18637/jss.v036.i03}
+
+\leavevmode\hypertarget{ref-VonHolzen2012}{}%
+Von Holzen, K., \& Mani, N. (2012). Language nonselective lexical access in bilingual toddlers. \emph{Journal of Experimental Child Psychology}, \emph{113}, 569--586. doi:\href{https://doi.org/10.1016/j.jecp.2011.02.002}{10.1016/j.jecp.2011.02.002}
+
+\leavevmode\hypertarget{ref-Werker2005}{}%
+Werker, J. F., \& Curtin, S. (2005). PRIMIR: A developmental framework of infant speech processing. \emph{Language Learning and Development}, \emph{1}(2), 197--234. doi:\href{https://doi.org/10.1207/s15473341lld0102_4}{10.1207/s15473341lld0102\_4}
+
+\leavevmode\hypertarget{ref-White2008}{}%
+White, K. S., \& Morgan, J. L. (2008). Sub-segmental detail in early lexical representations. \emph{Journal of Memory and Language}, \emph{52}(1), 114--132. doi:\href{https://doi.org/10.1016/j.jml.2008.03.001}{10.1016/j.jml.2008.03.001}
+
+\leavevmode\hypertarget{ref-Zesiger2012}{}%
+Zesiger, P., Lozeron, E. D., Levy, A., \& Frauenfelder, U. H. (2012). Phonological specificity in 12- and 17-month-old French-speaking infants. \emph{Infancy}, \emph{17}(6), 591--609. doi:\href{https://doi.org/10.1111/j.1532-7078.2011.00111.x}{10.1111/j.1532-7078.2011.00111.x}
+
+\leavevmode\hypertarget{ref-RMarkdown}{}%
+Allaire, J., Xie, Y., McPherson, J., Luraschi, J., Ushey, K., Atkins, A., \ldots{} Chang, W. (2018). rmarkdown: Dynamic Documents for R. Retrieved from \url{https://cran.r-project.org/package=rmarkdown}
+
+\leavevmode\hypertarget{ref-Altvater2010}{}%
+Altvater-Mackensen, N. (2010). \emph{Do manners matter? Asymmetries in the acquisition of manner of articulation features.} (PhD thesis). Radboud University Nijmegen.
+
+\leavevmode\hypertarget{ref-Altvater2014}{}%
+Altvater-Mackensen, N., Feest, S. V. H. van der, \& Fikkert, P. (2014). Asymmetries in early word recognition: The case of stops and fricatives. \emph{Language Learning and Development}, \emph{10}(2), 149--178. doi:\href{https://doi.org/10.1080/15475441.2013.808954}{10.1080/15475441.2013.808954}
+
+\leavevmode\hypertarget{ref-papaja}{}%
+Aust, F., \& Barth, M. (2018). papaja: Prepare reproducible APA journal articles with R Markdown. Retrieved from \url{https://github.com/crsh/papaja}
+
+\leavevmode\hypertarget{ref-Bailey2005}{}%
+Bailey, T. M., \& Hahn, U. (2005). Phoneme similarity and confusability. \emph{Journal of Memory and Language}, \emph{52}(3), 339--362. doi:\href{https://doi.org/10.1016/j.jml.2004.12.003}{10.1016/j.jml.2004.12.003}
+
+\leavevmode\hypertarget{ref-Bailey2002}{}%
+Bailey, T. M., \& Plunkett, K. (2002). Phonological specificity in early words. \emph{Cognitive Development}, \emph{17}(2), 1265--1282. doi:\href{https://doi.org/10.1016/S0885-2014(02)00116-8}{10.1016/S0885-2014(02)00116-8}
+
+\leavevmode\hypertarget{ref-Ballem2005}{}%
+Ballem, K. D., \& Plunkett, K. (2005). Phonological specificity in children at 1;2. \emph{Journal of Child Language}, \emph{32}(1), 159--173. doi:\href{https://doi.org/10.1017/S0305000904006567}{10.1017/S0305000904006567}
+
+\leavevmode\hypertarget{ref-Bergmann2016}{}%
+Bergmann, C., \& Cristia, A. (2016). Development of infants' segmentation of words from native speech: A meta-analytic approach. \emph{Developmental Science}, \emph{19}(6), 901--917. doi:\href{https://doi.org/10.1111/desc.12341}{10.1111/desc.12341}
+
+\leavevmode\hypertarget{ref-Bergmann2018}{}%
+Bergmann, C., Tsuji, S., Piccinini, P. E., Lewis, M. L., Braginsky, M., Frank, M. C., \& Cristia, A. (2018). Promoting replicability in developmental research through meta-analyses: Insights from language acquisition research. \emph{Child Development}. doi:\href{https://doi.org/10.17605/OSF.IO/3UBNC}{10.17605/OSF.IO/3UBNC}
+
+\leavevmode\hypertarget{ref-Bernier2017}{}%
+Bernier, D. E., \& White, K. S. (2017). What's a Foo? Toddlers Are Not Tolerant of Other Children's Mispronunciations. In \emph{Proceedings of the 41st annual boston university conference on language development} (pp. 88--100).
+
+\leavevmode\hypertarget{ref-CharlesLuce1995}{}%
+Charles-Luce, J., \& Luce, P. A. (1995). An examination of similarity neighbourhoods in young children's receptive vocabularies. \emph{Journal of Child Language}, \emph{22}(3), 727--735. doi:\href{https://doi.org/10.1017/S0305000900010023}{10.1017/S0305000900010023}
+
+\leavevmode\hypertarget{ref-cohen}{}%
+Cohen, J. (1988). \emph{Statistical Power Analysis for the Behavioural Sciences} (2nd ed.). New York: Lawrence Earlbaum Associates.
+
+\leavevmode\hypertarget{ref-Csibra2016}{}%
+Csibra, G., Hernik, M., Mascaro, O., Tatone, D., \& Lengyel, M. (2016). Statistical treatment of looking-time data. \emph{Developmental Psychology}, \emph{52}(4), 521--36. doi:\href{https://doi.org/10.1037/dev0000083}{10.1037/dev0000083}
+
+\leavevmode\hypertarget{ref-Curtin2007}{}%
+Curtin, S., \& Werker, J. F. (2007). The perceptual foundations of phonological development. In M. G. Gaskell (Ed.), \emph{The oxford handbook of psycholinguistics} (pp. 579--599). New York: Oxford University Press. doi:\href{https://doi.org/10.1093/oxfordhb/9780198568971.013.0035}{10.1093/oxfordhb/9780198568971.013.0035}
+
+\leavevmode\hypertarget{ref-vanderFeest2015}{}%
+Feest, S. V. H. van der, \& Fikkert, P. (2015). Building phonological lexical representations. \emph{Phonology}, \emph{32}(02), 207--239. doi:\href{https://doi.org/10.1017/S0952675715000135}{10.1017/S0952675715000135}
+
+\leavevmode\hypertarget{ref-Ferguson2012}{}%
+Ferguson, C. J., \& Heene, M. (2012). A vast graveyard of undead theories: Publication bias and psychological science's aversion to the null. \emph{Perspectives on Psychological Science}, \emph{7}(6), 555--561. doi:\href{https://doi.org/10.1177/1745691612459059}{10.1177/1745691612459059}
+
+\leavevmode\hypertarget{ref-Fernald1998}{}%
+Fernald, A., Pinto, J. P., Swingley, D., Weinberg, A., \& McRoberts, G. W. (1998). Rapid gains in speed of verbal processing by infants in the 2nd year. \emph{Psychological Science}, \emph{9}(3), 228--231. doi:\href{https://doi.org/10.1111/1467-9280.00044}{10.1111/1467-9280.00044}
+
+\leavevmode\hypertarget{ref-Fisher1922}{}%
+Fisher, R. A. (1922). On the Interpretation of \(\chi\) 2 from Contingency Tables, and the Calculation of P. \emph{Journal of the Royal Statistical Society}, \emph{85}(1), 87. doi:\href{https://doi.org/10.2307/2340521}{10.2307/2340521}
+
+\leavevmode\hypertarget{ref-Fleiss1986}{}%
+Fleiss, J. L. (1986). \emph{The Design and Analysis of Clinical Experiments}. New York: Wiley; Sons.
+
+\leavevmode\hypertarget{ref-Frank2016}{}%
+Frank, M. C., Lewis, M. L., \& Macdonald, K. (2016). A performance model for early word learning. \emph{Proceedings of the Cognitive Science Society}, 2609--2614. Retrieved from \url{https://mindmodeling.org/cogsci2016/papers/0450/paper0450.pdf}
+
+\leavevmode\hypertarget{ref-Gelman2013}{}%
+Gelman, A., \& Loken, E. (2013). \emph{The garden of forking paths: Why multiple comparisons can be a problem, even when there is no ``fishing expedition'' or ``p-hacking'' and the research hypothesis was posited ahead of time.} Department of Statistics, Columbia University. doi:\href{https://doi.org/10.1037/a0037714}{10.1037/a0037714}
+
+\leavevmode\hypertarget{ref-Halberda2003}{}%
+Halberda, J. (2003). The development of a word-learning strategy. \emph{Cognition}, \emph{87}, B23--B34.
+
+\leavevmode\hypertarget{ref-Havron}{}%
+Havron, N., Bergmann, C., \& Tsuji, S. (2020). Preregistration in infant research - a primer. doi:\href{https://doi.org/10.31234/osf.io/es2gx}{10.31234/osf.io/es2gx}
+
+\leavevmode\hypertarget{ref-Hedges1981}{}%
+Hedges, L. V. (1981). Distribution theory for glass's estimator of effect size and related estimators. \emph{Journal of Educational and Behavioral Statistics}, \emph{6}(2), 107--128. doi:\href{https://doi.org/10.3102/10769986006002107}{10.3102/10769986006002107}
+
+\leavevmode\hypertarget{ref-Hojen}{}%
+Højen, A., Madsen, T. O., Vach, W., Basbøll, H., Caporali, S., \& Blese, D. (n.d.). \emph{Contributions of vocalic and consonantal information when Danish 20-month-olds recognize familiar words}.
+
+\leavevmode\hypertarget{ref-Jennions2002}{}%
+Jennions, M. D., Mù, A. P., Pierre, Â., Curie, M., \& Cedex, F. P. (2002). Relationships fade with time : a meta-analysis of temporal trends in publication in ecology and evolution. \emph{Proceedings of the Royal Society of London B: Biological Sciences}, \emph{269}, 43--48. doi:\href{https://doi.org/10.1098/rspb.2001.1832}{10.1098/rspb.2001.1832}
+
+\leavevmode\hypertarget{ref-Leon2009}{}%
+Leon, A. C., \& Heo, M. (2009). Sample sizes required to detect interactions between two binary fixed-effects in a mixed-effects linear regression model. \emph{Computational Statistics and Data Analysis}, \emph{53}(3), 603--608. doi:\href{https://doi.org/10.1016/j.csda.2008.06.010}{10.1016/j.csda.2008.06.010}
+
+\leavevmode\hypertarget{ref-Mani2008}{}%
+Mani, N., Coleman, J., \& Plunkett, K. (2008). Phonological specificity of vowel contrasts at 18-months. \emph{Language and Speech}, \emph{51}, 3--21. doi:\href{https://doi.org/10.1177/00238309080510010201}{10.1177/00238309080510010201}
+
+\leavevmode\hypertarget{ref-Mani2007}{}%
+Mani, N., \& Plunkett, K. (2007). Phonological specificity of vowels and consonants in early lexical representations. \emph{Journal of Memory and Language}, \emph{57}(2), 252--272. doi:\href{https://doi.org/10.1016/j.jml.2007.03.005}{10.1016/j.jml.2007.03.005}
+
+\leavevmode\hypertarget{ref-Mani2010kepstups}{}%
+Mani, N., \& Plunkett, K. (2010). Twelve-month-olds know their cups from their keps and tups. \emph{Infancy}, \emph{15}(5), 445--470. doi:\href{https://doi.org/10.1111/j.1532-7078.2009.00027.x}{10.1111/j.1532-7078.2009.00027.x}
+
+\leavevmode\hypertarget{ref-Mani2011}{}%
+Mani, N., \& Plunkett, K. (2011). Does size matter? Subsegmental cues to vowel mispronunciation detection. \emph{Journal of Child Language}, \emph{38}(03), 606--627. doi:\href{https://doi.org/10.1017/S0305000910000243}{10.1017/S0305000910000243}
+
+\leavevmode\hypertarget{ref-MB1}{}%
+ManyBabiesConsortium. (2020). Quantifying sources of variability in infancy research using the infant-directed speech preference. \emph{Advances in Methods and Practices in Psychological Science}.
+
+\leavevmode\hypertarget{ref-Maris2007}{}%
+Maris, E., \& Oostenveld, R. (2007). Nonparametric statistical testing of EEG- and MEG-data. \emph{Journal of Neuroscience Methods}, \emph{164}(1), 177--190. doi:\href{https://doi.org/10.1016/j.jneumeth.2007.03.024}{10.1016/j.jneumeth.2007.03.024}
+
+\leavevmode\hypertarget{ref-Markman2003}{}%
+Markman, E. M., Wasow, J. L., \& Hansen, M. B. (2003). Use of the mutual exclusivity assumption by young word learners. \emph{Cognitive Psychology}, \emph{47}(3), 241--275. doi:\href{https://doi.org/10.1016/S0010-0285(03)00034-3}{10.1016/S0010-0285(03)00034-3}
+
+\leavevmode\hypertarget{ref-Marslen-Wilson1989}{}%
+Marslen-Wilson, W. D., \& Zwitserlood, P. (1989). Accessing spoken words: The importance of word onsets. \emph{Journal of Experimental Psychology: Human Perception and Performance}, \emph{15}(3), 576--585. doi:\href{https://doi.org/10.1037/0096-1523.15.3.576}{10.1037/0096-1523.15.3.576}
+
+\leavevmode\hypertarget{ref-Mayor2014}{}%
+Mayor, J., \& Plunkett, K. (2014). Infant word recognition: Insights from TRACE simulations. \emph{Journal of Memory and Language}, \emph{71}(1), 89--123. doi:\href{https://doi.org/10.1016/j.jml.2013.09.009}{10.1016/j.jml.2013.09.009}
+
+\leavevmode\hypertarget{ref-McClelland1986}{}%
+McClelland, J. L., \& Elman, J. L. (1986). The TRACE model of speech perception. \emph{Cognitive Psychology}, \emph{18}(1), 1--86. doi:\href{https://doi.org/10.1016/0010-0285(86)90015-0}{10.1016/0010-0285(86)90015-0}
+
+\leavevmode\hypertarget{ref-Mirman2008}{}%
+Mirman, D., Dixon, J. A., \& Magnuson, J. S. (2008). Statistical and computational models of the visual world paradigm: Growth curves and individual differences. \emph{Journal of Memory \& Language}, \emph{59}(4), 475--494. doi:\href{https://doi.org/10.1016/j.jml.2007.11.006}{10.1016/j.jml.2007.11.006}
+
+\leavevmode\hypertarget{ref-Moher2009}{}%
+Moher, D., Liberati, A., Tetzlaff, J., Altman, D. G., \& PRISMA Group". (2009). Preferred Reporting Items for Systematic Reviews and Meta-Analyses: The PRISMA Statement. \emph{PLoS Medicine}, \emph{6}(7), e1000097. doi:\href{https://doi.org/10.1371/journal.pmed.1000097}{10.1371/journal.pmed.1000097}
+
+\leavevmode\hypertarget{ref-morris2002combining}{}%
+Morris, S. B., \& DeShon, R. P. (2002). Combining effect size estimates in meta-analysis with repeated measures and independent-groups designs. \emph{Psychological Methods}, \emph{7}(1), 105--125. doi:\href{https://doi.org/10.1037/1082-989X.7.1.105}{10.1037/1082-989X.7.1.105}
+
+\leavevmode\hypertarget{ref-Nazzi2009a}{}%
+Nazzi, T., Floccia, C., Moquet, B., \& Butler, J. (2009). Bias for consonantal information over vocalic information in 30-month-olds: Cross-linguistic evidence from French and English. \emph{Journal of Experimental Child Psychology}, \emph{102}(4), 522--537. doi:\href{https://doi.org/10.1016/j.jecp.2008.05.003}{10.1016/j.jecp.2008.05.003}
+
+\leavevmode\hypertarget{ref-Nazzi2016}{}%
+Nazzi, T., Poltrock, S., \& Von Holzen, K. (2016). The developmental origins of the consonant bias in lexical processing. \emph{Current Directions in Psychological Science}, \emph{25}(4), 291--296. doi:\href{https://doi.org/10.1177/0963721416655786}{10.1177/0963721416655786}
+
+\leavevmode\hypertarget{ref-Rabagliati2018}{}%
+Rabagliati, H., Ferguson, B., \& Lew-Williams, C. (2018). The profile of abstract rule learning in infancy: Meta-analytic and experimental evidence. \emph{Developmental Science}, (October 2017), 1--18. doi:\href{https://doi.org/10.1111/desc.12704}{10.1111/desc.12704}
+
+\leavevmode\hypertarget{ref-Ramon-Casas2010}{}%
+Ramon-Casas, M., \& Bosch, L. (2010). Are non-cognate words phonologically better specified than cognates in the early lexicon of bilingual children? \emph{Selected Proceedings of the 4th Conference on Laboratory Approaches to Spanish Phonology}, 31--36.
+
+\leavevmode\hypertarget{ref-Ramon-Casas2009}{}%
+Ramon-Casas, M., Swingley, D., Sebastián-Gallés, N., \& Bosch, L. (2009). Vowel categorization during word recognition in bilingual toddlers. \emph{Cognitive Psychology}, \emph{59}(1), 96--121. doi:\href{https://doi.org/10.1016/j.cogpsych.2009.02.002}{10.1016/j.cogpsych.2009.02.002}
+
+\leavevmode\hypertarget{ref-R}{}%
+R Core Team. (2018). R: A Language and Environment for Statistical Computing. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.r-project.org/}
+
+\leavevmode\hypertarget{ref-Renner2017}{}%
+Renner, L. F. (2017). \emph{The magic of matching -- speech production and perception in language acquisition} (thesis). Stockholm University.
+
+\leavevmode\hypertarget{ref-Sakaluk2016}{}%
+Sakaluk, J. (2016). Make it pretty: Forest and funnel plots for meta-analysis using ggplot2. {[}Blog post{]}. Retrieved from \url{https://sakaluk.wordpress.com/2016/02/16/7-make-it-pretty-plots-for-meta-analysis/}
+
+\leavevmode\hypertarget{ref-meta}{}%
+Schwarzer, G. (2007). meta: An R package for meta-analysis. \emph{R News}, \emph{7}(3), 40--45. doi:\href{https://doi.org/10.1007/978-3-319-21416-0\%3E}{10.1007/978-3-319-21416-0\textgreater{}}
+
+\leavevmode\hypertarget{ref-Simmons2011}{}%
+Simmons, J. P., Nelson, L. D., \& Simonsohn, U. (2011). False-positive psychology: Undisclosed flexibility in data collection and analysis allows presenting anything as significant. \emph{Psychological Science}, \emph{22}(11), 1359--1366. doi:\href{https://doi.org/10.1177/0956797611417632}{10.1177/0956797611417632}
+
+\leavevmode\hypertarget{ref-pcurve}{}%
+Simonsohn, U., Nelson, L. D., \& Simmons, J. P. (2014). P-curve: A key to the file-drawer. \emph{Journal of Experimental Psychology: General}, \emph{143}(2), 534--547. doi:\href{https://doi.org/10.1037/a0033242}{10.1037/a0033242}
+
+\leavevmode\hypertarget{ref-Skoruppa2013}{}%
+Skoruppa, K., Mani, N., Plunkett, K., Cabrol, D., \& Peperkamp, S. (2013). Early word recognition in sentence context: French and English 24-month-olds' sensitivity to sentence-medial mispronunciations and assimilations. \emph{Infancy}, \emph{18}(6), 1007--1029. doi:\href{https://doi.org/10.1111/infa.12020}{10.1111/infa.12020}
+
+\leavevmode\hypertarget{ref-Swingley2009}{}%
+Swingley, D. (2009). Onsets and codas in 1.5-year-olds' word recognition. \emph{Journal of Memory and Language}, \emph{60}(2), 252--269. doi:\href{https://doi.org/10.1016/j.jml.2008.11.003}{10.1016/j.jml.2008.11.003}
+
+\leavevmode\hypertarget{ref-Swingley2016}{}%
+Swingley, D. (2016). Two-year-olds interpret novel phonological neighbors as familiar words. \emph{Developmental Psychology}, \emph{52}(7), 1011--1023. doi:\href{https://doi.org/10.1037/dev0000114}{10.1037/dev0000114}
+
+\leavevmode\hypertarget{ref-Swingley2000}{}%
+Swingley, D., \& Aslin, R. N. (2000). Spoken word recognition and lexical representation in very young children. \emph{Cognition}, \emph{76}(2), 147--166. doi:\href{https://doi.org/10.1016/S0010-0277(00)00081-0}{10.1016/S0010-0277(00)00081-0}
+
+\leavevmode\hypertarget{ref-Swingley2002}{}%
+Swingley, D., \& Aslin, R. N. (2002). Lexical Neighborhoods and the Word-Form representations of 14-Month-Olds. \emph{Psychological Science}, \emph{13}(5), 480--484. doi:\href{https://doi.org/10.1111/1467-9280.00485}{10.1111/1467-9280.00485}
 
 \leavevmode\hypertarget{ref-Tamasi2016}{}%
 Tamasi, K. (2016). \emph{Measuring children ' s sensitivity to phonological detail using eye tracking and pupillometry} (PhD thesis). University of Potsdam.
@@ -733,6 +914,5 @@ White, K. S., \& Morgan, J. L. (2008). Sub-segmental detail in early lexical rep
 Zesiger, P., Lozeron, E. D., Levy, A., \& Frauenfelder, U. H. (2012). Phonological specificity in 12- and 17-month-old French-speaking infants. \emph{Infancy}, \emph{17}(6), 591--609. doi:\href{https://doi.org/10.1111/j.1532-7078.2011.00111.x}{10.1111/j.1532-7078.2011.00111.x}
 
 \endgroup
-
 
 \end{document}

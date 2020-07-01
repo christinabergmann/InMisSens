@@ -52,22 +52,22 @@ Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod & fam & none & 1, 2 & O & C &
 
 \scriptsize{
 \begin{longtable}{lllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
-\caption{\label{tab:mod_table_finalize}Summary of moderator tests and effect estimates.}\\
+\caption{\label{tab:mod_table_finalize}Summary of the 5 moderator tests, including effect estimates for effects and critical interactions.}\\
 \toprule
 Moderator & Moderator Test & Interaction Terms & Hedges' *g* & SE & 95 CI & *p*-value\\
 \midrule
 Misp. size & QM(1) = 61.081, *p* < .001 &  & -0.406 & 0.052 & [-0.507, -0.304] & < .001\\
-Misp. size & QM(3) = 143.617, *p* < .001 & Age & 0.009 & 0.006 & [-0.002, 0.02] & = 0.099\\
+ & QM(3) = 143.617, *p* < .001 & Age & 0.009 & 0.006 & [-0.002, 0.02] & = 0.099\\ \midrule
 Misp. position & QM(3) = 172.345, *p* < .001 & Condition & -0.126 & 0.064 & [-0.252, 0] & = 0.049\\
-Misp. position & QM(7) = 175.856, *p* < .001 & Condition * Age & 0.022 & 0.018 & [-0.013, 0.057] & = 0.223\\
+ & QM(7) = 175.856, *p* < .001 & Condition * Age & 0.022 & 0.018 & [-0.013, 0.057] & = 0.223\\ \midrule
 Misp. type & QM(3) = 145.138, *p* < .001 & Condition & 0.056 & 0.079 & [-0.099, 0.211] & = 0.479\\
-Misp. type & QM(7) = 153.795, *p* < .001 & Condition * Age & 0.044 & 0.018 & [0.008, 0.08] & = 0.016\\
-Misp. type & QM(7) = 158.889, *p* < .001 & Condition * Language Family & -0.872 & 0.28 & [-1.421, -0.323] & = 0.002\\
-Misp. type & QM(15) = 185.148, *p* < .001 & Condition * Language Family * Age & 0.331 & 0.078 & [0.178, 0.484] & < .001\\
-Distractor Overlap & QM(3) = 48.101, *p* < .001 & Condition & 0.195 & 0.213 & [-0.223, 0.612] & = 0.36\\
-Distractor Overlap & QM(7) = 67.82, *p* < .001 & Condition * Age & 0.091 & 0.038 & [0.017, 0.166] & = 0.016\\
-Distractor Familiarity & QM(3) = 104.058, *p* < .001 & Condition & 0.067 & 0.137 & [-0.203, 0.336] & = 0.628\\
-Distractor Familiarity & QM(7) = 107.683, *p* < .001 & Condition * Age & -0.021 & 0.035 & [-0.09, 0.048] & = 0.547\\
+ & QM(7) = 153.795, *p* < .001 & Condition * Age & 0.044 & 0.018 & [0.008, 0.08] & = 0.016\\
+ & QM(7) = 158.889, *p* < .001 & Condition * Language Family & -0.872 & 0.28 & [-1.421, -0.323] & = 0.002\\
+ & QM(15) = 185.148, *p* < .001 & Condition * Language Family * Age & 0.331 & 0.078 & [0.178, 0.484] & < .001\\ \midrule
+Distractor overlap & QM(3) = 48.101, *p* < .001 & Condition & 0.195 & 0.213 & [-0.223, 0.612] & = 0.36\\
+ & QM(7) = 67.82, *p* < .001 & Condition * Age & 0.091 & 0.038 & [0.017, 0.166] & = 0.016\\ \midrule
+Distractor familiarity & QM(3) = 104.058, *p* < .001 & Condition & 0.067 & 0.137 & [-0.203, 0.336] & = 0.628\\
+ & QM(7) = 107.683, *p* < .001 & Condition * Age & -0.021 & 0.035 & [-0.09, 0.048] & = 0.547\\
 \bottomrule
 \end{longtable}
 }

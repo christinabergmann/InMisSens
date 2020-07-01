@@ -15,7 +15,7 @@
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMPEffect-1.pdf}
-\caption{\label{fig:PlotMPEffect}Panel a: Effect sizes for correct pronunciations (orange) and mispronunciations (blue) by participant age. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMPEffect}Panel a: Effect sizes for correct pronunciations (orange) and mispronunciations (blue) by participant age. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
@@ -36,40 +36,40 @@
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispPosit-1.pdf}
-\caption{\label{fig:PlotMispPosit}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMispPosit}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispType-1.pdf}
-\caption{\label{fig:PlotMispType}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMispType}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotCVEffectLang-1.pdf}
-\caption{\label{fig:PlotCVEffectLang}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotCVEffectLang}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotDistOverlap-1.pdf}
-\caption{\label{fig:PlotDistOverlap}Panel a: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap. Panel b: Effect sizes for mispronunciation sensitivity (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotDistOverlap}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotPostNameCondAge-1.pdf}
-\caption{\label{fig:PlotPostNameCondAge}Effect sizes for the different lengths of the post-naming analysis window: 2000 ms or less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green). Although length of the post-naming analysis window was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
+\caption{\label{fig:PlotPostNameCondAge}Effect sizes for the different lengths of the post-naming analysis window: 2000 ms or less (orange), 2001 to 3000 ms (blue), and 3001 ms or greater (green). Although length of the post-naming analysis window was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
 
 \centering
-\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondAgeDiffScore-1.pdf}
-\caption{\label{fig:PlotWithinCondAgeDiffScore}Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs.~Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondAgeDiffScore_old-1.pdf}
+\caption{(\#fig:PlotWithinCondAgeDiffScore\_old)Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs.~Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
 \end{figure*}
