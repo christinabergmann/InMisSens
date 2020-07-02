@@ -55,7 +55,9 @@ for(line in 1:length(db_ET$n_1)){
     } else if (complete.cases(db_ET[line,]$t)) {
       #Dunlap et al., 1996, p.171
       wc <- sqrt(2 * (1 - db_ET[line,]$corr))
-      db_ET[line,]$d_calc <- (db_ET[line,]$t / sqrt(db_ET[line,]$n_1)) * wc
+      db_ET[line,]$d_calc <- (db_ET[line,]$t / sqrt(db_ET[line,]$n_1))
+      #based on reviewer feedback on a different MetaLab project (on which this project is based), it has been suggested we remove this correction factor (wc)
+      #db_ET[line,]$d_calc <- (db_ET[line,]$t / sqrt(db_ET[line,]$n_1)) * wc
       db_ET[line,]$es_method  <- "t_two"
     } else if (complete.cases(db_ET[line,]$x_1, db_ET[line,]$x_2, db_ET[line,]$SD_dif)) {
         within_SD <-db_ET[line,]$ SD_dif / sqrt(2 * (1 - db_ET[line,]$corr)) # Lipsey & Wilson (2001); Morris & DeShon (2002)
