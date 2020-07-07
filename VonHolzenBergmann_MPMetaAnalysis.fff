@@ -36,7 +36,7 @@
 
 \centering
 \includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotMispPosit-1.pdf}
-\caption{\label{fig:PlotMispPosit}Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).}
+\caption{\label{fig:PlotMispPosit}Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for mispronunciations on the onset, medial, and coda positions. The dashed line indicates zero (chance).}
 \end{figure*}
 \begin{figure*}[hbt]
 \ifnextchar[{\eatarg}{}
@@ -70,6 +70,6 @@
 \ifnextchar[{\eatarg}{}
 
 \centering
-\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondAgeDiffScore_old-1.pdf}
-\caption{(\#fig:PlotWithinCondAgeDiffScore\_old)Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs.~Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
+\includegraphics{VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondDVbaseline-1.pdf}
+\caption{\label{fig:PlotWithinCondDVbaseline}Effect sizes for the different types of dependent variables calculated: Post (orange), Post vs.~Pre (blue), and Difference Score (green). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.}
 \end{figure*}
