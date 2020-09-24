@@ -1,7 +1,7 @@
 \begin{lltable}
 
-
 \scriptsize{
+
 \begin{longtable}{llllllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
 \caption{\label{tab:SummaryTable}Summary of all papers. Age: mean age (in months). Vocabulary: Comp = comprehension, Prod = production. Distractor Familiarity: Fam = Familiar, Unfam = Unfamiliar  Target Overlap: O = onset, M = medial, C = coda. Mispronunciation Size: number of features changed; commas indicate separate comparison, dashes indicate an aggregated range. Mispronunciation Position: O = onset, M = medial, C = coda. Mispronunciation Type: C = consonant, V = vowel, T = tone. A slash separator indicates no distinction was made in the stimuli and unspec. indicates that the value was unspecified in the paper}\\
 \toprule
@@ -9,6 +9,14 @@
 \cmidrule(r){5-6} \cmidrule(r){7-9}
 Paper & Format & Age & Vocabulary & Familiarity & Target Overlap & Size & Position & Type & N Effect Sizes\\
 \midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:SummaryTable} continued}}\\
+\toprule
+ &  &  &  & \multicolumn{2}{c}{Distractor} & \multicolumn{3}{c}{Mispronunciation}  &\\
+\cmidrule(r){5-6} \cmidrule(r){7-9}
+Paper & Format & Age & Vocabulary & Familiarity & Target Overlap & Size & Position & Type & N Effect Sizes\\
+\midrule
+\endhead
 Altvater-Mackensen (2010) & dissertation & 22, 25 & None & fam, unfam & O, unfam & 1 & O, O/M & C & 13\\
 Altvater-Mackensen et al. (2014) & paper & 18, 25 & None & fam & O & 1 & O & C & 16\\
 Bailey \& Plunkett (2002) & paper & 18, 24 & Comp & fam & none & 1, 2 & O & C & 12\\
@@ -43,19 +51,27 @@ Zesiger \& JÃ¶hr (2011) & paper & 14 & None & fam & none & 1 & O, M & C, V & 7
 Zesiger et al. (2012) & paper & 12, 19 & Comp/Prod & fam & none & 1, 2 & O & C & 6\\
 \bottomrule
 \end{longtable}
+
 }
+
 \end{lltable}
 \efloatseparator
  
 \begin{lltable}
 
-
 \scriptsize{
+
 \begin{longtable}{lllllll}\noalign{\getlongtablewidth\global\LTcapwidth=\longtablewidth}
 \caption{\label{tab:mod_table_finalize}Summary of the 5 moderator tests, including effect estimates for effects and critical interactions.}\\
 \toprule
 Moderator & Moderator Test & Interaction Terms & Hedges' *g* & SE & 95 CI & *p*-value\\
 \midrule
+\endfirsthead
+\caption*{\normalfont{Table \ref{tab:mod_table_finalize} continued}}\\
+\toprule
+Moderator & Moderator Test & Interaction Terms & Hedges' *g* & SE & 95 CI & *p*-value\\
+\midrule
+\endhead
 Misp. size & QM(1) = 59.618, *p* < .001 &  & -0.403 & 0.052 & [-0.505, -0.301] & < .001\\
  & QM(3) = 140.626, *p* < .001 & Age & 0.009 & 0.006 & [-0.002, 0.02] & = 0.099\\ \midrule
 Misp. position & QM(3) = 172.935, *p* < .001 & Condition & -0.146 & 0.064 & [-0.271, -0.02] & = 0.023\\
@@ -70,5 +86,7 @@ Distractor familiarity & QM(3) = 102.487, *p* < .001 & Condition & 0.038 & 0.138
  & QM(7) = 106.262, *p* < .001 & Condition * Age & -0.02 & 0.035 & [-0.089, 0.049] & = 0.574\\
 \bottomrule
 \end{longtable}
+
 }
+
 \end{lltable}

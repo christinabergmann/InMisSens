@@ -43,7 +43,9 @@ apatheme=theme_bw()+
         text=element_text(family='Times', size=25))
 
 # Color Blind palette:
-cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbPalette <- c("#F0E442","#0072B2","#CC79A7", "#E69F00", "#999999", "#56B4E9", "#009E73", "#0072B2", "#D55E00")
+
+
 
 get_legend<-function(myggplot){
   tmp <- ggplot_gtable(ggplot_build(myggplot))

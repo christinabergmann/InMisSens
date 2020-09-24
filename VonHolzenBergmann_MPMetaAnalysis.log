@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2020.3.6)  7 JUL 2020 16:22
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020/W32TeX) (preloaded format=xelatex 2020.9.23)  24 SEP 2020 11:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **VonHolzenBergmann_MPMetaAnalysis.tex
 (./VonHolzenBergmann_MPMetaAnalysis.tex
 LaTeX2e <2020-02-02> patch level 5
-L3 programming layer <2020-02-25> (c:/Users/user/AppData/Roaming/TinyTeX/texmf-
+L3 programming layer <2020-09-06> (c:/Users/user/AppData/Roaming/TinyTeX/texmf-
 dist/tex/latex/apa6/apa6.cls
 Document Class: apa6 2020/01/13 v2.34 APA formatting (6th edition)
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/article.cls
@@ -13,22 +13,22 @@ Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
 )
-\c@part=\count163
-\c@section=\count164
-\c@subsection=\count165
-\c@subsubsection=\count166
-\c@paragraph=\count167
-\c@subparagraph=\count168
-\c@figure=\count169
-\c@table=\count170
+\c@part=\count164
+\c@section=\count165
+\c@subsection=\count166
+\c@subsubsection=\count167
+\c@paragraph=\count168
+\c@subparagraph=\count169
+\c@figure=\count170
+\c@table=\count171
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
 \bibindent=\dimen134
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.s
 ty
-Package: etoolbox 2019/09/21 v2.5h e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count171
+Package: etoolbox 2020/08/24 v2.5j e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count172
 )
 Class apa6 Info: No bibliography package was specified; defaulting to (but not 
 loading) Biblatex on input line 213.
@@ -84,11 +84,11 @@ Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 y
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2019/11/07 v1.0c TeX engine tests
+Package: iftex 2020/03/06 v1.0d TeX engine tests
 ))
-\Gm@cnth=\count172
-\Gm@cntv=\count173
-\c@Gm@tempcnt=\count174
+\Gm@cnth=\count173
+\Gm@cntv=\count174
+\c@Gm@tempcnt=\count175
 \Gm@bindingoffset=\dimen135
 \Gm@wd@mp=\dimen136
 \Gm@odd@mp=\dimen137
@@ -117,7 +117,7 @@ Package graphics Info: Driver file: xetex.def on input line 105.
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.
 def
-File: xetex.def 2017/06/24 v5.0h Graphics/color driver for xetex
+File: xetex.def 2020/08/26 v5.0i Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen143
 \Gin@req@width=\dimen144
@@ -135,12 +135,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen152
 \cmidrulekern=\dimen153
 \defaultaddspace=\dimen154
-\@cmidla=\count175
-\@cmidlb=\count176
+\@cmidla=\count176
+\@cmidlb=\count177
 \@aboverulesep=\dimen155
 \@belowrulesep=\dimen156
-\@thisruleclass=\count177
-\@lastruleclass=\count178
+\@thisruleclass=\count178
+\@lastruleclass=\count179
 \@thisrulewidth=\dimen157
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/thre
@@ -160,12 +160,11 @@ Package: threeparttable 2003/06/13  v 3.0
 \e@level@five@skip=\skip58
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.sty
-Package: caption 2020/01/03 v3.4h Customizing captions (AR)
+Package: caption 2020/09/12 v3.5b Customizing captions (AR)
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3.st
 y
-Package: caption3 2020/01/03 v1.8h caption3 kernel (AR)
-Package caption3 Info: TeX engine: e-TeX on input line 61.
+Package: caption3 2020/09/17 v2.1b caption3 kernel (AR)
 \captionmargin=\dimen158
 \captionmargin@=\dimen159
 \captionwidth=\dimen160
@@ -175,11 +174,11 @@ Package caption3 Info: TeX engine: e-TeX on input line 61.
 \caption@hangindent=\dimen164
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count179
-\c@continuedfloat=\count180
+\c@caption@flags=\count180
+\c@continuedfloat=\count181
 Package caption Info: threeparttable package is loaded.
 )
-\c@APAenum=\count181
+\c@APAenum=\count182
 \@text@par@indent=\skip59
 \gr@box=\box46
 \gr@boxwidth=\skip60
@@ -192,7 +191,7 @@ Package: bm 2019/07/24 v1.2d Bold Symbol Support (DPC/FMi)
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
 LaTeX Info: Redefining \bm on input line 209.
 )
-\c@appendix=\count182
+\c@appendix=\count183
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyhdr/fancyhdr.s
 ty
@@ -212,12 +211,12 @@ s
 ty
 Package: endfloat 2019/04/15 v2.7 LaTeX2e package puts figures and tables at en
 d (jdm)
-\c@posttable=\count183
+\c@posttable=\count184
 \efloat@postttt=\write3
-\@ef@tttopen=\count184
-\c@postfigure=\count185
+\@ef@tttopen=\count185
+\c@postfigure=\count186
 \efloat@postfff=\write4
-\@ef@fffopen=\count186
+\@ef@fffopen=\count187
 ))
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.st
 y
@@ -253,13 +252,13 @@ LaTeX Info: Redefining \boldsymbol on input line 28.
 y
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count187
+\inf@bad=\count188
 LaTeX Info: Redefining \frac on input line 227.
-\uproot@=\count188
-\leftroot@=\count189
+\uproot@=\count189
+\leftroot@=\count190
 LaTeX Info: Redefining \overline on input line 389.
-\classnum@=\count190
-\DOTSCASE@=\count191
+\classnum@=\count191
+\DOTSCASE@=\count192
 LaTeX Info: Redefining \ldots on input line 486.
 LaTeX Info: Redefining \dots on input line 489.
 LaTeX Info: Redefining \cdots on input line 610.
@@ -268,15 +267,15 @@ LaTeX Info: Redefining \cdots on input line 610.
 \big@size=\dimen167
 LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
-\macc@depth=\count192
-\c@MaxMatrixCols=\count193
+\macc@depth=\count193
+\c@MaxMatrixCols=\count194
 \dotsspace@=\muskip16
-\c@parentequation=\count194
-\dspbrk@lvl=\count195
+\c@parentequation=\count195
+\dspbrk@lvl=\count196
 \tag@help=\toks19
-\row@=\count196
-\column@=\count197
-\maxfields@=\count198
+\row@=\count197
+\column@=\count198
+\maxfields@=\count199
 \andhelp@=\toks20
 \eqnshift@=\dimen168
 \alignsep@=\dimen169
@@ -301,15 +300,15 @@ Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/unicode-math/unicod
 e-math.sty (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3kernel
 /expl3.sty
-Package: expl3 2020-02-25 L3 programming layer (loader) 
+Package: expl3 2020-09-06 L3 programming layer (loader) 
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend
--xdvipdfmx.def
-File: l3backend-xdvipdfmx.def 2020-02-23 L3 backend support: xdvipdfmx
-\g__graphics_track_int=\count199
+-xetex.def
+File: l3backend-xetex.def 2020-09-11 L3 backend support: XeTeX
+\g__graphics_track_int=\count266
 \l__pdf_internal_box=\box49
-\g__pdf_backend_object_int=\count266
-\g__pdf_backend_annotation_int=\count267
+\g__pdf_backend_object_int=\count267
+\g__pdf_backend_annotation_int=\count268
 ))
 Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
 
@@ -320,15 +319,18 @@ TeX
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/x
 parse.sty
-Package: xparse 2020-02-25 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count268
-\g__xparse_grabber_int=\count269
-\l__xparse_m_args_int=\count270
-\l__xparse_v_nesting_int=\count271
-)
+Package: xparse 2020-05-15 L3 Experimental document command parser
+
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/x
+parse-generic.tex
+\l__xparse_current_arg_int=\count269
+\g__xparse_grabber_int=\count270
+\l__xparse_m_args_int=\count271
+\l__xparse_v_nesting_int=\count272
+))
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e
 /l3keys2e.sty
-Package: l3keys2e 2020-02-25 LaTeX2e option processing using LaTeX3 keys
+Package: l3keys2e 2020-05-15 LaTeX2e option processing using LaTeX3 keys
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.s
 ty
@@ -338,17 +340,17 @@ Package: fontspec 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
 etex.sty
 Package: fontspec-xetex 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTe
 X
-\l__fontspec_script_int=\count272
-\l__fontspec_language_int=\count273
-\l__fontspec_strnum_int=\count274
-\l__fontspec_tmp_int=\count275
-\l__fontspec_tmpa_int=\count276
-\l__fontspec_tmpb_int=\count277
-\l__fontspec_tmpc_int=\count278
-\l__fontspec_em_int=\count279
-\l__fontspec_emdef_int=\count280
-\l__fontspec_strong_int=\count281
-\l__fontspec_strongdef_int=\count282
+\l__fontspec_script_int=\count273
+\l__fontspec_language_int=\count274
+\l__fontspec_strnum_int=\count275
+\l__fontspec_tmp_int=\count276
+\l__fontspec_tmpa_int=\count277
+\l__fontspec_tmpb_int=\count278
+\l__fontspec_tmpc_int=\count279
+\l__fontspec_em_int=\count280
+\l__fontspec_emdef_int=\count281
+\l__fontspec_strong_int=\count282
+\l__fontspec_strongdef_int=\count283
 \l__fontspec_tmpa_dim=\dimen174
 \l__fontspec_tmpb_dim=\dimen175
 \l__fontspec_tmpc_dim=\dimen176
@@ -363,9 +365,9 @@ Package: fix-cm 2015/01/14 v1.1t fixes to LaTeX
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
 ))
-\g__um_fam_int=\count283
-\g__um_fonts_used_int=\count284
-\l__um_primecount_int=\count285
+\g__um_fam_int=\count284
+\g__um_fonts_used_int=\count285
+\l__um_primecount_int=\count286
 \g__um_primekern_muskip=\muskip17
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/unicode-math/unicod
@@ -395,15 +397,15 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.s
 ty
-Package: hyperref 2020/01/14 v7.00d Hypertext links for LaTeX
+Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.s
 ty
 Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
 )
-(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdftexcmds/pdftexcm
-ds.sty
-Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftex
+cmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
 )
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infware
@@ -441,11 +443,11 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
 )
 \@linkdim=\dimen177
-\Hy@linkcounter=\count286
-\Hy@pagecounter=\count287
+\Hy@linkcounter=\count287
+\Hy@pagecounter=\count288
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2020/01/14 v7.00d Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.s
 ty
@@ -455,24 +457,24 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 .sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count288
-Package hyperref Info: Option `unicode' set `true' on input line 4421.
+\Hy@SavedSpaceFactor=\count289
+Package hyperref Info: Option `unicode' set `true' on input line 4338.
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2020/01/14 v7.00d Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2020-05-15 v7.00e Hyperref: PDF Unicode definition (HO)
 )
-Package hyperref Info: Hyper figures OFF on input line 4547.
-Package hyperref Info: Link nesting OFF on input line 4552.
-Package hyperref Info: Hyper index ON on input line 4555.
-Package hyperref Info: Plain pages OFF on input line 4562.
-Package hyperref Info: Backreferencing OFF on input line 4567.
+Package hyperref Info: Hyper figures OFF on input line 4464.
+Package hyperref Info: Link nesting OFF on input line 4469.
+Package hyperref Info: Hyper index ON on input line 4472.
+Package hyperref Info: Plain pages OFF on input line 4479.
+Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4800.
-\c@Hy@tempcnt=\count289
+Package hyperref Info: Bookmarks ON on input line 4717.
+\c@Hy@tempcnt=\count290
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5159.
+LaTeX Info: Redefining \url on input line 5076.
 \XeTeXLinkMargin=\dimen178
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
@@ -483,31 +485,31 @@ calc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count290
+\Fld@menulength=\count291
 \Field@Width=\dimen179
 \Fld@charsize=\dimen180
-Package hyperref Info: Hyper figures OFF on input line 6430.
-Package hyperref Info: Link nesting OFF on input line 6435.
-Package hyperref Info: Hyper index ON on input line 6438.
-Package hyperref Info: backreferencing OFF on input line 6445.
-Package hyperref Info: Link coloring OFF on input line 6450.
-Package hyperref Info: Link coloring with OCG OFF on input line 6455.
-Package hyperref Info: PDF/A mode OFF on input line 6460.
-LaTeX Info: Redefining \ref on input line 6500.
-LaTeX Info: Redefining \pageref on input line 6504.
+Package hyperref Info: Hyper figures OFF on input line 6347.
+Package hyperref Info: Link nesting OFF on input line 6352.
+Package hyperref Info: Hyper index ON on input line 6355.
+Package hyperref Info: backreferencing OFF on input line 6362.
+Package hyperref Info: Link coloring OFF on input line 6367.
+Package hyperref Info: Link coloring with OCG OFF on input line 6372.
+Package hyperref Info: PDF/A mode OFF on input line 6377.
+LaTeX Info: Redefining \ref on input line 6417.
+LaTeX Info: Redefining \pageref on input line 6421.
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/atbegshi/atbegshi
 .sty
 Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
 )
-\Hy@abspage=\count291
-\c@Item=\count292
-\c@Hfootnote=\count293
+\Hy@abspage=\count292
+\c@Item=\count293
+\c@Hfootnote=\count294
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2020/01/14 v7.00d Hyperref driver for XeTeX
+File: hxetex.def 2020-05-15 v7.00e Hyperref driver for XeTeX
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/stringenc/stringe
 nc.sty
@@ -515,10 +517,10 @@ Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
 \pdfm@box=\box50
-\c@Hy@AnnotLevel=\count294
-\HyField@AnnotCount=\count295
-\Fld@listcount=\count296
-\c@bookmark@seq@number=\count297
+\c@Hy@AnnotLevel=\count295
+\HyField@AnnotCount=\count296
+\Fld@listcount=\count297
+\c@bookmark@seq@number=\count298
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/reru
 nfilecheck.sty
@@ -536,35 +538,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
 \Hy@SectionHShift=\skip74
-)
-(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/grffile/grffile.sty
-Package: grffile 2019/11/11 v2.1 Extended file name support for graphics (legac
-y)
-Package grffile Info: This package is an empty stub for compatibility on input 
-line 40.
-)
-(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.s
-ty
-Package: csquotes 2019-12-06 v5.2j context-sensitive quotations (JAW)
-\csq@reset=\count298
-\csq@gtype=\count299
-\csq@glevel=\count300
-\csq@qlevel=\count301
-\csq@maxlvl=\count302
-\csq@tshold=\count303
-\csq@ltx@everypar=\toks23
-
-(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.d
-ef
-File: csquotes.def 2019-12-06 v5.2j csquotes generic definitions (JAW)
-)
-Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
-Package csquotes Info: ... configuration file loaded successfully.
-
-(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.c
-fg
-File: csquotes.cfg 
-)) (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
+) (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/was/upgreek.sty
 Package: upgreek 2003/02/12 v2.0 (WaS)
 Package upgreek Info: Using Euler Roman for upright Greek on input line 31.
 \symugrf@m=\mathgroup9
@@ -577,17 +551,17 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTright=\skip76
 \LTpre=\skip77
 \LTpost=\skip78
-\LTchunksize=\count304
+\LTchunksize=\count299
 \LTcapwidth=\dimen181
 \LT@head=\box51
 \LT@firsthead=\box52
 \LT@foot=\box53
 \LT@lastfoot=\box54
-\LT@cols=\count305
-\LT@rows=\count306
-\c@LT@tables=\count307
-\c@LT@chunks=\count308
-\LT@p@ftn=\toks24
+\LT@cols=\count300
+\LT@rows=\count301
+\c@LT@tables=\count302
+\c@LT@chunks=\count303
+\LT@p@ftn=\toks23
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
@@ -596,7 +570,7 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 ty
 Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
 \multirow@colwidth=\skip79
-\multirow@cntb=\count309
+\multirow@cntb=\count304
 \multirow@dima=\skip80
 \bigstrutjot=\dimen182
 ) (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/tabularx.st
@@ -607,7 +581,7 @@ Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
 \col@sep=\dimen183
 \ar@mcellbox=\box55
 \extrarowheight=\dimen184
-\NC@list=\toks25
+\NC@list=\toks24
 \extratabsurround=\skip81
 \backup@length=\skip82
 \ar@cellbox=\box56
@@ -617,8 +591,8 @@ Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
 \TX@old@col=\dimen187
 \TX@target=\dimen188
 \TX@delta=\dimen189
-\TX@cols=\count310
-\TX@ftn=\toks26
+\TX@cols=\count305
+\TX@ftn=\toks25
 )
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/thr
 eeparttablex.sty
@@ -637,26 +611,44 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 Invalid UTF-8 byte or sequence at line 296 replaced by U+FFFD.
-\linenopenalty=\count311
-\output=\toks27
-\linenoprevgraf=\count312
+\linenopenalty=\count306
+\output=\toks26
+\linenoprevgraf=\count307
 \linenumbersep=\dimen190
 \linenumberwidth=\dimen191
-\c@linenumber=\count313
-\c@pagewiselinenumber=\count314
-\c@LN@truepage=\count315
-\c@internallinenumber=\count316
-\c@internallinenumbers=\count317
+\c@linenumber=\count308
+\c@pagewiselinenumber=\count309
+\c@LN@truepage=\count310
+\c@internallinenumber=\count311
+\c@internallinenumbers=\count312
 \quotelinenumbersep=\dimen192
 \bframerule=\dimen193
 \bframesep=\dimen194
 \bframebox=\box57
-
-LaTeX Warning: Command \@parboxrestore  has changed.
-               Check if current package is valid.
-
 LaTeX Info: Redefining \\ on input line 3056.
 )
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.s
+ty
+Package: csquotes 2019-12-06 v5.2j context-sensitive quotations (JAW)
+\csq@reset=\count313
+\csq@gtype=\count314
+\csq@glevel=\count315
+\csq@qlevel=\count316
+\csq@maxlvl=\count317
+\csq@tshold=\count318
+\csq@ltx@everypar=\toks27
+
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.d
+ef
+File: csquotes.def 2019-12-06 v5.2j csquotes generic definitions (JAW)
+)
+Package csquotes Info: Trying to load configuration file 'csquotes.cfg'...
+Package csquotes Info: ... configuration file loaded successfully.
+
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/csquotes/csquotes.c
+fg
+File: csquotes.cfg 
+))
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/setspace/setspace.s
 ty
 Package: setspace 2011/12/19 v6.7a set line spacing
@@ -679,33 +671,132 @@ LaTeX Font Warning: Font shape `T3/lmss/m/n' undefined
 (Font)              using `T3/cmr/m/n' instead on input line 357.
 
 )))
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/polyglossia/polyglo
+ssia.sty
+Package: polyglossia 2020/04/08 v1.49 Modern multilingual typesetting with XeLa
+TeX and LuaLaTeX
+
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecmds/makecmds.s
+ty
+Package: makecmds 2009/09/03 v1.0a extra command making commands
+)
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval.t
+ex
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutils.
+tex
+\XKV@toks=\toks28
+\XKV@tempa@toks=\toks29
+)
+\XKV@depth=\count319
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/filehook/filehook.s
+ty
+Package: filehook 2020/02/03 v0.7 Hooks for input files
+)
+\xpg@normalclass=\XeTeXcharclass1
+
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/polyglossia/gloss-l
+atex.ldf
+File: gloss-latex.ldf polyglossia: module for default language
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}.
+)
+Package polyglossia Info: Default language is latex.
+)
+(c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/polyglossia/gloss-e
+nglish.ldf
+File: gloss-english.ldf polyglossia: module for english
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/script}  =>  {latin}
+>  {english/lcscript}  =>  {latin}
+>  {english/scripttag}  =>  {}
+>  {english/language}  =>  {English}
+>  {english/langtag}  =>  {ENG}
+>  {english/bcp47}  =>  {en-US}
+>  {english/hyphennames}  =>  {english,american,usenglish,USenglish}
+>  {english/direction}  =>  {LR}
+>  {english/hyphenmins}  =>  {2,3}
+>  {english/frenchspacing}  =>  {false}
+>  {english/indentfirst}  =>  {false}
+>  {english/fontsetup}  =>  {true}
+>  {english/envname}  =>  {english}
+>  {english/babelname}  =>  {english}
+>  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
+Package polyglossia Info: Option: English, variant=american.
+)
+Package polyglossia Info: Default language is english.
+\cslhangindent=\skip85
 Package csquotes Info: Checking for multilingual support...
-Package csquotes Info: ... none found.
-(./VonHolzenBergmann_MPMetaAnalysis.aux)
+Package csquotes Info: ... found 'polyglossia' package.
+Package csquotes Info: Adjusting default style.
+Package csquotes Info: Redefining alias 'default' -> 'american'.
+(./VonHolzenBergmann_MPMetaAnalysis.aux
+LaTeX Info: Redefining \rmfamily on input line 19.
+LaTeX Info: Redefining \sffamily on input line 19.
+LaTeX Info: Redefining \ttfamily on input line 19.
+)
 \openout1 = `VonHolzenBergmann_MPMetaAnalysis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
-LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 120.
-LaTeX Font Info:    ... okay on input line 120.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 173.
+LaTeX Font Info:    ... okay on input line 173.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -751,23 +842,23 @@ Package caption Info: longtable package is loaded.
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.s
 ty
-Package: ltcaption 2018/08/26 v1.4a longtable captions (AR)
+Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 120.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 120.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 120.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 120.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 120.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 120.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 173.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 120.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 173.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -796,7 +887,7 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 120.
+(Font)              scaled to size 12.0pt on input line 173.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -835,18 +926,18 @@ pt=math;language=dflt;"
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 120.
+(Font)              scaled to size 12.0pt on input line 173.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 120.
+(Font)              `operators' in the math version `normal' on input line 173.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input
- line 120.
+ line 173.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 120.
+(Font)              `operators' in the math version `bold' on input line 173.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on inpu
-t line 120.
+t line 173.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -933,15 +1024,15 @@ t=math;language=dflt;"
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 120.
+(Font)              `symbols' in the math version `normal' on input line 173.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
 (Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on inpu
-t line 120.
+t line 173.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 120.
+(Font)              `symbols' in the math version `bold' on input line 173.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
 (Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on inpu
-t line 120.
+t line 173.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -1011,18 +1102,18 @@ pt=math;language=dflt;"
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
 (Font)              `largesymbols' in the math version `normal' on input line 1
-20.
+73.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on inpu
-t line 120.
+t line 173.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 120
+(Font)              `largesymbols' in the math version `bold' on input line 173
 .
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 (Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on inpu
-t line 120.
+t line 173.
 \AtBeginShipoutBox=\box58
-Package hyperref Info: Link coloring OFF on input line 120.
+Package hyperref Info: Link coloring OFF on input line 173.
 
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.st
 y
@@ -1036,53 +1127,56 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ttitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count318
+\c@section@level=\count320
 )
-LaTeX Info: Redefining \ref on input line 120.
-LaTeX Info: Redefining \pageref on input line 120.
-LaTeX Info: Redefining \nameref on input line 120.
+LaTeX Info: Redefining \ref on input line 173.
+LaTeX Info: Redefining \pageref on input line 173.
+LaTeX Info: Redefining \nameref on input line 173.
 (./VonHolzenBergmann_MPMetaAnalysis.out) (./VonHolzenBergmann_MPMetaAnalysis.ou
 t)
 \@outlinefile=\write5
 \openout5 = `VonHolzenBergmann_MPMetaAnalysis.out'.
 
+LaTeX Info: Redefining \rmfamily on input line 173.
+LaTeX Info: Redefining \sffamily on input line 173.
+LaTeX Info: Redefining \ttfamily on input line 173.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 8.4pt on input line 122.
+(Font)              scaled to size 8.4pt on input line 175.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 6.0pt on input line 122.
+(Font)              scaled to size 6.0pt on input line 175.
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-22.
+75.
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.0011pt on input line 122.
+(Font)              scaled to size 12.0011pt on input line 175.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.40076pt on input line 122.
+(Font)              scaled to size 8.40076pt on input line 175.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00055pt on input line 122.
+(Font)              scaled to size 6.00055pt on input line 175.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 122.
+(Font)              scaled to size 11.99872pt on input line 175.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 8.3991pt on input line 122.
+(Font)              scaled to size 8.3991pt on input line 175.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 122.
+(Font)              scaled to size 5.99936pt on input line 175.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
-22.
+75.
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-122.
+175.
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 122
+LaTeX Font Info:    Trying to load font information for U+msa on input line 175
 .
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 122
+LaTeX Font Info:    Trying to load font information for U+msb on input line 175
 .
 (c:/Users/user/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1105,25 +1199,25 @@ Underfull \vbox (badness 3965) has occurred while \output is active []
 
 (VonHolzenBergmann_MPMetaAnalysis.ttt)
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 216.
+(Font)              scaled to size 10.0pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 216.
+(Font)              scaled to size 7.0pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 216.
+(Font)              scaled to size 5.0pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 216.
+(Font)              scaled to size 10.00092pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 216.
+(Font)              scaled to size 7.00064pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 216.
+(Font)              scaled to size 5.00046pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 216.
+(Font)              scaled to size 9.99893pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 216.
+(Font)              scaled to size 6.99925pt on input line 279.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 216.
+(Font)              scaled to size 4.99947pt on input line 279.
 [9] [10] [11]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 7649) has occurred while \output is active []
 
 [12] [13] [14] [15] [16] [17]
 Underfull \vbox (badness 3977) has occurred while \output is active []
@@ -1141,47 +1235,59 @@ Underfull \vbox (badness 3965) has occurred while \output is active []
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [27] [28]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 7649) has occurred while \output is active []
 
-[29]
-Underfull \vbox (badness 1558) has occurred while \output is active []
-
-[30] [31]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[32] [33]
+[29] [30] [31] [32]
 Underfull \vbox (badness 3965) has occurred while \output is active []
 
-[34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48] [49]
+[33]
+Underfull \vbox (badness 3965) has occurred while \output is active []
 
-Package caption Warning: Unused \captionsetup[table] on input line 102.
+[34] [35] [36] [37] [38] [39] [40] [41] [42] [43] [44]
+
+Package caption Warning: Unused \captionsetup[table] on input line 132.
 See the caption package documentation for explanation.
 
 
-Package caption Warning: Unused \captionsetup[figure] on input line 103.
+Package caption Warning: Unused \captionsetup[figure] on input line 133.
 See the caption package documentation for explanation.
 
-AED endfloat: Processing end Figures and Tables [50] (./VonHolzenBergmann_MPMet
+AED endfloat: Processing end Figures and Tables [45] (./VonHolzenBergmann_MPMet
 aAnalysis.ttt
 Overfull \hbox (22.2371pt too wide) in paragraph at lines 6--6
 [] [] 
  []
 
 
-Overfull \hbox (44.4742pt too wide) in alignment at lines 5--29
+Overfull \hbox (44.4742pt too wide) in alignment at lines 5--12
  [] [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (44.4742pt too wide) in alignment at lines 29--45
+Overfull \hbox (22.2371pt too wide) in paragraph at lines 13--13
+[] [] 
+ []
+
+
+Overfull \hbox (44.4742pt too wide) in alignment at lines 12--19
  [] [] [] [] [] [] [] [] [] [] 
  []
 
-[51
+
+Overfull \hbox (44.4742pt too wide) in alignment at lines 19--40
+ [] [] [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (44.4742pt too wide) in alignment at lines 40--53
+ [] [] [] [] [] [] [] [] [] [] 
+ []
+
+[46
 
 
 
-] [52
+] [47
 
 
 
@@ -1235,26 +1341,64 @@ ine-1.pdf Graphic file (type pdf)
 <use VonHolzenBergmann_MPMetaAnalysis_files/figure-latex/PlotWithinCondDVbaseli
 ne-1.pdf>
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 920.
-[53] [54] [55] [56] [57] [58] [59] [60] [61] [62]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 920.
-(./VonHolzenBergmann_MPMetaAnalysis.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 920.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 920.
+The property list \polyglossia@langsetup contains the pairs (without outer
+braces):
+>  {latex/script}  =>  {latin}
+>  {latex/lcscript}  =>  {latin}
+>  {latex/scripttag}  =>  {}
+>  {latex/language}  =>  {Latex}
+>  {latex/langtag}  =>  {ENG}
+>  {latex/bcp47}  =>  {}
+>  {latex/hyphennames}  =>  {english}
+>  {latex/direction}  =>  {LR}
+>  {latex/hyphenmins}  =>  {2,3}
+>  {latex/frenchspacing}  =>  {false}
+>  {latex/indentfirst}  =>  {false}
+>  {latex/fontsetup}  =>  {true}
+>  {latex/envname}  =>  {latex}
+>  {latex/babelname}  =>  {latex}
+>  {latex/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {latex/Localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/script}  =>  {latin}
+>  {english/lcscript}  =>  {latin}
+>  {english/scripttag}  =>  {}
+>  {english/language}  =>  {English}
+>  {english/langtag}  =>  {ENG}
+>  {english/bcp47}  =>  {en-US}
+>  {english/hyphennames}  =>  {english,american,usenglish,USenglish}
+>  {english/direction}  =>  {LR}
+>  {english/hyphenmins}  =>  {2,3}
+>  {english/frenchspacing}  =>  {false}
+>  {english/indentfirst}  =>  {false}
+>  {english/fontsetup}  =>  {true}
+>  {english/envname}  =>  {english}
+>  {english/babelname}  =>  {american}
+>  {english/localnumeral}  =>  {polyglossia@C@localnumeral}
+>  {english/Localnumeral}  =>  {polyglossia@C@localnumeral}.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 814.
+[48] [49] [50] [51] [52] [53] [54] [55] [56] [57]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 814.
+(./VonHolzenBergmann_MPMetaAnalysis.aux
+LaTeX Info: Redefining \rmfamily on input line 19.
+LaTeX Info: Redefining \sffamily on input line 19.
+LaTeX Info: Redefining \ttfamily on input line 19.
+)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 814.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 814.
 Package rerunfilecheck Info: File `VonHolzenBergmann_MPMetaAnalysis.out' has no
 t changed.
-(rerunfilecheck)             Checksum: F48F5A81D80BF247ED984074E99185A5;6206.
+(rerunfilecheck)             Checksum: 580C859BBD5A799312E6658B1360BF78;5677.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 20915 strings out of 481790
- 369068 string characters out of 5935795
- 792922 words of memory out of 5000000
- 37557 multiletter control sequences out of 15000+600000
- 565513 words of font info for 101 fonts, out of 8000000 for 9000
+ 21928 strings out of 481674
+ 392812 string characters out of 5931186
+ 832233 words of memory out of 5000000
+ 38658 multiletter control sequences out of 15000+600000
+ 568263 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 52i,11n,115p,2359b,654s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 52i,11n,118p,2359b,701s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on VonHolzenBergmann_MPMetaAnalysis.pdf (62 pages).
+Output written on VonHolzenBergmann_MPMetaAnalysis.pdf (57 pages).
