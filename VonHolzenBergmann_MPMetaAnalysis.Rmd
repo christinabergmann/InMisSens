@@ -321,7 +321,7 @@ apa_table(Sum_table, col.names = c("Paper", "Format", "Age", "Vocabulary", "Fami
 
 ## Study Selection
 
-We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list (see Figure \@ref(fig:PRISMA-image) for an overview of the selection process). This process yielded 110 items. We then used the Google Scholar search engine to search for papers citing the original @Swingley2000 publication. This search was conducted on 22 September, 2017 and yielded 288 results. From this combined list of 398 records we removed 99 duplicate items and screened the remaining 299 items for their title and abstract to determine whether each met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition and mispronunciations; (3) infants studied were under 31-months-of-age and typically developing; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; (5) the stimuli were auditory speech. The final sample (*n* = `r length(unique(descriptive_dat$short_cite))`) consisted of `r with(descriptive_dat, n_distinct(short_cite[publication_status == "paper"]))` journal articles, `r with(descriptive_dat, n_distinct(short_cite[publication_status == "proceedings"]))` proceedings paper, `r with(descriptive_dat, n_distinct(short_cite[publication_status == "dissertation"]))` theses, and `r with(descriptive_dat, n_distinct(short_cite[publication_status == "gray paper"]))` unpublished reports. We will refer to these items collectively as papers. Table \@ref(tab:SummaryTable) provides an overview of all papers included in the present meta-analysis.
+We first generated a list of potentially relevant items to be included in our meta-analysis by creating an expert list (see Figure \@ref(fig:PRISMA-image) for an overview of the selection process). This process yielded 110 items. We then used the Google Scholar search engine to search for papers citing the original @Swingley2000 publication. This search was conducted on 22 September, 2017 and yielded 288 results. From this combined list of 398 records we removed 99 duplicate items and screened the remaining 299 items for their title and abstract to determine whether each met the following inclusion criteria: (1) original data was reported; (2) the experiment examined familiar word recognition and mispronunciations; (3) infants studied were under 31-months-of-age and typically developing; (4) the dependent variable was derived from proportion of looks to a target image versus a distractor in a eye movement experiment; (5) the stimuli were auditory speech. The final sample (*n* = `r length(unique(descriptive_dat$short_cite))`) consisted of `r with(descriptive_dat, n_distinct(short_cite[publication_status == "paper"]))` journal articles, `r with(descriptive_dat, n_distinct(short_cite[publication_status == "proceedings"]))` proceedings paper, `r with(descriptive_dat, n_distinct(short_cite[publication_status == "dissertation"]))` theses, and `r with(descriptive_dat, n_distinct(short_cite[publication_status == "gray paper"]))` unpublished report. We will refer to these items collectively as papers. Table \@ref(tab:SummaryTable) provides an overview of all papers included in the present meta-analysis.
 
 (Insert Table 1 about here)
 
@@ -669,7 +669,7 @@ dat_mp = db_ET_MP %>%
 
 
   jpeg(filename = "figures/Figure_2_Funnel_Plots_Object_Identification.jpg", 
-       width = 600, height = 400, units = "px")
+       width = 1600, height = 800, units = "px", res = 300)
   
   p <-   grid.arrange(fp_co, fp_mp, nrow = 1)
                       #top = textGrob("Object Identification", gp=gpar(fontsize=25)))
@@ -939,7 +939,7 @@ We then examined the interaction between age and mispronunciation sensitivity (c
 
 (Insert Figure \@ref(fig:PlotMPEffect) about here)
 
-```{r PlotMPEffect, echo = FALSE, fig.width=7,fig.height=8, fig.cap="Panel a: Effect sizes for correct pronunciations (yellow) and mispronunciations (blue) by participant age. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
+```{r PlotMPEffect, echo = FALSE, fig.width=7,fig.height=8, fig.cap="Panel a: Effect sizes for correct pronunciations (light orange, light grey) and mispronunciations (dark purple, black) by participant age. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) by participant age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
 
 dat$condition_label = ifelse(dat$condition==1, "Correct", "Mispronunciation")
 
@@ -1003,7 +1003,7 @@ lay <- rbind(c(1),
 #lay <- rbind(c(1,2))
 
   jpeg(filename = "figures/Figure_3_AgeEffect.jpg", 
-       width = 500, height = 900, units = "px")
+       width = 1450, height = 1800, units = "px", res = 300)
   
 MS_plot <- grid.arrange(p, p.diff,
                              layout_matrix = lay)
@@ -1118,7 +1118,7 @@ Figure \@ref(fig:Vocabdescribe1) plots the year of publication for all the mispr
 
 (Insert Figure \@ref(fig:Vocabdescribe1) about here)
 
-```{r Vocabdescribe1, echo = FALSE, fig.width=7,fig.height=4.5, fig.cap="Counts of studies included in the meta-analysis as a function of publication year, representing whether the study did not measure vocabulary (yellow), did measure vocabulary and was reported to predict mispronunciation sensitivity (blue), or did measure vocabulary and was reported to not predict mispronunciation sensitivity (pink).", results="hide"}
+```{r Vocabdescribe1, echo = FALSE, fig.width=7,fig.height=4.5, fig.cap="Counts of studies included in the meta-analysis as a function of publication year, representing whether the study did not measure vocabulary (light orange, light grey), did measure vocabulary and was reported to predict mispronunciation sensitivity (dark purple, black), or did measure vocabulary and was reported to not predict mispronunciation sensitivity (dark orange, dark grey).", results="hide"}
 #how did vocabulary collection change over time?
 
 dv <- read.csv("data/vocab_collection.csv", header = T)
@@ -1164,7 +1164,7 @@ vocab_year <- ggplot(d.v,aes(x=Year, fill = relationship)) +
 #vocab_year
 
   jpeg(filename = "figures/Figure_4_Vocab_findings.jpg", 
-       width = 550, height = 300, units = "px")
+       width = 2200, height = 1200, units = "px", res = 300)
 
 vocab_year
   
@@ -1383,7 +1383,7 @@ ms.age <- ggplot(dat.f, aes(mean_age_1/30.44, g_calc, color = Features_changed))
 # ms.age
 
   jpeg(filename = "figures/Figure_5_Number_of_Features.jpg", 
-       width = 500, height = 300, units = "px")
+       width = 1800, height = 1200, units = "px", res = 300)
 
   p.MS
   
@@ -1579,7 +1579,7 @@ ms.age <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = locatio
 # grid.draw(ger.plot.age)
 
   jpeg(filename = "figures/Figure_6_Misp_Position.jpg", 
-       width = 500, height = 300, units = "px")
+       width = 1800, height = 1200, units = "px", res = 300)
 
   ms.agg
   
@@ -1693,7 +1693,7 @@ mod_table <- rbind(mod_table, lin, lin2)
 ```
 
 
-```{r PlotMispType, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
+```{r PlotMispType, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant (light orange, light grey) and vowel (dark purple, black) mispronunciations by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
 
 db_type = dat %>%
   filter(type_feature == "consonant" | type_feature == "vowel")
@@ -1756,7 +1756,7 @@ lay <- rbind(c(1), c(2))
 #lay <- rbind(c(1,2))
 
   jpeg(filename = "figures/Figure_7_CV.jpg",
-       width = 500, height = 800, units = "px")
+       width = 1450, height = 1800, units = "px", res = 300)
 
 ger.plot.age <- grid.arrange(ms.agg, ms.age,
                              layout_matrix = lay)
@@ -1858,7 +1858,7 @@ mod_table <- rbind(mod_table, lin, lin2)
 
 ```
 
-```{r PlotCVEffectLang, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
+```{r PlotCVEffectLang, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant and vowel mispronunciations for infants learning a Germanic (left) or a Romance (right) native language. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for consonant (light orange, light grey) and vowel (dark purple, black) mispronunciations for infants learning a Germanic (left) or a Romance (right) native language by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
 
 db_type = dat %>%
   filter(type_feature == "consonant" | type_feature == "vowel")
@@ -1923,7 +1923,7 @@ lay <- rbind(c(1), c(2))
 #lay <- rbind(c(1,2))
 
   jpeg(filename = "figures/Figure_8_LangCV.jpg",
-       width = 500, height = 900, units = "px")
+       width = 1450, height = 2200, units = "px", res = 300)
 
 ger.plot.age <- grid.arrange(ms.agg, ms.age,
                              layout_matrix = lay)
@@ -2048,7 +2048,7 @@ mod_table <- rbind(mod_table, lin, lin2)
 
 ```
 
-```{r PlotDistOverlap, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
+```{r PlotDistOverlap, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Panel a: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap or no overlap. Panel b: Effect sizes for mispronunciation sensitivity within subject group and study (correct - mispronunciations) for target-distractor pairs with onset overlap (dark purple, black) or no overlap (light orange, light grey) by age. For both panels, point size depicts inverse variance and the dashed line indicates zero (chance).", results="hide"}
 
 
 db_ET_MPo = dat %>%
@@ -2116,7 +2116,7 @@ lay <- rbind(c(1), c(2))
 #lay <- rbind(c(1,2))
 
   jpeg(filename = "figures/Figure_9_Distractor_Overlap.jpg",
-       width = 500, height = 800, units = "px")
+       width = 1600, height = 1800, units = "px", res = 300)
 
 ger.plot.age <- grid.arrange(ms.agg, ms.age,
                              layout_matrix = lay)
@@ -2364,11 +2364,11 @@ rma_post_dur <- rma.mv(g_calc, g_var_calc, mods = ~as.numeric(post_nam_dur), dat
         
 ```
 
-```{r PlotPostNameCondAge, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Effect sizes for the different lengths of the post-naming analysis window: 2000 ms or less (yellow), 2001 to 3000 ms (blue), and 3001 ms or greater (pink). Although length of the post-naming analysis window was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.", results="hide"}
+```{r PlotPostNameCondAge, echo = FALSE, fig.width=10,fig.height=11, fig.cap="Effect sizes for the different lengths of the post-naming analysis window: 2000 ms or less (light orange, light grey), 2001 to 3000 ms (dark purple, black), and 3001 ms or greater (dark orange, dark grey). Although length of the post-naming analysis window was included as a continuous variable in the meta-analytic model, it is divided into categories for ease of viewing. Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.", results="hide"}
 dat$condition_label <- ifelse(dat$condition==1, "Correct", "Mispronunciation")
-dat$post_size <- ifelse(dat$post_nam_dur <= 2, "2000 ms or less",
-                       ifelse(dat$post_nam_dur > 2 & dat$post_nam_dur <= 3, "2001-3000 ms", "3001 ms or greater"))
-dat$post_size <- factor(dat$post_size, levels = c("2000 ms or less", "2001-3000 ms", "3001 ms or greater"))
+dat$post_size <- ifelse(dat$post_nam_dur <= 2, "< 2000 ms",
+                       ifelse(dat$post_nam_dur > 2 & dat$post_nam_dur <= 3, "2001-3000 ms", "> 3001 ms"))
+dat$post_size <- factor(dat$post_size, levels = c("< 2000 ms", "2001-3000 ms", "> 3001 ms"))
 dat.cm <- dat[,c("short_cite", "is_correct", "is_mp", "post_size", "condition", "g_calc", "weights_g", "mean_age_1", "n_1")]
 dat.c <- subset(dat.cm, is_correct == 1)
 dat.m <- subset(dat.cm, is_mp == 1)
@@ -2410,7 +2410,7 @@ p.AGE <- ggplot(dat.cm, aes(mean_age_1/30.44, Misp_sensitivity, color = post_siz
 lay <- rbind(c(1), c(2))
 #lay <- rbind(c(1,2))
   jpeg(filename = "figures/Figure_10_Post_name_size.jpg", 
-       width = 600, height = 800, units = "px")
+       width = 2200, height = 2200, units = "px", res = 300)
   
 ger.plot.age <- grid.arrange(p.MS, p.AGE,
                              layout_matrix = lay)
@@ -2508,7 +2508,7 @@ rma_within_effbaseline <- coef(summary(rma_within))[2,]
     
 ```
 
-```{r PlotWithinCondDVbaseline, echo = FALSE, fig.width=7,fig.height=3.5, fig.cap="Effect sizes for the different types of dependent variables calculated: Post (yellow), Post vs. Pre (blue), and Difference Score (pink). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.", results="hide"}
+```{r PlotWithinCondDVbaseline, echo = FALSE, fig.width=7,fig.height=3.5, fig.cap="Effect sizes for the different types of dependent variables calculated: Post (light orange, light grey) and Baseline corrected (dark purple, black). Panel a plots mispronunciation sensitivity aggregated over age, while panel b plots mispronunciation sensitivity, within subject group and study (correct - mispronunciations), as a function of age. The lines plot the linear regression and the gray shaded area indicates the standard error.", results="hide"}
 
 
 dat.cm <- dat[,c("short_cite", "is_correct", "is_mp", "within_measure", "condition", "g_calc", "weights_g", "mean_age_1", "n_1")]
@@ -2559,7 +2559,7 @@ lay <- rbind(c(1), c(2))
 
 #lay <- rbind(c(1,2))
   jpeg(filename = "figures/Figure_11_Dependent_variable.jpg", 
-       width = 500, height = 350, units = "px")
+       width = 1800, height = 1200, units = "px", res = 300)
   
 ms.agg
 
@@ -2778,6 +2778,12 @@ Variation in measurement standards can have serious consequences, as our analyse
 This meta-analysis comprises an aggregation of two decades of research on mispronunciation sensitivity, finding robust evidence that infants have well-specified phonological representations for familiar words. Furthermore, these representations may be well specified at an early age, perhaps before the vocabulary explosion. We recommend future theoretical frameworks take this evidence into account. Our meta-analysis was also able to confirm different findings in the literature, including the role of mispronunciation size, mispronunciation position, and infants' age and native language in sensitivity to mispronunciation type (consonant vs. vowel). Furthermore, evidence of an interaction between task demands (phonological overlap between target-distractor pairs) and infant age may partially explain the lack of developmental change in our meta-analysis.
 
 Despite this overall finding, we note evidence that data analysis choices can modulate conclusions about mispronunciation sensitivity development. Future studies should be carefully planned with this evidence in mind. Ideally, future experimental design and data analysis would become standardized which will be aided by the growing trend of preregistration and open science practices. Our analysis highlights how meta-analyses can identify issues in a particular field and play a vital role in how the field addresses such issues.
+
+
+---
+nocite: |
+  @Ren, @Bergelson2017, @DelleLuche2015, @Durrant2014, @Hohle2006, @Swingley2003, @Tao2013, @Tao2012, @VanderFeest2016, @Wewalaarachchi2017, @White2011a, @Zesiger2011
+---
 
 \newpage
 
